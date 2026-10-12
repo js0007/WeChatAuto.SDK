@@ -272,8 +272,8 @@ namespace WeChatAuto.Components
         {
             //首先置顶微信
             WinApi.ActivateProcess(processId);
-            //关闭输入法,以方便Keyboard.Type函数正确
-            WindowsInputHelper.ForceEnglishInput((uint)processId);
+            // //关闭输入法,以方便Keyboard.Type函数正确
+            // WindowsInputHelper.ForceEnglishInput((uint)processId);
             RandomWait.Wait(100, 800);
             (OwerInfo info, Window window) result = __GetCurrentWxNickName(processId, automation);
             result.window.Focus();

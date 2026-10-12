@@ -948,12 +948,15 @@ namespace WeChatAuto.Components
 			}
 			else
 			{
-				WindowsInputHelper.ForceEnglishInput((uint)this._Client.MainWindow.Properties.ProcessId.Value);
 				message = message.replace("\r\n", "\n");
-				SupperMouseKey.Type(message);
-				RandomWait.Wait(50, 800);
-				Keyboard.TypeSimultaneously(VirtualKeyShort.ENTER);
-				RandomWait.Wait(50, 800);
+				using (WindowsInputHelper.SwitchToEnglish((uint)this._Client.MainWindow.Properties.ProcessId.Value))
+				{
+					// WindowsInputHelper.ForceEnglishInput((uint)this._Client.MainWindow.Properties.ProcessId.Value);
+					SupperMouseKey.Type(message);
+					RandomWait.Wait(50, 800);
+					Keyboard.TypeSimultaneously(VirtualKeyShort.ENTER);
+					RandomWait.Wait(50, 800);
+				}
 			}
 		}
 

@@ -61,6 +61,10 @@ namespace WeChatAuto.Utils
             uint flags);
 
         [DllImport("user32.dll")]
+        private static extern IntPtr GetKeyboardLayout(
+            uint idThread);
+
+        [DllImport("user32.dll")]
         private static extern bool PostMessage(
             IntPtr hWnd,
             uint msg,
@@ -118,19 +122,24 @@ namespace WeChatAuto.Utils
         }
 
         // ------------------------------------------------------------
-        // 强制目标进程切换到英文键盘布局
+        // 解析目标进程的 UI 线程与当前键盘焦点窗口
         // ------------------------------------------------------------
 
-        public static bool ForceEnglishInput(uint processId)
+        private static bool TryResolveFocusWindow(
+            uint processId,
+            out uint threadId,
+            out IntPtr focusWindow)
         {
+            threadId = 0;
+            focusWindow = IntPtr.Zero;
+
             // 1. 找到目标进程窗口
             IntPtr processWindow = FindProcessWindow(processId);
-
             if (processWindow == IntPtr.Zero)
                 return false;
 
             // 2. 获取目标窗口所属 UI 线程
-            uint threadId = GetWindowThreadProcessId(
+            threadId = GetWindowThreadProcessId(
                 processWindow,
                 out uint actualProcessId);
 
@@ -138,14 +147,21 @@ namespace WeChatAuto.Utils
                 return false;
 
             // 3. 获取这个线程当前真正的键盘焦点窗口
-            IntPtr focusWindow = GetFocusedWindow(threadId);
-
-            // 某些程序可能暂时没有 hwndFocus
-            // 这种情况下退回到顶层窗口
+            // 某些程序可能暂时没有 hwndFocus，这种情况下退回到顶层窗口
+            focusWindow = GetFocusedWindow(threadId);
             if (focusWindow == IntPtr.Zero)
                 focusWindow = processWindow;
 
-            if (!IsWindow(focusWindow))
+            return IsWindow(focusWindow);
+        }
+
+        // ------------------------------------------------------------
+        // 强制目标进程切换到英文键盘布局
+        // ------------------------------------------------------------
+
+        public static bool ForceEnglishInput(uint processId)
+        {
+            if (!TryResolveFocusWindow(processId, out _, out IntPtr focusWindow))
                 return false;
 
             // 4. 加载英文键盘布局
@@ -165,6 +181,92 @@ namespace WeChatAuto.Utils
                 WM_INPUTLANGCHANGEREQUEST,
                 IntPtr.Zero,
                 hkl);
+        }
+
+        // ------------------------------------------------------------
+        // 保存当前布局 → 切换英文 → 结束后恢复原布局
+        // ------------------------------------------------------------
+
+        /// <summary>
+        /// 先记录目标线程当前的键盘布局，再切换到英文，并返回一个作用域对象。
+        /// 用 using 包裹自动化动作，作用域结束（含异常退出）时自动恢复原布局。
+        /// 切换失败时返回 <see cref="KeyboardLayoutScope.Empty"/>（无操作）。
+        /// </summary>
+        public static KeyboardLayoutScope SwitchToEnglish(uint processId)
+        {
+            if (!TryResolveFocusWindow(processId, out uint threadId, out IntPtr focusWindow))
+                return KeyboardLayoutScope.Empty;
+
+            // 保存目标线程当前的键盘布局
+            // 注意：跨进程调用 GetKeyboardLayout 通常可用，若返回 0 则恢复时按无操作处理
+            IntPtr originalHkl = GetKeyboardLayout(threadId);
+
+            IntPtr englishHkl = LoadKeyboardLayout(
+                EnglishKeyboardLayout,
+                KLF_ACTIVATE);
+
+            if (englishHkl == IntPtr.Zero)
+                return KeyboardLayoutScope.Empty;
+
+            PostMessage(
+                focusWindow,
+                WM_INPUTLANGCHANGEREQUEST,
+                IntPtr.Zero,
+                englishHkl);
+
+            return new KeyboardLayoutScope(focusWindow, originalHkl);
+        }
+
+        public static KeyboardLayoutScope SwitchToEnglish(Process process)
+        {
+            if (process == null)
+                throw new ArgumentNullException(nameof(process));
+
+            return SwitchToEnglish((uint)process.Id);
+        }
+
+        /// <summary>
+        /// 键盘布局作用域：Dispose 时把之前保存的布局发回目标焦点窗口，实现“用后恢复”。
+        /// </summary>
+        public sealed class KeyboardLayoutScope : IDisposable
+        {
+            /// <summary>切换失败时的无操作作用域，用于保持 using 结构统一。</summary>
+            public static KeyboardLayoutScope Empty { get; } = new KeyboardLayoutScope(IntPtr.Zero, IntPtr.Zero);
+
+            private readonly IntPtr _focusWindow;
+            private readonly IntPtr _originalHkl;
+            private bool _disposed;
+
+            internal KeyboardLayoutScope(IntPtr focusWindow, IntPtr originalHkl)
+            {
+                _focusWindow = focusWindow;
+                _originalHkl = originalHkl;
+            }
+
+            /// <summary>立即恢复原来的键盘布局（幂等，可重复调用）。</summary>
+            public void Restore()
+            {
+                if (_disposed)
+                    return;
+                _disposed = true;
+
+                if (_focusWindow == IntPtr.Zero || _originalHkl == IntPtr.Zero)
+                    return;
+
+                if (IsWindow(_focusWindow))
+                {
+                    PostMessage(
+                        _focusWindow,
+                        WM_INPUTLANGCHANGEREQUEST,
+                        IntPtr.Zero,
+                        _originalHkl);
+                }
+            }
+
+            public void Dispose()
+            {
+                Restore();
+            }
         }
 
 
