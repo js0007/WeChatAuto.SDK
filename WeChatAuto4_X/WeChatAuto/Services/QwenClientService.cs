@@ -464,8 +464,11 @@ public class QwenClientService
         }
         else
         {
-            throw new HttpRequestException($"请求发生错误，错误代码:{response.StatusCode}");
+            var body = await response.Content.ReadAsStringAsync();
+            var err = JsonConvert.DeserializeObject<QwenResponseBody>(body);
+            throw new HttpRequestException($"请求发生错误，错误代码:{response.StatusCode}，code:{err?.Code}，message:{err?.Message}");
         }
+
     }
 
     private string _GetInputJson(VoiceOptions options, string message)
