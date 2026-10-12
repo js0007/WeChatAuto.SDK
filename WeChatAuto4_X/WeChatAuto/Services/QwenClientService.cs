@@ -13,7 +13,7 @@ namespace WeChatAuto.Services;
 /// <summary>
 /// 千问http客户端
 /// </summary>
-public class QwenClientService
+public partial class QwenClientService
 {
     private readonly HttpClient _http;
 
