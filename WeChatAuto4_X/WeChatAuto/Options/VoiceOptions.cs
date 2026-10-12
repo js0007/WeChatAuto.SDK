@@ -15,6 +15,9 @@ namespace WeChatAuto.Options
         /// 应用于qwen3-tts-instruct-flash模型
         /// </summary>
         public string Instructions { get; set; } = "";
+        /// <summary>
+        /// 是否在发送前用LLM进行口语化校核
+        /// </summary>
         public bool OptimizeInstructions { get; set; } = false;
         public bool IsStream { get; set; } = false;
     }

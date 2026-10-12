@@ -1035,8 +1035,8 @@ namespace WeChatAuto.Components
 			{
 				var point = textBox.BoundingRectangle.SafeRandomPoint();
 				Mouse.Position = point;
-				Mouse.Click();
-				RandomWait.Wait(50, 300);
+				//Mouse.Click();
+				//RandomWait.Wait(50, 300);
 				Keyboard.TypeSimultaneously(VirtualKeyShort.CONTROL, VirtualKeyShort.KEY_A);
 				RandomWait.Wait(50, 300);
 				Keyboard.TypeSimultaneously(VirtualKeyShort.BACK);
@@ -1053,8 +1053,8 @@ namespace WeChatAuto.Components
 				RandomWait.Wait(100, 600);
 				var point = textBox.BoundingRectangle.SafeRandomPoint();
 				Mouse.Position = point;
-				Mouse.Click();
-				RandomWait.Wait(50, 300);
+				//Mouse.Click();
+				//RandomWait.Wait(50, 300);
 				Keyboard.TypeSimultaneously(VirtualKeyShort.ENTER);
 				RandomWait.Wait(50, 300);
 			}
