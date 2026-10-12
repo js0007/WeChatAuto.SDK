@@ -5,7 +5,7 @@ public class VoicePreset
     /// <summary>
     /// 音色参数
     /// </summary>
-    public string Id {get;set;} = "Cherry";
-    public string Description {get;set;} = "阳光积极、亲切自然小姐姐（女性）";
+    public string Id {get;set;} = "longanhuan_v3.1";
+    public string Description {get;set;} = "龙安欢（女性），支持多方言多语言";
     public string MainLanguage {get;set;} = "普通话";
 }

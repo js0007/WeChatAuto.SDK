@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -432,10 +431,10 @@ public class QwenClientService
     {
         _ = string.IsNullOrWhiteSpace(apiKey) ? throw new Exception("错误：apiKey不能为空！") : "";
         options = options == null ? new VoiceOptions() : options;
-        //检查音色是否为系统包含的音色
-        if (!VoicePresetList.AllVoicePresets.Any(x => x.Id.Equals(options.Voice)))
-            throw new Exception($"错误：传入的音色 {options.Voice}不存在！或者 你可能使用的是克隆声音 或者 自创建的声音，请调用其他的api命令.");
-        var url = "https://dashscope.aliyuncs.com/api/v1/services/aigc/multimodal-generation/generation";
+        // Qwen-Audio-TTS 的系统音色与声音复刻/设计音色均通过同一端点调用，因此仅校验音色非空。
+        if (string.IsNullOrWhiteSpace(options.Voice))
+            throw new Exception("错误：音色(voice)不能为空！");
+        var url = "https://maas.qianwenaiapi.com/api/v1/services/audio/tts/SpeechSynthesizer";
         var httpRequest = new HttpRequestMessage(HttpMethod.Post, url);
         httpRequest.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", apiKey);
         //获取发送json字符串
@@ -474,20 +473,13 @@ public class QwenClientService
     private string _GetInputJson(VoiceOptions options, string message)
     {
         var result = new QwenRequestBody();
-        var model = string.IsNullOrWhiteSpace(options.Instructions) ? "qwen3-tts-flash" : "qwen3-tts-instruct-flash";
-        var flashModels = new string[] { "Bodega", "Sonrisa", "Alek", "Dolce", "Sohee", "Ono Anna", "Lenn", "Emilien", "Andre", "Radio Gol", "Jada", "Dylan", "Li", "Marcus", "Roy", "Peter", "Sunny", "Eric", "Rocky", "Kiki" };
-        result.Model = model;
-        if (flashModels.Contains(options.Voice))
-        {
-            result.Model = "qwen3-tts-flash";
-        }
+        result.Model = string.IsNullOrWhiteSpace(options.Model) ? "qwen-audio-3.1-tts-flash" : options.Model;
         var input = new RequestInput();
         input.Text = message;
         input.Voice = options.Voice;
-        input.LanguageType = options.LanguageType;
-        input.Instructions = options.Instructions;
-        input.OptimizeInstructions = options.OptimizeInstructions;
-        input.Stream = options.IsStream;
+        input.Format = "wav";
+        input.SampleRate = 24000;
+        input.Instruction = string.IsNullOrWhiteSpace(options.Instructions) ? null : options.Instructions;
         result.Input = input;
         return JsonConvert.SerializeObject(result);
     }

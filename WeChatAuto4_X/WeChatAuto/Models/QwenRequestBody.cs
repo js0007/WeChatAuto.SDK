@@ -20,19 +20,33 @@ public class QwenRequestBody
 public class RequestInput
 {
     /// <summary>
-    /// 待合成的文本内容，支持多语言混合输入。Qwen-TTS 最大支持 512 tokens 输入，其他模型最大支持 600 个字符。
+    /// 待合成的文本内容，支持多语言混合输入。
     /// </summary>
     [JsonProperty("text")]
     public string Text { get; set; }
+
+    /// <summary>
+    /// 音色，必须属于当前模型支持的音色列表，不能跨模型混用。
+    /// </summary>
     [JsonProperty("voice")]
     public string Voice { get; set; }
-    [JsonProperty("language_type")]
-    public string LanguageType { get; set; } = "Auto";
-    [JsonProperty("instructions")]
-    public string Instructions { get; set; } = null;
-    [JsonProperty("optimize_instructions")]
-    public bool OptimizeInstructions { get; set; } = false;
-    [JsonProperty("stream")]
-    public bool Stream { get; set; } = false;
 
+    /// <summary>
+    /// 音频编码格式。可选值：mp3、pcm、wav、opus。默认 wav。
+    /// </summary>
+    [JsonProperty("format")]
+    public string Format { get; set; } = "wav";
+
+    /// <summary>
+    /// 音频采样率（Hz）。24000 为常用值。
+    /// </summary>
+    [JsonProperty("sample_rate")]
+    public int SampleRate { get; set; } = 24000;
+
+    /// <summary>
+    /// 指令控制文本。Qwen-Audio-TTS 使用 instruction（单数），
+    /// 用于控制方言、情感、语速、音色等合成效果。为空时不发送。
+    /// </summary>
+    [JsonProperty("instruction", NullValueHandling = NullValueHandling.Ignore)]
+    public string Instruction { get; set; } = null;
 }
