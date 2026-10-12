@@ -22,7 +22,7 @@ namespace WeChatAuto.Utils
             {
                 try
                 {
-                    throw new Exception("测试");
+                    // throw new Exception("测试");
                     System.Windows.Clipboard.SetText(text);
                 }
                 catch (Exception e)
