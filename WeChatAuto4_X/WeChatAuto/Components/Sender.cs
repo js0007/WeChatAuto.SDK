@@ -1086,7 +1086,7 @@ namespace WeChatAuto.Components
 			textBox.Focus();
 			var point = textBox.BoundingRectangle.SafeRandomPoint();
 			Mouse.Position = point;
-			Mouse.Click();
+			// Mouse.Click();
 
 			_Client.MainWindow.SilencePasteSimple(files, textBox);
 			RandomWait.Wait(300, 1200);

@@ -121,7 +121,8 @@ namespace WeChatAuto.Extentions
         public static void SilencePasteSimple(this Window wxWindow, string[] filePath, TextBox edit)
         {
             // 1. 先点击输入框获取焦点
-            wxWindow.SilenceClickExt(edit);
+            // wxWindow.SilenceClickExt(edit);
+            edit.Focus();
             Wait.UntilInputIsProcessed();
             System.Threading.Thread.Sleep(200);
 
