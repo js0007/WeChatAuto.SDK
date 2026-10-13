@@ -267,7 +267,7 @@ namespace WeChatAuto.Components
         {
             var result = new List<int>();
             var desktop = automation.GetDesktop();
-            var wechatWins = desktop.FindAllChildren(u => u.ByClassName("mmui::MainWindow").And(u.ByControlType(ControlType.Window)).And(u.ByFrameworkType(FlaUI.Core.FrameworkType.Qt)));
+            var wechatWins = desktop.FindAllChildren(u => (u.ByClassName("mmui::MainWindow").Or(u.ByClassName(CURRENT_WEIXIN_CLASSNAME))).And(u.ByControlType(ControlType.Window)).And((u.ByFrameworkType(FlaUI.Core.FrameworkType.Qt).Or(u.ByFrameworkType(FlaUI.Core.FrameworkType.Win32)))));
             if (wechatWins.Count() == 0)
             {
                 _logger.Error("错误：检查到系统中未打开微信窗口 或者 微信窗口处于隐藏状态，请先打开微信，并且保持微信窗口处于显示状态！");
@@ -343,7 +343,7 @@ namespace WeChatAuto.Components
         private bool __CheckUITreeExist(int pid, UIA3Automation automation)
         {
             var desktop = automation.GetDesktop();
-            var winRetry = Retry.WhileNull(() => desktop.FindFirstChild(cf => cf.ByClassName("mmui::MainWindow").And(cf.ByControlType(ControlType.Window)).And(cf.ByProcessId(pid)).And(cf.ByFrameworkId("Qt"))), TimeSpan.FromSeconds(1), TimeSpan.FromMilliseconds(200));
+            var winRetry = Retry.WhileNull(() => desktop.FindFirstChild(cf => cf.ByClassName("mmui::MainWindow").Or(cf.ByClassName(CURRENT_WEIXIN_CLASSNAME)).And(cf.ByControlType(ControlType.Window)).And(cf.ByProcessId(pid))), TimeSpan.FromSeconds(1), TimeSpan.FromMilliseconds(200));
             if (winRetry.Success)
             {
                 var win = winRetry.Result;
