@@ -296,6 +296,7 @@ namespace WeChatAuto.Components
             var height = (int)(784 * ratio);
             Win32WindowHelper.ResizeWindow(currentWin.Properties.NativeWindowHandle, width, height);
             RandomWait.Wait(800, 1500);
+            var topSetep = (int)(48 * ratio);
             if (index < 3)
             {
                 var workArea = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea;
@@ -304,7 +305,7 @@ namespace WeChatAuto.Components
                 if (beforeWin == null)
                 {
                     point.X = workArea.Width - currentWin.BoundingRectangle.Width - 30;
-                    point.Y = (int)((workArea.Height - currentWin.BoundingRectangle.Height) / 2);
+                    point.Y = (int)((workArea.Height - currentWin.BoundingRectangle.Height) / 2) - topSetep;
                 }
                 else
                 {
