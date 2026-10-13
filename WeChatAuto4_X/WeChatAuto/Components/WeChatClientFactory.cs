@@ -151,8 +151,19 @@ namespace WeChatAuto.Components
             {
                 MainActionThreadInvoker.Run(automation =>
                 {
-                    _GetAllWechatProcessId(automation)
-                    .Bind(processIds => _InitWechatFramework(automation, processIds));
+                    if (WeAutomation.Config.IsOptimizeMainWindowLayout)
+                    {
+                        //优化主窗口显示位置
+                        _GetAllWechatProcessId(automation)
+                        .Bind(processIds => _InitWechatFramework(automation, processIds));
+                    }
+                    else
+                    {
+                        //不优化主窗口显示位置
+                        _GetTaskBarRoot(automation)
+                        .Bind(taskBar => _GetNotifyIcons(taskBar))
+                        .Bind(buttons => _ProcessNotifyButtons(automation, buttons));
+                    }
                 }).ConfigureAwait(false).GetAwaiter().GetResult();
             }
             catch (WechatNotOpenedException)
@@ -176,6 +187,81 @@ namespace WeChatAuto.Components
                 throw new Exception($"获取微信窗口失败: {ex.Message}");
             }
         }
+
+
+        /// <summary>
+        /// 获取任务栏根元素
+        /// </summary>
+        /// <param name="automation"></param>
+        /// <returns></returns>
+        private Maybe<AutomationElement> _GetTaskBarRoot(UIA3Automation automation)
+        {
+            var result = Retry.WhileNull(() => automation.GetDesktop().FindFirstChild(cf =>
+                          cf.ByName(WeChatConstant.WECHAT_SYSTEM_TASKBAR).And(cf.ByClassName("Shell_TrayWnd"))),
+                          timeout: TimeSpan.FromSeconds(5),
+                          interval: TimeSpan.FromMilliseconds(200)).Result;
+            if (result == null)
+            {
+                _logger.Error($"{nameof(WeChatClientFactory)} - {nameof(_GetTaskBarRoot)}:本系统的UI Tree可能不被支持，因为找不到任务栏");
+            }
+            return result.ToMaybe();
+        }
+
+        private Maybe<AutomationElement[]> _GetNotifyIcons(AutomationElement taskBar) => ShellNotifyHelper.GetNotifyIcons(taskBar);
+
+        private Maybe<bool> _ProcessNotifyButtons(UIA3Automation automation, AutomationElement[] buttons)
+        {
+            try
+            {
+                var index = 0;
+                foreach (var wxNotifyButton in buttons)
+                {
+                    index++;
+                    _InitWechatAutomationFramework(automation, wxNotifyButton, index);
+                }
+                this._IsInit = true;
+                _logger.Trace($"当前微信客户端数量: 共{_wxClientList.Count}个");
+                return _IsInit.ToMaybe();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"获取UI Tree时出错，错误原因:{ex.ToString()}");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// 初始化微信自动化整个框架
+        /// </summary>
+        /// <param name="automation"></param>
+        /// <param name="wxNotifyButton"></param>
+        /// <param name="index">任务栏索引</param>
+        private void _InitWechatAutomationFramework(UIA3Automation automation, AutomationElement wxNotifyButton, int index)
+        {
+            DrawHightlightHelper.DrawHighlightExt(wxNotifyButton);
+            RandomWait.Wait(100, 600);
+            wxNotifyButton.AsButton().Click();
+            RandomWait.Wait(100, 800);
+            var topWindowProcessId = _GetTopWindowProcessIdResult();  //当前微信的processid
+            //关闭输入法,以方便Keyboard.Type函数正确
+            WindowsInputHelper.ForceEnglishInput((uint)topWindowProcessId.Result);
+            RandomWait.Wait(100, 800);
+            (OwerInfo info, Window window) result = __GetCurrentWxNickName(topWindowProcessId.Result, automation);
+            result.window.Focus();
+            var client = new WeChatClient(topWindowProcessId.Result, _serviceProvider, this, result.window, MainActionThreadInvoker, result.info, index, monitorEvent);
+            _wxClientList.Add(result.info.NickName, client);
+        }
+
+
+        /// <summary>
+        /// 获取顶部窗口进程ID
+        /// </summary>
+        /// <returns></returns>
+        private RetryResult<int> _GetTopWindowProcessIdResult()
+        => Retry.WhileException(() => WinApi.GetTopWindowProcessIdByClassName(CURRENT_WEIXIN_CLASSNAME),
+            timeout: TimeSpan.FromSeconds(5),
+            interval: TimeSpan.FromMilliseconds(200));
+
 
         private Maybe<List<int>> _GetAllWechatProcessId(UIA3Automation automation)
         {

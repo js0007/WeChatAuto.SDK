@@ -19,6 +19,11 @@ namespace WeAutoCommon.Configs
         /// 在微信的UI Tree未被腾迅公开的情况下是否强开UI Tree,默认为False
         /// </summary>
         public bool IsForceOpenUITree { get; set; } = false;
+
+        /// <summary>
+        /// 是否启动的时候自动优化主窗口布局,默认是True,即优化，可以设置为不优化。
+        /// </summary>
+        public bool IsOptimizeMainWindowLayout { get; set; } = true;
         /// <summary>
         /// 下载文件/图片默认保存路径
         /// </summary>
