@@ -278,6 +278,8 @@ namespace WeChatAuto.Components
                 result.Add(win.Properties.ProcessId);
             }
 
+            result = result.OrderBy(u=>u).ToList();
+
             return result.ToMaybe();
         }
 
@@ -289,6 +291,7 @@ namespace WeChatAuto.Components
                 var index = 0;
                 var wechatList = new List<string>();
                 Window beforeWin = null;
+
                 __ForceOpenUITree__(processList, automation);
                 foreach (var process in processList)
                 {
