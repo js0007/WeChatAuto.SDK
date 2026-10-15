@@ -243,8 +243,7 @@ namespace WeChatAuto.Components
             wxNotifyButton.AsButton().Click();
             RandomWait.Wait(100, 800);
             var topWindowProcessId = _GetTopWindowProcessIdResult();  //当前微信的processid
-            //关闭输入法,以方便Keyboard.Type函数正确
-            WindowsInputHelper.ForceEnglishInput((uint)topWindowProcessId.Result);
+            //WindowsInputHelper.ForceEnglishInput((uint)topWindowProcessId.Result);
             RandomWait.Wait(100, 800);
             (OwerInfo info, Window window) result = __GetCurrentWxNickName(topWindowProcessId.Result, automation);
             result.window.Focus();

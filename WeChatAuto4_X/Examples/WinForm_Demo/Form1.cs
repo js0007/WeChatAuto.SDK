@@ -17,8 +17,8 @@ namespace WinForm_Demo
     {
         private string wxClientName = "Alex";   //这里修改成自己的，如果想控制多个微信，这里不需要写死
         private string wxGroupName = "人工智能自动化技术讨论群";  //这里修改成自己的
-        private WeChatClient client;   //微信客户端对象,如果想控制多个微信，这里不需要写死，可以保存一个数组或者字典.
-        private WeChatClientFactory factory;   //通过这里随时可以获取到微信客户端对象
+        private WeChatClient? client;   //微信客户端对象,如果想控制多个微信，这里不需要写死，可以保存一个数组或者字典.
+        private WeChatClientFactory? factory;   //通过这里随时可以获取到微信客户端对象
         public Form1()
         {
             InitializeComponent();
@@ -35,7 +35,7 @@ namespace WinForm_Demo
                 });
                 factory = _serviceProvider.GetRequiredService<WeChatClientFactory>();
                 client = factory.GetWeChatClient(wxClientName);
-            }catch(Exception ex)
+            }catch(Exception)
             {
                 MessageBox.Show("""
                     初始化微信客户端失败，请按下面步骤检查:
@@ -49,7 +49,7 @@ namespace WinForm_Demo
         private async void button1_Click(object sender, EventArgs e)  //这里设置为async
         {
             //这里设定你自己的群
-            var list = await client.GetChatGroupMemberList(wxGroupName);
+            var list = await client!.GetChatGroupMemberList(wxGroupName);
             if (list != null && list.Count > 0)
             {
                 foreach (var item in list)
