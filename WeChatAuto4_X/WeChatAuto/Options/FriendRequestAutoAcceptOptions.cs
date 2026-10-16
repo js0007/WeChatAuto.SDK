@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -28,16 +29,24 @@ namespace WeChatAuto.Options
         /// <summary>取某个关键词对应的有效后缀：优先关键词规则，回退到全局 Suffix。</summary>
         public string GetSuffix(string keyword)
         {
-            if (KeywordRules != null && !string.IsNullOrWhiteSpace(keyword) && KeywordRules.TryGetValue(keyword, out var rule) && !string.IsNullOrWhiteSpace(rule?.Suffix))
-                return rule.Suffix;
+            if (KeywordRules != null && !string.IsNullOrWhiteSpace(keyword))
+            {
+                var rule = KeywordRules.FirstOrDefault(kv => string.Equals(kv.Key, keyword, StringComparison.OrdinalIgnoreCase)).Value;
+                if (rule != null && !string.IsNullOrWhiteSpace(rule.Suffix))
+                    return rule.Suffix;
+            }
             return Suffix;
         }
 
         /// <summary>取某个关键词对应的有效标签：优先关键词规则，回退到全局 Label。</summary>
         public string GetLabel(string keyword)
         {
-            if (KeywordRules != null && !string.IsNullOrWhiteSpace(keyword) && KeywordRules.TryGetValue(keyword, out var rule) && !string.IsNullOrWhiteSpace(rule?.Label))
-                return rule.Label;
+            if (KeywordRules != null && !string.IsNullOrWhiteSpace(keyword))
+            {
+                var rule = KeywordRules.FirstOrDefault(kv => string.Equals(kv.Key, keyword, StringComparison.OrdinalIgnoreCase)).Value;
+                if (rule != null && !string.IsNullOrWhiteSpace(rule.Label))
+                    return rule.Label;
+            }
             return Label;
         }
 

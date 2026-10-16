@@ -849,10 +849,13 @@ namespace WeChatAuto.Components
 
 		private static (bool flowControl, bool value, string keyword) __CheckKeyword__(FriendRequestAutoAcceptOptions options, AutomationElement root)
 		{
-			var kw = options.KeyWord;
-			kw = kw.Where(item => !string.IsNullOrEmpty(item)).Select(item => item.Trim()).ToList();
+			var kw = new List<string>();
+			if (options.KeyWord != null)
+				kw.AddRange(options.KeyWord.Where(item => !string.IsNullOrWhiteSpace(item)).Select(item => item.Trim()));
+			if (options.KeywordRules != null)
+				kw.AddRange(options.KeywordRules.Keys.Where(item => !string.IsNullOrWhiteSpace(item)).Select(item => item.Trim()));
 			var currentKeyword = "";
-			if (kw.Count() > 0)  //如果设定关键词，检查是否包含关键词
+			if (kw.Count > 0)  //如果设定关键词，检查是否包含关键词
 			{
 				var textGroup = root.FindFirstDescendant(cf => cf.ByControlType(ControlType.Group).And(cf.ByAutomationId("qt_scrollarea_viewport").And(cf.ByClassName("QWidget"))));
 				if (textGroup == null)
