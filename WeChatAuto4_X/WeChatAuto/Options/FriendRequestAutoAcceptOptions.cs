@@ -16,8 +16,30 @@ namespace WeChatAuto.Options
         /// - 通过的好友昵称列表
         /// - WeChatClient对象，可以通过此对象发送消息等
         /// - 依赖注入 - 调用者可以通过依赖注入容器取出自己注入的对象，执行自己的业务逻辑;
-        /// </summary>    
+        /// </summary>
         public Func<List<NewFriendBackItem>, WeChatClient, IServiceProvider, Task> PassedCallBack { get; set; }
+
+        /// <summary>
+        /// 每个关键词对应的后缀/标签规则，key 为关键词（须与 <see cref="FriendRequestAutoAcceptOptionsPrefix.KeyWord"/> 中的项一致）。
+        /// 命中关键词时，若此处有对应规则，则优先使用规则内的 Suffix/Label；否则回退到全局 <see cref="FriendRequestAutoAcceptOptionsPrefix.Suffix"/>/<see cref="FriendRequestAutoAcceptOptionsPrefix.Label"/>。
+        /// </summary>
+        public Dictionary<string, FriendKeywordRule> KeywordRules { get; set; }
+
+        /// <summary>取某个关键词对应的有效后缀：优先关键词规则，回退到全局 Suffix。</summary>
+        public string GetSuffix(string keyword)
+        {
+            if (KeywordRules != null && !string.IsNullOrWhiteSpace(keyword) && KeywordRules.TryGetValue(keyword, out var rule) && !string.IsNullOrWhiteSpace(rule?.Suffix))
+                return rule.Suffix;
+            return Suffix;
+        }
+
+        /// <summary>取某个关键词对应的有效标签：优先关键词规则，回退到全局 Label。</summary>
+        public string GetLabel(string keyword)
+        {
+            if (KeywordRules != null && !string.IsNullOrWhiteSpace(keyword) && KeywordRules.TryGetValue(keyword, out var rule) && !string.IsNullOrWhiteSpace(rule?.Label))
+                return rule.Label;
+            return Label;
+        }
 
         public static FriendRequestAutoAcceptOptions CreateFriendRequestAutoAcceptOptions(FriendRequestAutoAcceptOptionsPrefix oriObject)
         {
@@ -28,6 +50,18 @@ namespace WeChatAuto.Options
             result.Label = oriObject.Label;
             return result;
         }
+    }
+
+    /// <summary>
+    /// 单个关键词的自动通过规则：命中该关键词时应用的后缀与标签（可为空，为空表示不覆盖全局配置）。
+    /// </summary>
+    public class FriendKeywordRule
+    {
+        /// <summary>备注后缀，例如 Test，则备注变为 昵称_Test。</summary>
+        public string Suffix { get; set; }
+
+        /// <summary>微信标签。</summary>
+        public string Label { get; set; }
     }
 
     public class FriendRequestAutoAcceptOptionsPrefix

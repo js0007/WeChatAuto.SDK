@@ -824,10 +824,10 @@ namespace WeChatAuto.Components
 						if (passedFriendRoot == null)
 							return false;
 						var memoItem = passedFriendRoot.FindFirstDescendant(cf => cf.ByControlType(ControlType.Edit).And(cf.ByName("修改备注").And(cf.ByClassName("mmui::XLineEdit"))));
-						__ProcessMemoItem(win, memoItem, token, options);
+						__ProcessMemoItem(win, memoItem, token, options.GetSuffix(keyword));
 						RandomWait.Wait(800, 1200);
 						var lableItem = passedFriendRoot.FindFirstDescendant(cf => cf.ByControlType(ControlType.Button).And(cf.ByName("修改标签")).And(cf.ByAutomationId("button")));
-						__ProcessLabelItem(lableItem, token, options, automation, win);
+						__ProcessLabelItem(lableItem, token, automation, win, options.GetLabel(keyword));
 						RandomWait.Wait(1200, 3000);
 						__ProcessOk(passedFriendRoot, win, token, options, resultList, keyword);
 						//其实上面已经关闭了win,但是为了保险，再检查一遍.
@@ -1081,9 +1081,9 @@ namespace WeChatAuto.Components
 			}
 		}
 
-		private void __ProcessLabelItem(AutomationElement lableItem, CancellationToken token, FriendRequestAutoAcceptOptions options, UIA3Automation automation, FlaUI.Core.AutomationElements.Window win)
+		private void __ProcessLabelItem(AutomationElement lableItem, CancellationToken token, UIA3Automation automation, FlaUI.Core.AutomationElements.Window win, string label)
 		{
-			if (string.IsNullOrWhiteSpace(options.Label))
+			if (string.IsNullOrWhiteSpace(label))
 				return;
 			token.ThrowIfCancellationRequested();
 			var point = lableItem.BoundingRectangle.SafeRandomPoint();
@@ -1098,10 +1098,10 @@ namespace WeChatAuto.Components
 				//标签名可能已经存在，或者不存在，需要新建.
 				var list = window.FindFirstDescendant(cf => cf.ByControlType(ControlType.List).And(cf.ByClassName("mmui::XTableView")).And(cf.ByName("标签"))).AsListBox();
 				var items = list.FindAllChildren(cf => cf.ByControlType(ControlType.CheckBox));
-				if (items.Select(x => x.Name).Where(x => x.Equals(options.Label)).Count() > 0)
+				if (items.Select(x => x.Name).Where(x => x.Equals(label)).Count() > 0)
 				{
 					//已经有标签
-					var selectItem = items.FirstOrDefault(x => x.Name.Equals(options.Label));
+					var selectItem = items.FirstOrDefault(x => x.Name.Equals(label));
 					if (selectItem != null)
 					{
 						var point2 = selectItem.BoundingRectangle.SafeRandomPoint();
@@ -1119,7 +1119,7 @@ namespace WeChatAuto.Components
 						searchEdit.Focus();
 						var point2 = searchEdit.BoundingRectangle.SafeRandomPoint();
 						Mouse.Click(point2);
-						ClipboardHelper.SetText(options.Label);
+						ClipboardHelper.SetText(label);
 						Keyboard.TypeSimultaneously(VirtualKeyShort.CONTROL, VirtualKeyShort.KEY_V);
 						RandomWait.Wait(300, 900);
 						list = window.FindFirstDescendant(cf => cf.ByControlType(ControlType.List).And(cf.ByClassName("mmui::XTableView")).And(cf.ByName("标签"))).AsListBox();
@@ -1156,7 +1156,7 @@ namespace WeChatAuto.Components
 			}
 		}
 
-		private void __ProcessMemoItem(FlaUI.Core.AutomationElements.Window window, AutomationElement memoItem, CancellationToken token, FriendRequestAutoAcceptOptions options)
+		private void __ProcessMemoItem(FlaUI.Core.AutomationElements.Window window, AutomationElement memoItem, CancellationToken token, string suffix)
 		{
 			token.ThrowIfCancellationRequested();
 			//首先获取到旧备注名
@@ -1175,11 +1175,11 @@ namespace WeChatAuto.Components
 			{
 				oriName = _ProcessCacheSameName(cacheFile, oriName);
 			}
-			if (!string.IsNullOrWhiteSpace(options.Suffix))
+			if (!string.IsNullOrWhiteSpace(suffix))
 			{
-				if (!oriName.EndsWith($"_{options.Suffix}"))
+				if (!oriName.EndsWith($"_{suffix}"))
 				{
-					oriName = oriName + $"_{options.Suffix}";
+					oriName = oriName + $"_{suffix}";
 				}
 			}
 			window.Focus();
