@@ -55,6 +55,7 @@ namespace WeChatAuto.Components
         #region 好友监听字段
         private int newFriendMonitorStarted = 0;   //消息监听启用标识
         private CancellationTokenSource cts = new CancellationTokenSource();
+        private CancellationTokenSource fetchCts;   //本次启动的轮询取消令牌，Stop 时取消以停止轮询
         private Task fetchNumberTask;
         private Task automationTask;
         private Action<string> UIInvoker;
@@ -176,6 +177,33 @@ namespace WeChatAuto.Components
         }
 
         /// <summary>
+        /// 停止好友申请监听：取消本次轮询循环并复位启动标记，允许再次调用
+        /// <see cref="AddFriendRequestAutoAcceptListener(FriendRequestAutoAcceptOptions, CancellationToken, Action{string})"/>
+        /// 以新配置重新启动。
+        /// </summary>
+        /// <returns></returns>
+        public async Task StopNewFriendListener()
+        {
+            Volatile.Write(ref this._IsContinue, 0);
+            Interlocked.Exchange(ref this.newFriendMonitorStarted, 0);
+
+            var cts = Interlocked.Exchange(ref this.fetchCts, null);
+            if (cts != null)
+            {
+                try { cts.Cancel(); } catch (ObjectDisposedException) { }
+                cts.Dispose();
+            }
+
+            var task = this.fetchNumberTask;
+            if (task != null && !task.IsCompleted)
+            {
+                try { await task.WaitAsync(TimeSpan.FromSeconds(3)); } catch { }
+            }
+            this.fetchNumberTask = null;
+            await Task.CompletedTask;
+        }
+
+        /// <summary>
         /// <para>自动通过加好友申请监听</para>
         /// <para>实现的功能</para>
         /// <para>1. 通过好友申请</para>
@@ -203,21 +231,22 @@ namespace WeChatAuto.Components
                 return;
             }
             this.UIInvoker = UIInvoker;
-            CancellationToken token;
-            if (userToken != default)
-            {
-                using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cts.Token, userToken);
-                token = linkedCts.Token;
-            }
-            else
-            {
-                token = cts.Token;
-            }
+            // 重新启动后默认处于运行态（Stop 会将其置为 0）。
+            Volatile.Write(ref this._IsContinue, 1);
+            // 每次启动新建一个停止令牌，Stop 时取消即可让本次轮询循环退出，从而实现「取消后按新配置重启」。
+            var fetchCts = new CancellationTokenSource();
+            this.fetchCts = fetchCts;
             try
             {
                 var startTcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
                 fetchNumberTask = Task.Run(async () =>
                 {
+                    // 组合取消源：监控器释放(cts)、调用方令牌(userToken)、本次启动停止令牌(fetchCts)任一取消都会停止轮询。
+                    // 链接源放在闭包内 using，保证其存活到轮询循环结束，避免方法返回后即被释放导致取消信号失效。
+                    using CancellationTokenSource linkedCts = userToken != default
+                        ? CancellationTokenSource.CreateLinkedTokenSource(cts.Token, userToken, fetchCts.Token)
+                        : CancellationTokenSource.CreateLinkedTokenSource(cts.Token, fetchCts.Token);
+                    CancellationToken token = linkedCts.Token;
                     using UIThreadInvoker newFriendInvoker = new UIThreadInvoker("new-friends-fetch");
                     startTcs.TrySetResult(true);
                     using PeriodicTimer timer = new PeriodicTimer(TimeSpan.FromSeconds(WeAutomation.Config.MonitorNewFriendRequestInterval));  //20秒循环一次.
@@ -246,7 +275,7 @@ namespace WeChatAuto.Components
                             _Logger.Error($"监听消息发生错误：{ex.ToString()}");
                         }
                     }
-                }, token);
+                });
                 await startTcs.Task;
             }
             catch (OperationCanceledException)
@@ -326,6 +355,7 @@ namespace WeChatAuto.Components
             if (disposing)
             {
                 cts?.Cancel();
+                try { fetchCts?.Cancel(); } catch (ObjectDisposedException) { }
                 channel.Writer.TryComplete();
                 if (fetchNumberTask != null)
                 {
@@ -353,6 +383,7 @@ namespace WeChatAuto.Components
                 }
 
                 cts?.Dispose();
+                try { fetchCts?.Dispose(); } catch (ObjectDisposedException) { }
             }
         }
     }
