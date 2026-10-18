@@ -480,6 +480,10 @@ public partial class QwenClientService
         input.Format = "wav";
         input.SampleRate = 24000;
         input.Instruction = string.IsNullOrWhiteSpace(options.Instructions) ? null : options.Instructions;
+        input.Volume = options.Volume;
+        input.Rate = options.Rate;
+        input.Pitch = options.Pitch;
+        input.Seed = options.Seed;
         result.Input = input;
         return JsonConvert.SerializeObject(result);
     }

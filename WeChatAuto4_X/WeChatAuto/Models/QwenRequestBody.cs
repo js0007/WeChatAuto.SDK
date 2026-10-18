@@ -49,4 +49,28 @@ public class RequestInput
     /// </summary>
     [JsonProperty("instruction", NullValueHandling = NullValueHandling.Ignore)]
     public string Instruction { get; set; } = null;
+
+    /// <summary>
+    /// 音量。可选，默认 50，范围 [0, 100]。为空时不发送。
+    /// </summary>
+    [JsonProperty("volume", NullValueHandling = NullValueHandling.Ignore)]
+    public int? Volume { get; set; }
+
+    /// <summary>
+    /// 语速。可选，默认 1.0，范围 [0.5, 2.0]。为空时不发送。
+    /// </summary>
+    [JsonProperty("rate", NullValueHandling = NullValueHandling.Ignore)]
+    public float? Rate { get; set; }
+
+    /// <summary>
+    /// 音调。可选，默认 1.0，范围 [0.5, 2.0]。为空时不发送。
+    /// </summary>
+    [JsonProperty("pitch", NullValueHandling = NullValueHandling.Ignore)]
+    public float? Pitch { get; set; }
+
+    /// <summary>
+    /// 随机种子。可选，范围 [0, 65535]。为空时不发送。
+    /// </summary>
+    [JsonProperty("seed", NullValueHandling = NullValueHandling.Ignore)]
+    public int? Seed { get; set; }
 }
