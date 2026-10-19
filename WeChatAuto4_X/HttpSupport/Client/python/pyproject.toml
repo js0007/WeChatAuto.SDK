@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wechatauto"
+version = "0.1.0"
+description = "Python HTTP client for the WECHATAUTO.SDK WeChat automation API (auto-generated from swagger.json)."
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "requests",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+]
+
+[tool.setuptools.packages.find]
+include = ["wechatauto*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
