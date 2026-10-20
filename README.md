@@ -154,6 +154,9 @@ Wechatauto.SDK分为社区版和VIP版，社区版是完全开源的，VIP版为
 
 本项目采用 MIT 许可证。详见 [LICENSE](LICENSE) 文件。
 
+## 🔆 Faq
+
+
 ## 🤝 贡献
 
 如果发现BUG或者有功能增强需求，欢迎提交 Issue 和 Pull Request！
