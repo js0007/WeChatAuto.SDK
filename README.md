@@ -23,7 +23,7 @@
 
 
 > [!IMPORTANT]
-> 支持的微信版本为 >= 4.1.9.30 ...... 最新版微信，推荐使用最新版本的微信,WeChatAuto.SDK分两个版本： 社区版 与 VIP版，VIP版与社区版底层核心代码都一样，业务层多了一些高级功能,
+> 支持的微信版本为 >= 4.1.9.30 and <= 最新版微信，推荐使用最新版本的微信,WeChatAuto.SDK分两个版本： 社区版 与 VIP版，VIP版与社区版底层核心代码都一样，业务层多了一些高级功能,
 > 具体请参考 [WECHATAUTO.SDK能力表](./docs/ability.md).
 
 <div align="center">
