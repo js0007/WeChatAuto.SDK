@@ -15,7 +15,7 @@
 [![Rust](https://img.shields.io/badge/Rust-blue?logo=rust&logoColor=white)](https://www.rust-lang.org/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-**[Website](https://scottfly189.github.io/WeChatAuto.SDK/) · [Guides](https://scottfly189.github.io/WeChatAuto.SDK/main.html#/README) · [FAQ](https://rea.tools/guides/)**
+**[Website](https://scottfly189.github.io/WeChatAuto.SDK/) · [Guides](https://scottfly189.github.io/WeChatAuto.SDK/main.html#/README) · [Faq](https://rea.tools/guides/)**
 
 [为什么选择我们?](./docs/why.md)
 
@@ -33,7 +33,7 @@
 
 <br/>
 
-<img src="Images/ui.png" alt="WECHATAUTO.SDK 吸附框" width="1200" />
+<img src="Images/second.png" alt="WECHATAUTO.SDK 吸附框" width="1200" />
 <br/>
 </div>
 
