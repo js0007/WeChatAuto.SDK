@@ -24,6 +24,8 @@
 2. 把```models```文件夹拷贝到你的项目运行目录下，注意：如果你是使用vs运行的，请把```models```文件夹拷贝到```bin\Debug\netx.x-windows```目录下;
 3. 再运行你的项目，就不会报错了;
 
+## ❓ 请WechatAuto.sdk还有计划支持3.1.9.12的旧版本吗？
+回答：仓库对于3.1.9.xx版本支持已处于归档状态，请使用最新的微信版本
 
 ## ❓ 请问WeChatAuto.SDK支持最新版的微信吗？
 回答：支持最新版本的微信，并且会随着微信的版本更新而更新;
@@ -48,3 +50,11 @@ WeAutomation.Initialize(builder.Services, options =>
 - 开发环境为：bin\Debug\net9.0-windows\ffmpeg\ffmpeg.exe
 - 运行环境为: 你的执行文件所在目录\ffmpeg\ffmpeg.exe
 
+## ❓ SDK安装在服务器运行，并且用远程桌面连接服务器，远程桌面最小化的时候自动化异常？
+回答: 请在"发起远程桌面的客户端电脑"上,而不是服务器上执行下面脚本:
+
+1. [下载脚本](https://github.com/scottfly189/WeChatAuto.SDK/blob/master/Tools/EnableRdpMinimize.bat)
+2. 下载脚本后按下面的步骤执行:
+   - 执行作业之前，注销机器人（服务器）计算机上的所有用户。
+   - 执行作业之后，重新打开远程桌面连接。
+3. 现在，即使 RDP 窗口已最小化，您也可以自动化用户界面操作。

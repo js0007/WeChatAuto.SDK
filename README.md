@@ -158,13 +158,51 @@ Wechatauto.SDK分为社区版和VIP版，社区版是完全开源的，VIP版为
 ## 🔆 Faq
 <details>
 <summary>❓ 运行WechatAuto.sdk的示例自动化不了微信客户端？</summary>
-
 回答：请按下面的步骤检查：
 - 确保待自动化的微信的窗口是打开状态;
 - 检查windows版本，仅支持win10+;
 - 如果是最新版本的微信4.1.xx,请检查是否有UI Tree,如果没有UI Tree,请参考 [我的最新版微信没有UI Tree,这个怎么办？](https://github.com/scottfly189/WeChatAuto.SDK/issues/3)
   > 查看UI Tree的方法：下载并安装 UI Tree查看工具，如: inspect.exe或者FlaUInspect等，[下载链接](https://github.com/scottfly189/WeChatAuto.SDK/tree/master/Tools)
 - 如果经过上面的步骤还不行，请联系作者，并将你的代码发给他看;
+</details>
+
+<details>
+<summary>❓ WechatAuto.sdk可以直接运行吗？</summary>
+回答：SDK支持两种开发模式
+- 内嵌方式，即以DLL或者Nuget包引入的方式，这个不能直接运行，因为是一个SDK开发包，需要整合在你的项目中使用，当然你也可以直接运行[示例代码](https://github.com/scottfly189/WeChatAuto.SDK/tree/master/WeChatAuto4_X/Examples/WinForm_Demo)或者单元测试;
+- Http WebAPI的方式，这个可以直接运行，请[下载](https://github.com/scottfly189/WeChatAuto.SDK/releases/tag/2.0.7)后直接运行;
+</details>
+
+<details>
+<summary>❓ WechatAuto.sdk还有计划支持3.1.9.12的旧版本吗？</summary>
+回答：仓库对于3.1.9.xx版本支持已处于归档状态，请使用最新的微信版本
+</details>
+
+<details>
+<summary>❓ 请问WeChatAuto.SDK支持最新版的微信吗?</summary>
+回答：支持最新版本的微信，并且会随着微信的版本更新而更新;
+</details>
+
+<details>
+<summary>❓ WeChatAuto.SDK开启录屏不成功？</summary>
+问题：我使用了下面的代码开启了录屏后，运行被卡在在那里不往下运行了
+
+```
+WeAutomation.Initialize(builder.Services, options =>
+{
+    //开启调试模式，调试模式会在获得焦点时边框高亮，生产环境建议关闭
+    options.DebugMode = true;
+    //开启录制视频功能，录制的视频会保存在项目的运行目录下的Videos文件夹中
+    options.EnableRecordVideo = true;  
+});
+```
+
+回答：WechatAuto.SDK使用ffmpeg进行录制，如果系统没有安装ffmpeg，第一次运行会自动从官网下载ffmpeg.exe,此文件比较大，并且需要梯子，如果没有开梯子或者梯子质量不好，会产生上述情况，建议按下面的步骤解决：
+
+1. 开VPN,等第一次下载完;
+2. 手动上传ffmpeg.exe文件至项目运行的ffmepg目录下:
+- 开发环境为：bin\Debug\net9.0-windows\ffmpeg\ffmpeg.exe
+- 运行环境为: 你的执行文件所在目录\ffmpeg\ffmpeg.exe
 </details>
 
 ## 🤝 贡献
