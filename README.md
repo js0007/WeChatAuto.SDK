@@ -29,7 +29,7 @@
 <div align="center">
 <br />
 
-<img src="Images/main_2.png" alt="WECHATAUTO.SDK主界面" width="1200" />
+<img src="Images/main_1.png" alt="WECHATAUTO.SDK主界面" width="1200" />
 
 <br/>
 
