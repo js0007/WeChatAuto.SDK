@@ -56,6 +56,11 @@ namespace WeChatAuto.Utils
         private static readonly byte[] GatePrefix = new byte[] { 0x48, 0x85, 0xC9, 0x0F, 0x84 };
         private const uint GateDistanceLimit = 0x20000;
 
+        // 强开后观察门控字节是否被微信回写（纯诊断，见 StartGateWatch）。
+        private static readonly bool EnableGateWatch = true; // 诊断完成后可改为 false 关闭观察。
+        private const int GateWatchIntervalMs = 500;         // 采样间隔。
+        private const int GateWatchDurationMs = 10000;       // 观察总时长，到点自动结束。
+
         // 扫描结果优先。此表仅在扫描器无法给出唯一可佐证候选时，用于特定版本的兜底。
         private static readonly Dictionary<string, uint> QAccessibleActiveRvaByVersion = new Dictionary<string, uint>
         {
@@ -782,12 +787,75 @@ namespace WeChatAuto.Utils
                 result.ReadbackValue = readback;
                 result.State = "ACTIVATION_WRITTEN";
                 _logger.Info(result.State);
+                // 写入门控字节成功（0 -> 1），观察其是否很快被微信复原为 0。
+                StartGateWatch(target, readback);
                 return result;
             }
             finally
             {
                 CloseHandle(handle);
             }
+        }
+
+        /// <summary>
+        /// 强开后观察门控字节是否被微信回写（纯诊断）。
+        /// <para>
+        /// 在后台线程上以只读句柄定时读回 <c>Weixin.dll + Rva</c> 处的门控字节，
+        /// 仅在字节值发生跳变时输出日志（含跳变时刻），观察满 <see cref="GateWatchDurationMs"/> 后自动结束。
+        /// 全程只读、不阻塞调用方、时长有界，因此对后续 UI 自动化的读写/消息链路没有性能影响。
+        /// </para>
+        /// </summary>
+        private void StartGateWatch(Target target, byte initialValue)
+        {
+            if (!EnableGateWatch)
+            {
+                return;
+            }
+
+            ThreadPool.QueueUserWorkItem(_ =>
+            {
+                IntPtr handle = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION | PROCESS_VM_READ, false, (uint)target.Pid);
+                if (handle == IntPtr.Zero)
+                {
+                    _logger.Warn($"[UI Tree 观察] pid={target.Pid} 无法以只读权限打开进程，跳过观察");
+                    return;
+                }
+                try
+                {
+                    long address = target.DllBase + target.Rva;
+                    byte last = initialValue;
+                    int samples = 1;
+                    var watch = Stopwatch.StartNew();
+                    _logger.Info($"[UI Tree 观察] pid={target.Pid} 开始：门控字节 Weixin.dll+0x{target.Rva:x} 初始值={initialValue}，每 {GateWatchIntervalMs}ms 采样，持续 {GateWatchDurationMs}ms");
+
+                    while (watch.ElapsedMilliseconds < GateWatchDurationMs)
+                    {
+                        Thread.Sleep(GateWatchIntervalMs);
+                        byte value;
+                        if (!ReadProcessByte(handle, address, out value))
+                        {
+                            _logger.Info($"[UI Tree 观察] pid={target.Pid} @ {watch.ElapsedMilliseconds}ms 读取失败（进程可能已退出），停止观察");
+                            break;
+                        }
+                        samples++;
+                        if (value != last)
+                        {
+                            _logger.Info($"[UI Tree 观察] pid={target.Pid} @ {watch.ElapsedMilliseconds}ms 门控字节变化: {last} -> {value}");
+                            last = value;
+                        }
+                    }
+
+                    _logger.Info($"[UI Tree 观察] pid={target.Pid} 结束：共采样 {samples} 次，最终值={last}");
+                }
+                catch (Exception ex)
+                {
+                    _logger.Warn($"[UI Tree 观察] pid={target.Pid} 异常: {ex.Message}");
+                }
+                finally
+                {
+                    CloseHandle(handle);
+                }
+            });
         }
 
         #endregion
