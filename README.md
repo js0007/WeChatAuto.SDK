@@ -32,15 +32,12 @@
 <img src="Images/main.png" alt="WECHATAUTO.SDK主界面" width="1200" />
 
 <br/>
-<br/>
 
 <img src="Images/log.png" alt="WECHATAUTO.SDK启动日志" width="1200" />
 
 <br/>
-<br/>
 
 <img src="Images/ui.png" alt="WECHATAUTO.SDK 吸附框" width="1200" />
-<br/>
 <br/>
 </div>
 
