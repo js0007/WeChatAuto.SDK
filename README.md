@@ -4,7 +4,7 @@
 
 #### 一款为Harness/SI提供操作微信核心能力的SDK，不注入(内存Hook),不数据库破解，不越权访问微信数据,通过 UI Automation 操作微信,不写一行代码获取微信消息
 
-<font color="red">让你的微信 Agent/Wechat Bot 快速开发、快速上线、并安全发布到用户端</font>
+让你的微信 Agent/Wechat Bot 快速开发、快速上线、并安全发布到用户端
 
 [![.NET](https://img.shields.io/badge/.NET-6.0%2B-blue)](https://dotnet.microsoft.com/)
 [![Python](https://img.shields.io/badge/Python-3.13%2B-blue?logo=python&logoColor=white)](https://www.python.org/)
@@ -29,11 +29,7 @@
 <div align="center">
 <br />
 
-<img src="Images/main.png" alt="WECHATAUTO.SDK主界面" width="1200" />
-
-<br/>
-
-<img src="Images/log.png" alt="WECHATAUTO.SDK启动日志" width="1200" />
+<img src="Images/main_1.png" alt="WECHATAUTO.SDK主界面" width="1200" />
 
 <br/>
 
