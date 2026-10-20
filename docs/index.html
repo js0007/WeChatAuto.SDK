@@ -1,100 +1,688 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <title>WECHATAUTO.SDK - 安全构建微信 Agent 的开发基座,感知微信消息，以及通过 UI Automation 操作微信,让你的微信 Agent/Wechat Bot 快速上线，安全发布到用户端</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="description" content="Description">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WECHATAUTO.SDK · 安全构建微信 Agent 的开发基座</title>
+  <meta name="description" content="WECHATAUTO.SDK —— 不注入、不破解、安全构建。基于 UI Automation + OCR 视觉混合方案操作真实微信客户端，感知微信消息，让你的微信 Agent / Bot 快速上线、安全发布。">
+  <link rel="icon" type="image/png" href="_media/icon.png">
+
+  <!-- 字体：Orbitron(英文展示) / Noto Sans SC(中文) / JetBrains Mono(代码)  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Noto+Sans+SC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
   <style>
-    section.cover ul {
-      max-width: 600px !important;
+    :root {
+      --bg: #05070d;
+      --bg2: #070b14;
+      --panel: rgba(11, 18, 32, 0.72);
+      --panel-solid: #0b1220;
+      --line: rgba(0, 229, 255, 0.14);
+      --line-strong: rgba(0, 229, 255, 0.38);
+      --cyan: #00e5ff;
+      --green: #00ff9c;
+      --magenta: #c05cff;
+      --amber: #ffb547;
+      --red: #ff4d6d;
+      --text: #dbe6f3;
+      --muted: #8295ad;
+      --font-display: 'Orbitron', 'Segoe UI', system-ui, sans-serif;
+      --font-sans: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Cascadia Code', Consolas, 'Courier New', monospace;
     }
 
-    .cover-main img {
-      width: 600px;
-      height: 300px;
-      border-radius: 12px;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    .sidebar-nav>ul>li>a {
-      font-weight: bold !important;
+    a { color: inherit; text-decoration: none; }
+
+    /* ---------- 背景：网格 + 扫描线 + 光晕 ---------- */
+    .bg-grid {
+      position: fixed; inset: 0; z-index: -3;
+      background-image:
+        linear-gradient(rgba(0, 229, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 229, 255, 0.05) 1px, transparent 1px);
+      background-size: 46px 46px;
+      mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 30%, transparent 78%);
+      -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 30%, transparent 78%);
+    }
+    .bg-glow {
+      position: fixed; z-index: -2; pointer-events: none;
+      width: 70vw; height: 70vw; max-width: 900px; max-height: 900px;
+      top: -30vw; left: 50%; transform: translateX(-50%);
+      background: radial-gradient(circle, rgba(0, 229, 255, 0.16), rgba(192, 92, 255, 0.06) 45%, transparent 70%);
+      filter: blur(20px);
+    }
+    .scanlines {
+      position: fixed; inset: 0; z-index: 50; pointer-events: none;
+      background: repeating-linear-gradient(0deg, rgba(0,0,0,0.22) 0 1px, transparent 1px 3px);
+      opacity: .25;
+      mix-blend-mode: overlay;
+    }
+    #particles { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+
+    /* ---------- 通用 ---------- */
+    .wrap { width: min(1180px, 92vw); margin: 0 auto; }
+
+    .section { padding: 104px 0; position: relative; }
+    .section-label {
+      font-family: var(--font-mono); font-size: 13px; letter-spacing: .34em;
+      color: var(--cyan); text-transform: uppercase; margin-bottom: 14px;
+      display: inline-flex; align-items: center; gap: 12px;
+    }
+    .section-label::before { content: ""; width: 34px; height: 1px; background: var(--cyan); box-shadow: 0 0 8px var(--cyan); }
+    .section-title {
+      font-size: clamp(26px, 4vw, 40px); font-weight: 900; letter-spacing: .02em;
+      line-height: 1.25; margin-bottom: 18px;
+    }
+    .section-title .hl {
+      background: linear-gradient(90deg, var(--cyan), var(--green));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .section-desc { color: var(--muted); max-width: 680px; font-size: 16px; }
+
+    /* ---------- 导航 ---------- */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      background: rgba(5, 7, 13, 0.6);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 66px; }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand .mark {
+      width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center;
+      background: linear-gradient(135deg, rgba(0,229,255,.16), rgba(192,92,255,.16));
+      border: 1px solid var(--line-strong); color: var(--cyan);
+      font-family: var(--font-display); font-weight: 800; font-size: 15px;
+      box-shadow: 0 0 16px rgba(0,229,255,.25), inset 0 0 10px rgba(0,229,255,.12);
+    }
+    .brand .name {
+      font-family: var(--font-display); font-weight: 800; font-size: 17px; letter-spacing: .04em;
+      background: linear-gradient(90deg, #eaffff, var(--cyan));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .nav-links { display: flex; align-items: center; gap: 28px; }
+    .nav-links a { font-size: 14px; color: var(--muted); transition: color .2s, text-shadow .2s; }
+    .nav-links a:hover { color: var(--cyan); text-shadow: 0 0 12px rgba(0,229,255,.6); }
+    .btn-gh {
+      font-family: var(--font-mono); font-size: 13px; padding: 8px 16px; border-radius: 8px;
+      border: 1px solid var(--line-strong); color: var(--cyan); background: rgba(0,229,255,.06);
+      transition: all .2s;
+    }
+    .btn-gh:hover { background: rgba(0,229,255,.14); box-shadow: 0 0 18px rgba(0,229,255,.3); }
+
+    /* ---------- Hero ---------- */
+    .hero { padding: 168px 0 90px; position: relative; }
+    .hero-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px;
+      border: 1px solid var(--line-strong); border-radius: 999px;
+      font-family: var(--font-mono); font-size: 12px; letter-spacing: .08em; color: var(--green);
+      background: rgba(0, 255, 156, 0.06);
+      box-shadow: 0 0 20px rgba(0,255,156,.12);
+      margin-bottom: 26px;
+    }
+    .hero-badge .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+
+    .hero h1 {
+      font-size: clamp(34px, 5.4vw, 58px); font-weight: 900; line-height: 1.12; letter-spacing: .01em;
+      margin-bottom: 22px;
+    }
+    .hero h1 .en {
+      font-family: var(--font-display); font-weight: 800; display: block; font-size: .5em;
+      letter-spacing: .12em; margin-bottom: 10px;
+      background: linear-gradient(90deg, var(--cyan), var(--magenta));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .hero h1 .grad {
+      background: linear-gradient(90deg, #eaffff 10%, var(--cyan) 55%, var(--green));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .hero .sub { color: var(--muted); font-size: 17px; max-width: 540px; margin-bottom: 30px; }
+    .hero .sub b { color: var(--text); font-weight: 600; }
+
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 34px; }
+    .tag {
+      font-family: var(--font-mono); font-size: 12.5px; padding: 7px 13px; border-radius: 7px;
+      border: 1px solid var(--line); color: var(--text); background: rgba(11,18,32,.6);
+      display: inline-flex; align-items: center; gap: 7px;
+    }
+    .tag.x::before { content: "✕"; color: var(--red); font-weight: 700; }
+    .tag.ok::before { content: "✓"; color: var(--green); font-weight: 700; }
+    .tag .em { color: var(--cyan); }
+
+    .cta-row { display: flex; flex-wrap: wrap; gap: 16px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px; padding: 14px 26px; border-radius: 10px;
+      font-size: 15px; font-weight: 600; transition: transform .15s, box-shadow .25s, background .2s;
+      position: relative; cursor: pointer;
+    }
+    .btn-primary {
+      background: linear-gradient(90deg, #00c6e6, #00e5a0); color: #04141a;
+      box-shadow: 0 8px 30px rgba(0,229,255,.28);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,229,255,.45); }
+    .btn-outline { border: 1px solid var(--line-strong); color: var(--cyan); background: rgba(0,229,255,.05); }
+    .btn-outline:hover { background: rgba(0,229,255,.12); box-shadow: 0 0 24px rgba(0,229,255,.25); transform: translateY(-2px); }
+
+    /* 右侧终端/控制台 */
+    .hero-visual { position: relative; }
+    .terminal {
+      border: 1px solid var(--line-strong); border-radius: 14px; overflow: hidden;
+      background: linear-gradient(180deg, #0a1120, #070b14);
+      box-shadow: 0 30px 80px rgba(0,0,0,.6), 0 0 60px rgba(0,229,255,.10);
+      position: relative;
+    }
+    .terminal::before {
+      content: ""; position: absolute; inset: 0; border-radius: 14px; pointer-events: none;
+      background: linear-gradient(120deg, transparent 30%, rgba(0,229,255,.08) 48%, transparent 66%);
+    }
+    .term-bar {
+      display: flex; align-items: center; gap: 8px; padding: 12px 16px;
+      border-bottom: 1px solid var(--line); background: rgba(0,0,0,.28);
+    }
+    .term-bar .t-dot { width: 11px; height: 11px; border-radius: 50%; }
+    .term-bar .t-dot.r { background: #ff5f57; } .term-bar .t-dot.y { background: #febc2e; } .term-bar .t-dot.g { background: #28c840; }
+    .term-bar .t-title { margin-left: 10px; font-family: var(--font-mono); font-size: 12px; color: var(--muted); letter-spacing: .04em; }
+    .term-body { padding: 14px 16px; font-family: var(--font-mono); font-size: 12.5px; line-height: 1.9; }
+    .term-body .l { white-space: pre-wrap; }
+    .term-body .prompt { color: var(--green); }
+    .term-body .cmd { color: #eaffff; }
+    .term-body .out { color: var(--muted); }
+    .term-body .ok { color: var(--green); }
+    .term-body .cy { color: var(--cyan); }
+    .term-body .mg { color: var(--magenta); }
+    .cursor { display: inline-block; width: 8px; height: 14px; background: var(--cyan); vertical-align: -2px; animation: blink 1s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .float-chip {
+      position: absolute; z-index: 2; padding: 10px 14px; border-radius: 10px;
+      background: rgba(10,17,32,.92); border: 1px solid var(--line-strong);
+      font-family: var(--font-mono); font-size: 11.5px; line-height: 1.5;
+      box-shadow: 0 12px 30px rgba(0,0,0,.5);
+      animation: floaty 5s ease-in-out infinite;
+    }
+    .float-chip .k { color: var(--cyan); }
+    .float-chip.a { top: -22px; right: -14px; }
+    .float-chip.b { bottom: -20px; left: -18px; animation-delay: -2.5s; }
+    @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+
+    /* ---------- 数据带 ---------- */
+    .stats { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: rgba(7,11,20,.6); }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .stat { padding: 30px 24px; text-align: center; border-right: 1px solid var(--line); }
+    .stat:last-child { border-right: none; }
+    .stat .num {
+      font-family: var(--font-display); font-size: 30px; font-weight: 800;
+      background: linear-gradient(90deg, var(--cyan), var(--green));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .stat .lb { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+    /* ---------- 特性卡 ---------- */
+    .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; margin-top: 46px; }
+    .card {
+      position: relative; padding: 28px 28px 26px; border-radius: 14px;
+      background: var(--panel); border: 1px solid var(--line);
+      backdrop-filter: blur(6px); transition: transform .25s, border-color .25s, box-shadow .25s;
+      clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 0 100%);
+    }
+    .card:hover { transform: translateY(-4px); border-color: var(--line-strong); box-shadow: 0 18px 46px rgba(0,0,0,.5), 0 0 30px rgba(0,229,255,.08); }
+    .card .ic {
+      width: 44px; height: 44px; border-radius: 10px; display: grid; place-items: center; margin-bottom: 16px;
+      font-size: 21px; background: linear-gradient(135deg, rgba(0,229,255,.14), rgba(192,92,255,.14));
+      border: 1px solid var(--line-strong);
+    }
+    .card h3 { font-size: 19px; font-weight: 700; margin-bottom: 10px; }
+    .card p { color: var(--muted); font-size: 14.5px; }
+    .card .accent { color: var(--cyan); font-family: var(--font-mono); font-size: 12px; letter-spacing: .1em; }
+
+    /* ---------- 能力全景 ---------- */
+    .cap-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 46px; }
+    .cap {
+      padding: 22px 20px; border-radius: 12px; background: var(--panel);
+      border: 1px solid var(--line); position: relative; overflow: hidden; transition: all .25s;
+    }
+    .cap:hover { border-color: var(--line-strong); box-shadow: 0 12px 30px rgba(0,0,0,.45); }
+    .cap::before {
+      content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+      background: linear-gradient(90deg, var(--cyan), transparent); opacity: .7;
+    }
+    .cap h4 { font-size: 16.5px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+    .cap h4 .ic { font-size: 17px; }
+    .cap p { color: var(--muted); font-size: 13.5px; }
+    .cap.vip { border-color: rgba(192,92,255,.3); }
+    .cap.vip::before { background: linear-gradient(90deg, var(--magenta), transparent); }
+    .vip-pill {
+      font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em; color: #0d0316;
+      background: linear-gradient(90deg, var(--magenta), #e38bff); padding: 2px 7px; border-radius: 5px; font-weight: 700;
     }
 
-    /* H1 主标题 */
-    .markdown-section h1 {
-      font-size: 22px;
-      /* 默认太大，这里收一收 */
-      font-weight: 600;
-      /* 稍微粗一点但不夸张 */
-      margin-bottom: 20px;
-      border-bottom: none;
-      /* 去掉docsify默认下划线 */
-    }
+    /* ---------- 使用方式 / 快速开始 ---------- */
+    .use-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 46px; }
+    .use-card { padding: 30px; border-radius: 14px; background: var(--panel); border: 1px solid var(--line); }
+    .use-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 12px; }
+    .use-card .meta { font-family: var(--font-mono); font-size: 12px; color: var(--cyan); margin-bottom: 14px; }
+    .use-card ul { list-style: none; }
+    .use-card li { padding: 6px 0; color: var(--muted); font-size: 14.5px; display: flex; gap: 9px; }
+    .use-card li::before { content: "▸"; color: var(--cyan); }
 
-    /* H2 副标题 */
-    .markdown-section h2 {
-      font-size: 18px;
-      font-weight: 500;
-      margin-top: 40px;
-      margin-bottom: 16px;
-      border-bottom: none;
+    .code-wrap { margin-top: 40px; }
+    .tabs { display: inline-flex; gap: 4px; padding: 4px; border-radius: 10px; background: rgba(11,18,32,.8); border: 1px solid var(--line); }
+    .tab {
+      font-family: var(--font-mono); font-size: 13px; padding: 8px 18px; border-radius: 7px; cursor: pointer;
+      color: var(--muted); transition: all .2s; border: none; background: transparent;
     }
+    .tab.active { color: #04141a; background: linear-gradient(90deg, #00c6e6, #00e5a0); font-weight: 600; }
+    .code-box {
+      margin-top: 16px; border-radius: 14px; overflow: hidden; border: 1px solid var(--line-strong);
+      background: #080d18; box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    }
+    .code-box .cb-bar { display: flex; align-items: center; gap: 8px; padding: 11px 16px; border-bottom: 1px solid var(--line); }
+    .code-box pre { margin: 0; padding: 20px 22px; overflow-x: auto; font-family: var(--font-mono); font-size: 13.5px; line-height: 1.75; }
+    .code-box code { color: #cfe3ff; }
+    .code-box pre .c { color: #5b6f88; }
+    .code-box pre .s { color: #7ef0c0; }
+    .code-box pre .k { color: #8fd8ff; }
+    .code-box pre .f { color: #d9a7ff; }
+    .hidden { display: none; }
 
-    /* 可选：加一点层次感 */
-    .markdown-section h2::before {
-      content: "";
-      display: inline-block;
-      width: 4px;
-      height: 18px;
-      background: #42b983;
-      /* docsify默认绿色 */
-      margin-right: 8px;
-      vertical-align: middle;
-      border-radius: 2px;
+    /* ---------- 多语言 ---------- */
+    .langs { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; justify-content: center; }
+    .lang {
+      font-family: var(--font-mono); font-size: 14px; padding: 10px 20px; border-radius: 9px;
+      border: 1px solid var(--line-strong); color: var(--text); background: rgba(11,18,32,.6);
+      transition: all .2s;
+    }
+    .lang:hover { color: var(--cyan); border-color: var(--cyan); box-shadow: 0 0 20px rgba(0,229,255,.2); }
+    .lang .v { color: var(--cyan); font-size: 11px; margin-left: 6px; }
+
+    /* ---------- 版本 / 开源 ---------- */
+    .dual { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 46px; }
+    .dual .panel { padding: 30px; border-radius: 14px; background: var(--panel); border: 1px solid var(--line); }
+    .dual .panel.hot { border-color: rgba(192,92,255,.35); background: linear-gradient(180deg, rgba(192,92,255,.07), var(--panel)); }
+    .dual h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .dual .pill { font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em; }
+    .dual ul { list-style: none; margin: 14px 0 18px; }
+    .dual li { padding: 5px 0; color: var(--muted); font-size: 14.5px; }
+    .dual li::before { content: "✓"; color: var(--green); margin-right: 9px; font-weight: 700; }
+
+    /* ---------- 页脚 ---------- */
+    footer { border-top: 1px solid var(--line); padding: 60px 0 70px; background: rgba(5,7,13,.6); }
+    .foot-grid { display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+    .foot-brand .name { font-family: var(--font-display); font-weight: 800; font-size: 18px; letter-spacing: .05em; color: var(--cyan); }
+    .foot-brand p { color: var(--muted); font-size: 13.5px; margin-top: 10px; max-width: 380px; }
+    .foot-col h4 { font-size: 14px; font-weight: 700; margin-bottom: 14px; color: var(--text); }
+    .foot-col a { display: block; color: var(--muted); font-size: 13.5px; padding: 4px 0; transition: color .2s; }
+    .foot-col a:hover { color: var(--cyan); }
+    .foot-note { margin-top: 44px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12.5px; line-height: 1.9; }
+    .foot-note .warn { color: #c99b5a; }
+
+    /* ---------- 滚动进入动画 ---------- */
+    .reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.on { opacity: 1; transform: none; }
+
+    /* ---------- 响应式 ---------- */
+    @media (max-width: 960px) {
+      .hero { padding-top: 130px; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stat:nth-child(2n) { border-right: none; }
+      .stat:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+      .cards, .use-grid, .dual { grid-template-columns: 1fr; }
+      .cap-grid { grid-template-columns: repeat(2, 1fr); }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 560px) {
+      .cap-grid { grid-template-columns: 1fr; }
+      .float-chip { display: none; }
+      .section { padding: 76px 0; }
     }
   </style>
 </head>
-
 <body>
-  <div id="app">Loading...</div>
-  <script>
-    var isGitHub = location.hostname.includes('github.io');
-    window.$docsify = {
-      name: '<img src="./_media/logo.png" style="width:50%;margin:-30px 0 0 0 ;padding:0;line-height:0;"></img><b><p style="margin:0; padding:0; letter-spacing: 0.03em; font-family: "Poppins","Montserrat",sans-serif;font-weight: 800;">WECHATAUTO.SDK</p></b> <small>不注入、不破解、安全构建</small><hr style="border: none; border-top: 1px solid #ccc;"/>',
-      repo: 'https://github.com/scottfly189/WeChatAuto.SDK',
-      nameLink: "https://scottfly189.github.io/WeChatAuto.SDK/",
-      onlyCover: true,
-      maxLevel: 2,
-      auto2top: true,
-      loadNavbar: true,
-      coverpage: ['/'],
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+  <canvas id="particles"></canvas>
+  <div class="scanlines"></div>
 
-    }
+  <!-- 导航 -->
+  <nav>
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top">
+        <span class="mark">W</span>
+        <span class="name">WECHATAUTO.SDK</span>
+      </a>
+      <div class="nav-links">
+        <a href="#why">为什么选择</a>
+        <a href="#abilities">能力全景</a>
+        <a href="#usage">使用方式</a>
+        <a href="#quickstart">快速开始</a>
+        <a href="why.md">文档</a>
+      </div>
+      <a class="btn-gh" href="https://github.com/scottfly189/WeChatAuto.SDK" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </nav>
 
-    window.$docsify.plugins = (window.$docsify.plugins || []).concat([
-    function (hook, vm) {
-      hook.afterEach(function (html) {
-        return html + `
-          <hr/>
-          <div style="text-align:center;color:#999;font-size:14px;">
-            为你的微信应用开发提供感知微信消息、操作微信的能力 - 快速构建安全的微信Agent、微信Bot应用.<br/>© WeChatAuto.SDK ${new Date().getFullYear()}
+  <!-- Hero -->
+  <header class="hero" id="top">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="hero-badge"><span class="dot"></span> UI AUTOMATION × OCR · 安全构建</span>
+        <h1>
+          <span class="en">WECHATAUTO.SDK</span>
+          安全构建<span class="grad">微信 Agent</span><br>的开发基座
+        </h1>
+        <p class="sub">
+          感知微信消息，通过 <b>UI Automation</b> 操作微信。不 Hook、不破解、不被封号，
+          让你的微信 Agent / Wechat Bot <b>快速上线、安全发布到用户端</b>。
+        </p>
+
+        <div class="hero-tags">
+          <span class="tag x">不注入 / 内存 Hook</span>
+          <span class="tag x">不破解数据库</span>
+          <span class="tag x">不越权访问数据</span>
+          <span class="tag ok">100% 开源 · 无后门</span>
+          <span class="tag ok"><span class="em">7</span> 语言客户端</span>
+        </div>
+
+        <div class="cta-row">
+          <a class="btn btn-primary" href="README.md">开始使用 →</a>
+          <a class="btn btn-outline" href="https://github.com/scottfly189/WeChatAuto.SDK" target="_blank" rel="noopener">Star on GitHub</a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="terminal">
+          <div class="term-bar">
+            <span class="t-dot r"></span><span class="t-dot y"></span><span class="t-dot g"></span>
+            <span class="t-title">wechat-agent — 运行中</span>
           </div>
-        `;
-      });
-    }
-  ]);
-  </script>
-  <!-- Docsify v4 -->
-  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
-  <!-- 实现离线化 -->
+          <div class="term-body">
+            <div class="l"><span class="prompt">$ </span><span class="cmd">WeAutomation.Initialize(o => o.EnableOCR = true)</span></div>
+            <div class="l"><span class="out">[info] UI Automation 引擎就绪 · OCR 已加载</span></div>
+            <div class="l"><span class="out">[info] 强开 UI Tree <span class="ok">✓</span> · 微信版本适配完成</span></div>
+            <div class="l"><span class="prompt">$ </span><span class="cmd">await client.SendMessage("好友昵称", "hello world!")</span></div>
+            <div class="l"><span class="ok">✓ 消息已发送</span> <span class="cy">[text]</span> hello world!</div>
+            <div class="l"><span class="mg">◉ 监听中</span> <span class="out">新消息 → 回调 → LLM 应答…</span></div>
+            <div class="l"><span class="prompt">$</span><span class="cursor"></span></div>
+          </div>
+        </div>
+        <div class="float-chip a"><span class="k">Action 线程</span><br>监听 / 发送 互不抢占</div>
+        <div class="float-chip b"><span class="k">硬件级输入</span><br>模拟真人 · 降低风控</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 数据带 -->
+  <div class="stats">
+    <div class="wrap stats-grid">
+      <div class="stat"><div class="num">0</div><div class="lb">注入 / 破解 / 越权</div></div>
+      <div class="stat"><div class="num">7</div><div class="lb">官方语言客户端</div></div>
+      <div class="stat"><div class="num">2</div><div class="lb">接入方式（内嵌 / HTTP）</div></div>
+      <div class="stat"><div class="num">80+</div><div class="lb">可调用能力 API</div></div>
+    </div>
+  </div>
+
+  <!-- 为什么选择 -->
+  <section class="section" id="why">
+    <div class="wrap">
+      <span class="section-label reveal">Why WeChatAuto.SDK</span>
+      <h2 class="section-title reveal">绕开微信自动化的<span class="hl">三个老大难</span></h2>
+      <p class="section-desc reveal">
+        内存 Hook / 协议破解 / 数据库解密，极易触发风控封号，还易碎难维护。
+        WeChatAuto.SDK 用「模拟真人操作」这条正路，从架构上规避风险。
+      </p>
+      <div class="cards">
+        <div class="card reveal">
+          <div class="ic">🛡️</div>
+          <h3>安全合规 · 不 Hook 不破解</h3>
+          <p>不改写微信进程内存、不加载第三方模块进微信进程、不解密数据库、不越权读取数据。所有能力通过 <b>UI Automation（FlaUI UIA3）+ OCR</b> 双引擎完成，远离封号与灰色地带。</p>
+        </div>
+        <div class="card reveal">
+          <div class="ic">🪄</div>
+          <h3>强开 UI Tree</h3>
+          <p>微信默认不公开 UI Tree 也能自动化。内置「强开 UI Tree」能力，微信升级后只需维护 UI 定位，而非整套逆向方案 —— 更稳、更干净。</p>
+        </div>
+        <div class="card reveal">
+          <div class="ic">🧵</div>
+          <h3>专有 Action 线程</h3>
+          <p>所有 UI 操作统一调度到同一条专用线程，监听任务受信号量约束、与发送互斥排队。多微信在线也<b>不抢鼠标、不抢窗口、不互相打断</b>。</p>
+        </div>
+        <div class="card reveal">
+          <div class="ic">🖥️</div>
+          <h3>远程桌面 + 硬件级输入</h3>
+          <p>适配 RDP 最小化挂起优化与会话转移，云服务器上稳定运行；键鼠模拟器在硬件底层发信号，输入与人手无异，有效<b>降低被风控概率</b>。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 能力全景 -->
+  <section class="section" id="abilities">
+    <div class="wrap">
+      <span class="section-label reveal">Capabilities</span>
+      <h2 class="section-title reveal">一个 SDK，覆盖<span class="hl">高频场景</span></h2>
+      <p class="section-desc reveal">消息、语音、好友、群聊、朋友圈、监听、导航、数据 —— 感知与操作微信，开箱即用。</p>
+      <div class="cap-grid">
+        <div class="cap reveal"><h4><span class="ic">💬</span>消息</h4><p>发送文本 / 文件 / 图片 / 表情 / 视频，支持 @ 与引用</p></div>
+        <div class="cap reveal"><h4><span class="ic">🎙️</span>语音</h4><p>发送语音消息，文字转语音（TTS）</p></div>
+        <div class="cap reveal"><h4><span class="ic">👥</span>好友</h4><p>自动通过申请、打招呼、标签备注、通讯录管理</p></div>
+        <div class="cap reveal"><h4><span class="ic">👥</span>群聊</h4><p>建群、拉人、改群名 / 公告、群成员加好友</p></div>
+        <div class="cap reveal vip"><h4><span class="ic">🌏</span>朋友圈 <span class="vip-pill">VIP</span></h4><p>浏览与操作朋友圈，发送图文动态</p></div>
+        <div class="cap reveal"><h4><span class="ic">📡</span>监听</h4><p>好友申请 / 消息 / 系统消息，事件驱动回调</p></div>
+        <div class="cap reveal"><h4><span class="ic">🧭</span>导航</h4><p>会话定位、窗口切换、搜索、拍一拍</p></div>
+        <div class="cap reveal"><h4><span class="ic">🗂️</span>数据</h4><p>聊天历史、联系人 / 群列表、头像、截图、录屏</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 使用方式 -->
+  <section class="section" id="usage">
+    <div class="wrap">
+      <span class="section-label reveal">Integrations</span>
+      <h2 class="section-title reveal">两种方式，<span class="hl">按需接入</span></h2>
+      <div class="use-grid">
+        <div class="use-card reveal">
+          <h3>内嵌方式</h3>
+          <div class="meta">.NET / Windows 原生应用</div>
+          <ul>
+            <li>类型安全、能力最全、深度定制</li>
+            <li>事件回调、低延迟、完整 API</li>
+            <li>入口：WeAutomation.Initialize(…) → WeChatClient</li>
+          </ul>
+        </div>
+        <div class="use-card reveal">
+          <h3>HTTP WebAPI 方式</h3>
+          <div class="meta">后端 / 云服务 · 跨语言 · 多系统共享</div>
+          <ul>
+            <li>语言无关、进程隔离、可远程</li>
+            <li>REST + Swagger，开箱即用</li>
+            <li>入口：http://&lt;主机&gt;:5000</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 快速开始 -->
+  <section class="section" id="quickstart">
+    <div class="wrap">
+      <span class="section-label reveal">Quick Start</span>
+      <h2 class="section-title reveal">30 秒<span class="hl">上手</span></h2>
+      <div class="code-wrap reveal">
+        <div class="tabs">
+          <button class="tab active" data-tab="dotnet">内嵌 · .NET</button>
+          <button class="tab" data-tab="http">HTTP WebAPI</button>
+        </div>
+        <div class="code-box" id="tab-dotnet">
+          <div class="cb-bar"><span class="t-dot r"></span><span class="t-dot y"></span><span class="t-dot g"></span><span class="t-title">C# · Program.cs</span></div>
+<pre><code><span class="c"># 安装 SDK</span>
+<span class="c"># dotnet add package WeChatAuto4x.SDK</span>
+
+<span class="k">var</span> sp = WeAutomation.Initialize(o => o.EnableOCR = <span class="k">true</span>);
+<span class="k">using var</span> factory = sp.GetRequiredService&lt;WeChatClientFactory&gt;();
+<span class="k">var</span> client = factory.GetWeChatClient(<span class="s">"你的微信名"</span>);
+<span class="k">await</span> client.SendMessage(<span class="s">"好友昵称"</span>, <span class="s">"hello world!"</span>);</code></pre>
+        </div>
+        <div class="code-box hidden" id="tab-http">
+          <div class="cb-bar"><span class="t-dot r"></span><span class="t-dot y"></span><span class="t-dot g"></span><span class="t-title">bash · 任意语言可调用</span></div>
+<pre><code><span class="c"># 启动 Server 后，任何语言都能调用</span>
+curl http://localhost:5000/api/v1/clients
+
+curl -X POST http://localhost:5000/api/v1/clients/&lt;wxid&gt;/messages/send \
+  -H <span class="s">"Content-Type: application/json"</span> \
+  -d <span class="s">'{"who": "好友昵称", "message": "你好"}'</span></code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 多语言 -->
+  <section class="section">
+    <div class="wrap">
+      <span class="section-label reveal">Multi-Language</span>
+      <h2 class="section-title reveal">任何技术栈，<span class="hl">都能接</span></h2>
+      <div class="langs reveal">
+        <span class="lang">.NET<span class="v">C#</span></span>
+        <span class="lang">C++</span>
+        <span class="lang">Go</span>
+        <span class="lang">Java</span>
+        <span class="lang">Node.js</span>
+        <span class="lang">Python</span>
+        <span class="lang">Rust</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 开源 + VIP -->
+  <section class="section" id="versions">
+    <div class="wrap">
+      <span class="section-label reveal">Versions</span>
+      <h2 class="section-title reveal">开源 + 商业支持<span class="hl">双轨</span></h2>
+      <div class="dual">
+        <div class="panel reveal">
+          <h3>社区版 <span class="pill" style="color:var(--green)">MIT · 完全开源</span></h3>
+          <ul>
+            <li>MIT 协议，可免费使用</li>
+            <li>核心能力全覆盖，源码公开透明</li>
+            <li>适合个人开发者快速落地</li>
+          </ul>
+          <a class="btn btn-outline" href="https://github.com/scottfly189/WeChatAuto.SDK" target="_blank" rel="noopener">获取源码 ↗</a>
+        </div>
+        <div class="panel hot reveal">
+          <h3>VIP 版 <span class="pill" style="color:var(--magenta)">商业支持</span></h3>
+          <ul>
+            <li>比社区版多约 20% 高级 API</li>
+            <li>Bug 优先响应、专属私有仓库</li>
+            <li>一对一技术支持，适合上生产</li>
+          </ul>
+          <a class="btn btn-primary" href="README.md">了解详情 →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer>
+    <div class="wrap">
+      <div class="foot-grid">
+        <div class="foot-brand">
+          <div class="name">WECHATAUTO.SDK</div>
+          <p>安全构建微信 Agent 的开发基座。感知微信消息，通过 UI Automation 操作微信，让你的微信 Agent / Bot 快速上线、安全发布到用户端。</p>
+        </div>
+        <div class="foot-col">
+          <h4>文档</h4>
+          <a href="README.md">快速开始</a>
+          <a href="why.md">为什么选择</a>
+          <a href="ability.md">能力表</a>
+        </div>
+        <div class="foot-col">
+          <h4>接入方式</h4>
+          <a href="inlineuse.md">内嵌使用</a>
+          <a href="httpserveruse.md">HTTP 服务</a>
+          <a href="mcpserver.md">MCP 服务</a>
+        </div>
+        <div class="foot-col">
+          <h4>社区</h4>
+          <a href="https://github.com/scottfly189/WeChatAuto.SDK" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://github.com/scottfly189/WeChatAuto.SDK/issues" target="_blank" rel="noopener">Issues</a>
+        </div>
+      </div>
+      <div class="foot-note">
+        <p>为你的微信应用开发提供感知微信消息、操作微信的能力 —— 快速构建安全的微信 Agent、微信 Bot 应用。<br>© WeChatAuto.SDK 2026</p>
+        <p class="warn">⚠️ 免责声明：本 SDK 仅供学习和研究使用，请遵守微信使用条款，不得用于任何违法违规用途；使用本 SDK 产生的任何后果由使用者自行承担。</p>
+      </div>
+    </div>
+  </footer>
+
   <script>
-    if (typeof navigator.serviceWorker !== 'undefined') {
-      navigator.serviceWorker.register('sw.js')
-    }
+    // 粒子背景（星座连线效果）
+    (function () {
+      const c = document.getElementById('particles');
+      const ctx = c.getContext('2d');
+      let w, h, pts = [];
+      const COUNT = 80, LINK = 130;
+      function resize() { w = c.width = innerWidth; h = c.height = innerHeight; }
+      resize(); addEventListener('resize', resize);
+      function seed() {
+        pts = [];
+        for (let i = 0; i < COUNT; i++) {
+          pts.push({ x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - .5) * .35, vy: (Math.random() - .5) * .35, r: Math.random() * 1.6 + .5 });
+        }
+      }
+      seed(); addEventListener('resize', seed);
+      (function loop() {
+        ctx.clearRect(0, 0, w, h);
+        for (let i = 0; i < pts.length; i++) {
+          const p = pts[i];
+          p.x += p.vx; p.y += p.vy;
+          if (p.x < 0 || p.x > w) p.vx *= -1;
+          if (p.y < 0 || p.y > h) p.vy *= -1;
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(0,229,255,.7)'; ctx.fill();
+          for (let j = i + 1; j < pts.length; j++) {
+            const q = pts[j], dx = p.x - q.x, dy = p.y - q.y, d = dx * dx + dy * dy;
+            if (d < LINK * LINK) {
+              ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
+              ctx.strokeStyle = 'rgba(0,229,255,' + (0.12 * (1 - d / (LINK * LINK))) + ')';
+              ctx.lineWidth = .5; ctx.stroke();
+            }
+          }
+        }
+        requestAnimationFrame(loop);
+      })();
+    })();
+
+    // 代码 Tab 切换
+    document.querySelectorAll('.tab').forEach(t => {
+      t.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+        t.classList.add('active');
+        const target = t.dataset.tab;
+        document.getElementById('tab-dotnet').classList.toggle('hidden', target !== 'dotnet');
+        document.getElementById('tab-http').classList.toggle('hidden', target !== 'http');
+      });
+    });
+
+    // 滚动进入动画
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } });
+    }, { threshold: .12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   </script>
 </body>
-
 </html>
