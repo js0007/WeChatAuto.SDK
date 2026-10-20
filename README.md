@@ -159,6 +159,7 @@ Wechatauto.SDK分为社区版和VIP版，社区版是完全开源的，VIP版为
 <details>
 <summary>❓ 运行WechatAuto.sdk的示例自动化不了微信客户端？</summary>
 回答：请按下面的步骤检查：
+
 - 确保待自动化的微信的窗口是打开状态;
 - 检查windows版本，仅支持win10+;
 - 如果是最新版本的微信4.1.xx,请检查是否有UI Tree,如果没有UI Tree,请参考 [我的最新版微信没有UI Tree,这个怎么办？](https://github.com/scottfly189/WeChatAuto.SDK/issues/3)
