@@ -2,7 +2,7 @@
 
 # WECHATAUTO.SDK - 安全构建微信Agent的开发基座
 
-### 一款为Harness/SI提供操作微信核心能力的SDK，不注入(内存Hook),不数据库破解，不越权访问微信数据,通过 UI Automation 操作微信,不写一行代码获取微信消息
+#### 一款为Harness/SI提供操作微信核心能力的SDK，不注入(内存Hook),不数据库破解，不越权访问微信数据,通过 UI Automation 操作微信,不写一行代码获取微信消息
 
 <font color="red">让你的微信 Agent/Wechat Bot 快速开发、快速上线、并安全发布到用户端</font>
 
