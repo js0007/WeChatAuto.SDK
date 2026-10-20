@@ -170,6 +170,7 @@ Wechatauto.SDK分为社区版和VIP版，社区版是完全开源的，VIP版为
 <details>
 <summary>❓ WechatAuto.sdk可以直接运行吗？</summary>
 回答：SDK支持两种开发模式
+
 - 内嵌方式，即以DLL或者Nuget包引入的方式，这个不能直接运行，因为是一个SDK开发包，需要整合在你的项目中使用，当然你也可以直接运行[示例代码](https://github.com/scottfly189/WeChatAuto.SDK/tree/master/WeChatAuto4_X/Examples/WinForm_Demo)或者单元测试;
 - Http WebAPI的方式，这个可以直接运行，请[下载](https://github.com/scottfly189/WeChatAuto.SDK/releases/tag/2.0.7)后直接运行;
 </details>
@@ -204,6 +205,26 @@ WeAutomation.Initialize(builder.Services, options =>
 2. 手动上传ffmpeg.exe文件至项目运行的ffmepg目录下:
 - 开发环境为：bin\Debug\net9.0-windows\ffmpeg\ffmpeg.exe
 - 运行环境为: 你的执行文件所在目录\ffmpeg\ffmpeg.exe
+</details>
+
+<details>
+<summary>❓ SDK安装在服务器运行，并且用远程桌面连接服务器，远程桌面最小化的时候自动化异常？</summary>
+回答：请在"发起远程桌面的客户端电脑"上,而不是服务器上执行下面脚本:
+
+1. [下载脚本](https://github.com/scottfly189/WeChatAuto.SDK/blob/master/Tools/EnableRdpMinimize.bat)
+2. 下载脚本后按下面的步骤执行:
+   - 执行作业之前，注销机器人（服务器）计算机上的所有用户。
+   - 执行作业之后，重新打开远程桌面连接。
+3. 现在，即使 RDP 窗口已最小化，您也可以自动化用户界面操作。
+</details>
+
+<details>
+<summary>❓ 远程桌面连接服务器后SDK发送消息不了？</summary>
+回答: 请远程桌面打开服务器的时候，远程桌面按下面步骤执行： 打开远程桌面->本地资源->剪切板 打上勾，让远程桌面支持剪切板;
+
+如下图所示：
+
+![剪切板](./MD/clipboard.png)
 </details>
 
 ## 🤝 贡献
