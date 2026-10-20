@@ -109,7 +109,8 @@ using Microsoft.Extensions.DependencyInjection;
 var serviceProvider = WeAutomation.Initialize(options =>
 {
     options.DebugMode = false;   // 可选，在生产环境建议关闭
-    options.EnableOCR = true;    // 必须打开
+    options.EnableOCR = true;    // 必须打开OCR
+    options.IsForceOpenUITree = true; //是否强开微信的UI Tree,如果确认自己的微信UI Tree是开启的，则可以设置为False    
 });
 
 using var clientFactory = serviceProvider.GetRequiredService<WeChatClientFactory>();
