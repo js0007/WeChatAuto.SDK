@@ -1,4 +1,4 @@
-!> 如果你使用的不是.Net或者并不想关心WeChatAuto.SDK的生命周期/并不想把WeChatAuto.SDK深度集成在自己的应用中，推荐使用此方式,因为获取好友/群的消息、自动通过好友加好友等操作不需要写一行代码，仅需在UI中设置就可以实现，极大的降低集成工作量，也是**官方推荐**的方式.
+!> 如果你不是 .NET、不想管理 SDK 生命周期，或需要跨语言/远程调用,请使用 [HTTP WebAPI 方式](https://scottfly189.github.io/WeChatAuto.SDK/main.html#/httpserveruse)，官方推荐。
 
 # 一、HTTP WebAPI介绍
 
