@@ -1,6 +1,6 @@
 !> 如果你使用的不是.Net或者并不想关心WeChatAuto.SDK的生命周期/并不想把WeChatAuto.SDK深度集成在自己的应用中，推荐使用此方式,因为获取好友/群的消息、自动通过好友加好友等操作不需要写一行代码，仅需在UI中设置就可以实现，极大的降低集成工作量，也是**官方推荐**的方式.
 
-# HTTP WebAPI介绍
+# 一、HTTP WebAPI介绍
 
 ## 适用场景
 - 你的业务是后端服务 / 云服务 / 跨语言系统，需要从 Python、Go、Java、Node.js、Rust 等调用微信能力
@@ -29,7 +29,7 @@
 - HTTP服务要与需要自动化的微信放在同一台电脑上;
 - 先打开微信，并登入自己账号，保持微信窗口为打开状态(非关闭状态),支持多微信; 
 - 最后打开HTTP服务(运行解压缩目录的Server.exe);
-- 双击或者右键屏幕右下角的HTTP服务，在弹出的控制台窗口中点击链接打开Swagger页面，请可以查看各类API了,也可以在线调试;
+- 双击或者右键屏幕右下角的HTTP服务，在弹出的控制台窗口中点击链接打开Swagger页面,在弹出的Swagger页面可以在线调试API;
 - HTTP服务请参考:[HTTP服务使用指南](#http服务使用指南);
 - HTTP WebAPI参考请参考:[HTTP WebAPI 接入指南](#http-webapi-接入指南);
 - 其他问题请参见[FAQ](https://github.com/scottfly189/WeChatAuto.SDK/blob/master/docs/faq.md);
@@ -37,10 +37,10 @@
 
 !> 也可以浏览[在线Swagger](https://scottfly189.github.io/WeChatAuto.SDK/api-site/index.html),但是请不要操作，因为服务器没有打开对应的微信,具体还是以你本地打开的HTTP WebAPI服务为准！
 
-# HTTP服务使用指南
+# 二、HTTP服务使用指南
 
 
-# HTTP WebAPI 接入指南
+# 三、HTTP WebAPI 接入指南
 
 > 本服务是标准 HTTP RESTful 接口：任何能发 HTTP 请求、解析 JSON 的语言（.NET / Python / Rust / Go / Java / Node.js 等）都能直接调用，**无需依赖 .NET**。
 >
