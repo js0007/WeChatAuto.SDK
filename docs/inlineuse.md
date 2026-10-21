@@ -337,6 +337,7 @@ await client.SendFile("某好友", new[] { @"C:\report.pdf", @"C:\photo.jpg" });
 // 发表情（按名称或索引）
 await client.SendEmoji("某好友", "[微笑]");
 await client.SendEmoji("某好友", 1);
+
 ```
 
 <details>
@@ -452,7 +453,7 @@ await client.SendEmoji("某好友", 1);
 | 107 | 跳跳 | [跳跳] |
 | 108 | 发抖 | [发抖] |
 | 109 | 转圈 | [转圈] |
-</detials>
+</details>
 
 #### 语音 / 视频通话
 
