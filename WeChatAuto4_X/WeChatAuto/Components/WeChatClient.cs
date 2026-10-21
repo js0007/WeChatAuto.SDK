@@ -701,6 +701,8 @@ namespace WeChatAuto.Components
         public async Task AddOrUpdateFriendFromCacheAsync(FriendInfo friend) => await CacheManager.AddOrUpdateFriendFromCacheAsync(friend);
 
         #endregion
+
+        #region  群管理
         /// <summary>
         /// 是否是自有群
         /// </summary>
@@ -805,6 +807,7 @@ namespace WeChatAuto.Components
         /// <param name="options">好友选项，可以增加好友时设置备注后缀、打招呼内容及标签等，方便分类管理</param>
         /// <returns>返回每个好友增加情况的字典</returns>
         public async Task<IDictionary<string, FriendAddResult>> AddChatGroupMemberToFriends(string groupName, List<string> memberName, AddFriendsOptions options = null) => await this.OuterGroup.AddChatGroupMemberToFriends(groupName, memberName, options);
+        #endregion
 
         #endregion
 
