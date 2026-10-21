@@ -357,7 +357,7 @@ await client.SendVoiceMessage("某好友", @"C:\audio\hello.wav");
 
 #### 文字转语音（TTS，💎）
 
-!> 文字转语音及声音复刻内部使用了通义千问非实时语音合成模型: qwen-audio-3.0-tts-flash,详细了解请阅读[千问AI平台 - 语音合成](https://platform.qianwenai.com/docs/developer-guides/speech/tts-models)
+!> 文字转语音及声音复刻内部使用了通义千问非实时语音合成模型: `qwen-audio-3.1-tts-flash`,详细了解请阅读[千问AI平台 - 语音合成](https://platform.qianwenai.com/docs/developer-guides/speech/tts-models)官方文档.
 
 
 ```csharp
@@ -376,6 +376,87 @@ await client.SendVoiceMessageWithTTS(
         Instructions = "用温柔的语气说，语速稍慢"
     });
 ```
+
+
+> Voice的值取自下面的 预置音色列表 ,或者 音色复刻 产生的音色ID
+
+<details>
+<summary>👉 所有系统预置音色列表(即Voice选项对应下面的音色ID)</summary>
+
+| 音色 ID | 音色名称 | 性别 | 音色特点 | 主语言 |
+|---|---|---|---|---|
+| longanhuan_v3.1 | 龙安欢 | 女 | 支持多方言多语言 | 普通话 |
+| longanlingxin_v3.1 | 龙安灵心 | 女 | 支持多方言多语言 | 普通话 |
+| longanfengyue_v3.1 | 龙安风悦 | 女 | 支持多方言多语言 | 普通话 |
+| yuxiaoyun_v3.1 | 于小云 | 女 | 元气、亲切、自然 | 普通话 |
+| qiaoxiaojiao_v3.1 | 乔小娇 | 女 | 俏丽、可爱 | 普通话 |
+| xiaxiaochen_v3.1 | 夏小晨 | 女 | 元气、明亮 | 普通话 |
+| wenhuaiqing_v3.1 | 温怀清 | 女 | 清亮、柔和 | 普通话 |
+| anxiaolan_v3.1 | 安小岚 | 女 | 清甜、纯净 | 普通话 |
+| xieshurou_v3.1 | 谢舒柔 | 女 | 柔和、自然、知性 | 普通话 |
+| baiqinglan_v3.1 | 白清岚 | 女 | 明亮、清纯 | 普通话 |
+| xuyuyuan_v3.1 | 许玉远 | 女 | 知性、成熟、质感 | 普通话 |
+| anruorou_v3.1 | 安若柔 | 女 | 气声、知性 | 普通话 |
+| wenhuaizhi_v3.1 | 闻怀之 | 女 | 稳重、成熟 | 普通话 |
+| xiaoxingzhi_v3.1 | 萧行之 | 女 | 端庄、贵气 | 普通话 |
+| guyunshu_v3.1 | 顾云舒 | 女 | 成熟、稳重 | 普通话 |
+| yeqinghe_v3.1 | 叶清禾 | 女 | 亲切、温柔 | 普通话 |
+| yunhuanhuan_v3.1 | 云欢欢 | 女 | 高亢、热情 | 普通话 |
+| xuxiaoqiao_v3.1 | 徐小俏 | 女 | 自然、俏皮 | 普通话 |
+| baianran_v3.1 | 白安然 | 女 | 低沉、浑厚、气声 | 普通话 |
+| xuyanchu_v3.1 | 许言初 | 女 | 沉稳、磁性 | 普通话 |
+| yezhiqing_v3.1 | 叶知晴 | 女 | 轻快、自然 | 普通话 |
+| anyuqing_v3.1 | 安语晴 | 女 | 甜妹 | 普通话 |
+| Emily_v3.1 | Emily | 女 | 英式女声 | 英语 |
+| Luna_v3.1 | Luna | 女 | 英式女声 | 英语 |
+| Abby_v3.1 | Abby | 女 | 美式女声 | 英语 |
+| Annie_v3.1 | Annie | 女 | 美式女声 | 英语 |
+| Ava_v3.1 | Ava | 女 | 美式女声 | 英语 |
+| Beth_v3.1 | Beth | 女 | 美式女声 | 英语 |
+| Betty_v3.1 | Betty | 女 | 美式女声 | 英语 |
+| Cally_v3.1 | Cally | 女 | 美式女声 | 英语 |
+| Cindy_v3.1 | Cindy | 女 | 美式女声 | 英语 |
+| Donna_v3.1 | Donna | 女 | 美式女声 | 英语 |
+| longanyuanfei_v3.1 | 龙安元妃 | 女 | 高傲妃子音 | 普通话 |
+| longanlingxi_v3.1 | 龙安灵希 | 女 | 可爱甜美音 | 普通话 |
+| longyingtao_v3.1 | 龙应桃 | 女 | 温柔淡定女 | 普通话 |
+| longanya_v3.1 | 龙安雅 | 女 | 高雅气质女 | 普通话 |
+| longwan_v3.1 | 龙婉 | 女 | 细腻柔声女 | 普通话 |
+| longxing_v3.1 | 龙星 | 女 | 温婉邻家女 | 普通话 |
+| longhua_v3.1 | 龙华 | 女 | 元气甜美女 | 普通话 |
+| longling_v3.1 | 龙铃 | 女 | 稚气呆板女 | 普通话 |
+| longpaopao_v3.1 | 龙泡泡 | 女 | 飞天泡泡音 | 普通话 |
+| loongstella_v3.1 | loongstella | 女 | 飒爽利落女 | 普通话 |
+| longyuan_v3.1 | 龙媛 | 女 | 温暖治愈女 | 普通话 |
+| longmiao_v3.1 | 龙妙 | 女 | 抑扬顿挫女 | 普通话 |
+| longanli_v3.1 | 龙安莉 | 女 | 利落从容女 | 普通话 |
+| longanwen_v3.1 | 龙安温 | 女 | 优雅知性女 | 普通话 |
+| longxiaoxia_v3.1 | 龙小夏 | 女 | 沉稳权威女 | 普通话 |
+| xunanchuan_v3.1 | 许南川 | 男 | 支持多方言多语言 | 普通话 |
+| anmingyuan_v3.1 | 安明远 | 男 | 清亮、自然 | 普通话 |
+| huozhuoshi_v3.1 | 霍拙石 | 男 | 清亮 | 普通话 |
+| andi_v3.1 | 安迪 | 男 | ABC口音 | 普通话 |
+| Eric_v3.1 | Eric | 男 | 英式男声 | 英语 |
+| Luca_v3.1 | Luca | 男 | 英式男声 | 英语 |
+| Andy_v3.1 | Andy | 男 | 美式男声 | 英语 |
+| Brian_v3.1 | Brian | 男 | 美式男声 | 英语 |
+| David_v3.1 | David | 男 | 美式男声 | 英语 |
+| longjielidou_v3.1 | 龙杰力豆 | 男 | 天真男童音 | 普通话 |
+| longhuohuo_v3.1 | 龙火火 | 男 | 顽皮少年音 | 普通话 |
+| longhan_v3.1 | 龙寒 | 男 | 温暖痴情男 | 普通话 |
+| longanzhi_v3.1 | 龙安智 | 男 | 睿智轻熟男 | 普通话 |
+| longzhe_v3.1 | 龙哲 | 男 | 呆板大暖男 | 普通话 |
+| longanyang_v3.1 | 龙安洋 | 男 | 阳光大男孩 | 普通话 |
+| libai_v3.1 | 李白 | 男 | 古代诗仙男 | 普通话 |
+| longniuniu_v3.1 | 龙牛牛 | 男 | 阳光男童声 | 普通话 |
+| longshanshan_v3.1 | 龙闪闪 | 男 | 戏剧化童声 | 普通话 |
+| longsanshu_v3.1 | 龙三叔 | 男 | 沉稳质感男 | 普通话 |
+| longanlang_v3.1 | 龙安朗 | 男 | 清爽利落男 | 普通话 |
+| longanchong_v3.1 | 龙安冲 | 男 | 激情推销男 | 普通话 |
+
+说明：上表共 68 个音色，均为 `qwen-audio-3.1-tts-flash` 系统音色。音色 ID 必须与请求模型匹配，不能跨模型混用
+
+</details>
 
 #### 声音复刻（💎）
 
@@ -424,7 +505,9 @@ bool ok = await client.LocateConversation("某好友");
 
 // 会话设置
 await client.SetTopMost("某好友", true);       // 置顶
+await client.SetTopMost("某好友", false);       // 取消置顶
 await client.SetDoNotDisturb("某好友", true);  // 免打扰
+await client.SetDoNotDisturb("某好友", false);  // 取消 免打扰 模式
 ```
 
 ### 7.6 好友与通讯录
