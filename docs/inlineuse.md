@@ -108,10 +108,12 @@ dotnet new console -n demo
 ```
 
 3. 安装依赖包
-  
+
 ```bash
+
 dotnet add package Microsoft.Extensions.DependencyInjection
 dotnet add package WeChatAuto4x.SDK
+
 ```
 
 4. 把OCR模型文件放到项目根目录下(我这里是:```D:\repo\WeChatAuto.SDK\test\demo\bin\Debug\net10.0-windows\models```)，OCR模型文件下载地址：[模型文件下载](https://github.com/scottfly189/WeChatAuto.SDK/tree/master/Tools)
