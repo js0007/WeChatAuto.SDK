@@ -1,6 +1,5 @@
 !> 如果你使用的不是.Net或者并不想关心WeChatAuto.SDK的生命周期/并不想把WeChatAuto.SDK深度集成在自己的应用中，推荐使用此方式.
-!>
-!> 测试
+> 测试
 
 # HTTP WebAPI介绍
 
