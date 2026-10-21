@@ -84,9 +84,41 @@ SDK 面向 Windows 目标框架，把 `.csproj` 的 `TargetFramework` 改成带 
 
 ## 四、快速开始（5 分钟跑通）
 
-!> 最小示例为一个控制台.net应用，所以首先保证
+!> 一个最小可运行示例：初始化 → 拿客户端 → 发一条消息,最小示例为一个控制台.net10应用，首先保证电脑安装有.net10的环境
 
-一个最小可运行示例：初始化 → 拿客户端 → 发一条消息。
+1. 新建一个.net10控制台项目
+
+```csharp
+dotnet new console -n demo
+```
+
+2. 修改项目属性，打开 demo.csproj 文件，把```TargetFramework```修改为```net10.0-windows```,如果你使用的是.net6.0或.net7.0，请把```TargetFramework```修改为```net6.0-windows```或```net7.0-windows```，如下所示:
+```xml
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>
+
+```
+
+3. 安装依赖包
+  
+```bash
+dotnet add package Microsoft.Extensions.DependencyInjection
+dotnet add package WeChatAuto4x.SDK
+```
+
+4. 把OCR模型文件放到项目根目录下(我这里是:```D:\repo\WeChatAuto.SDK\test\demo\bin\Debug\net10.0-windows\models```)，OCR模型文件下载地址：[模型文件下载](https://github.com/scottfly189/WeChatAuto.SDK/tree/master/Tools)
+
+> 注：直接拷贝models文件夹到项目根目录下即可，或者在代码中指定模型文件路径。
+
+5. 在 Program.cs 中编写如下代码：
 
 ```csharp
 using WeChatAuto.Services;
