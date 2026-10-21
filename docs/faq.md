@@ -2,19 +2,18 @@
 
 ## ❓ 运行WechatAuto.sdk的示例自动化不了微信客户端？
 回答：请按下面的步骤检查：
-- 是否将微信拖到任务栏
-  如下图所示:
-  ![xx](./status.png)
-- 检查windows版本，win10与  win11可以运行;
+
+- 确保待自动化的微信的窗口是打开状态;
+- 检查windows版本，仅支持win10+;
 - 如果是最新版本的微信4.1.xx,请检查是否有UI Tree,如果没有UI Tree,请参考 [我的最新版微信没有UI Tree,这个怎么办？](https://github.com/scottfly189/WeChatAuto.SDK/issues/3)
   > 查看UI Tree的方法：下载并安装 UI Tree查看工具，如: inspect.exe或者FlaUInspect等，[下载链接](https://github.com/scottfly189/WeChatAuto.SDK/tree/master/Tools)
 - 如果经过上面的步骤还不行，请联系作者，并将你的代码发给他看;
 
 ## ❓ WechatAuto.sdk可以直接运行吗？
-回答：不行，这个是一个SDK开发包，需要整合在你的项目中使用，如果你要运行，可以:
-1. 直接运行作者提供的示例项目，示例项目中已经集成了WechatAuto.sdk;
-2. 你可以在你的项目中集成WechatAuto.sdk,然后运行你的项目;
-3. 可以向作者索要示例代码;
+回答：SDK支持两种开发模式
+
+- 内嵌方式，即以DLL或者Nuget包引入的方式，这个不能直接运行，因为是一个SDK开发包，需要整合在你的项目中使用，当然你也可以直接运行[示例代码](https://github.com/scottfly189/WeChatAuto.SDK/tree/master/WeChatAuto4_X/Examples/WinForm_Demo)或者单元测试;
+- Http WebAPI的方式，这个可以直接运行，请[下载](https://github.com/scottfly189/WeChatAuto.SDK/releases/tag/2.0.7)后直接运行;
 
 ## ❓我运行的时候提示:```Unhandled exception. System.Exception: 错误：Det模型文件不存在！```怎么办？
 
