@@ -64,7 +64,10 @@
 #### 🚀 快速开始（30 秒上手）
 
 > [!IMPORTANT]
-> 使用前请用Claude code 安装.net10环境
+> 使用前请用Claude code 安装.net10环境;
+>
+> 此示例在Examples目录的[FirstDemo](https://github.com/scottfly189/WeChatAuto.SDK/tree/master/WeChatAuto4_X/Examples/FirstDemo)项目中;
+> 
 > 更多使用请参见: [使用指南](https://scottfly189.github.io/WeChatAuto.SDK/main.html#/README)
 
 1. 新建一个.net10控制台项目
