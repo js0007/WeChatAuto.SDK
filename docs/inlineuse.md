@@ -93,6 +93,7 @@ dotnet new console -n demo
 ```
 
 2. 修改项目属性，打开 demo.csproj 文件，把```TargetFramework```修改为```net10.0-windows```,如果你使用的是.net6.0或.net7.0，请把```TargetFramework```修改为```net6.0-windows```或```net7.0-windows```，如下所示:
+
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
 
