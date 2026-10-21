@@ -179,13 +179,13 @@ Wechatauto.SDK分为社区版和VIP版，社区版是完全开源的，VIP版为
 </details>
 
 <details>
-<summary>❓ WechatAuto.sdk还有计划支持3.1.9.12的旧版本吗？</summary>
-回答：仓库对于3.1.9.xx版本支持已处于归档状态，请使用最新的微信版本
+<summary>❓ 请问WeChatAuto.SDK支持最新版的微信吗?</summary>
+回答：支持最新版本的微信，并且会随着微信的版本更新而更新;
 </details>
 
 <details>
-<summary>❓ 请问WeChatAuto.SDK支持最新版的微信吗?</summary>
-回答：支持最新版本的微信，并且会随着微信的版本更新而更新;
+<summary>❓ WechatAuto.sdk还有计划支持3.1.9.12的旧版本吗？</summary>
+回答：仓库对于3.1.9.xx版本支持已处于归档状态，请使用最新的微信版本
 </details>
 
 <details>
