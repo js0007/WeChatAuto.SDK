@@ -757,12 +757,23 @@ await client.RemoveListeningFriend("某好友");
 
 ### 7.9 新好友自动通过（💎）
 
+!> 新好友申请加好友自动通过可以根据关键词设置单独的备注后缀与标签
+
 ```csharp
 var options = new FriendRequestAutoAcceptOptions
 {
     KeyWord = new List<string> { "合作", "商务" },  // 只有打招呼命中关键词才通过
-    Suffix = "_商务",                               // 通过后备注加后缀
-    Label = "客户",                                 // 通过后打标签
+    Suffix = "默认",                               // 全局默认后缀（未命中 KeywordRules 时回退到这里）
+    Label = "客户",                                 // 全局默认标签
+
+    // 下面的 KeywordRules 演示单独为每个关键词设置 备注后缀 及 标签
+    // 按关键词设置单独的备注后缀与标签：命中关键词时优先用此规则，否则回退到全局 Suffix/Label
+    KeywordRules = new Dictionary<string, FriendKeywordRule>
+    {
+        { "合作", new FriendKeywordRule { Suffix = "合作", Label = "合作客户" } },
+        { "商务", new FriendKeywordRule { Suffix = "商务", Label = "商务客户" } },
+    },
+
     PassedDelete = true,                            // 通过后删除申请记录
     PassedCallBack = async (passedList, wxClient, sp) =>
     {
@@ -770,6 +781,7 @@ var options = new FriendRequestAutoAcceptOptions
             await wxClient.SendMessage(item.Who, "您好，欢迎添加！");
     }
 };
+
 
 await client.AddFriendRequestAutoAcceptListener(options);
 
