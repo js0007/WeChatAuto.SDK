@@ -24,7 +24,7 @@
 > HTTP服务需要先下载再运行！，👉 [下载地址](https://github.com/scottfly189/WeChatAuto.SDK/releases/tag/2.0.7)
 
 
-### 🚀请按下面的步骤使用:
+#### 🚀请按下面的步骤使用:
 - 请先下载[HTTP服务端](https://github.com/scottfly189/WeChatAuto.SDK/releases/tag/2.0.7),放置在本机/服务器的某个目录，然后解压缩
 - HTTP服务要与需要自动化的微信放在同一台电脑上 
 - 先打开微信，并登入自己账号，保持微信窗口为打开状态(非关闭状态); 
