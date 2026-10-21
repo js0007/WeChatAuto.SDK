@@ -334,569 +334,125 @@ await client.SendMessage("某好友", "好的", refer: new ChatRefer
 // 发文件（多个）
 await client.SendFile("某好友", new[] { @"C:\report.pdf", @"C:\photo.jpg" });
 
-// 发表情Emoji（按名称或索引）
+// 发表情（按名称或索引）
 await client.SendEmoji("某好友", "[微笑]");
 await client.SendEmoji("某好友", 1);
 ```
 
 <details>
-<summary>👉 所有可用的表情</summary>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">索引 (index)</th>
-<th style="text-align: center;">描述 (desc)</th>
-<th style="text-align: center;">表情名 (value)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;">1</td>
-<td style="text-align: center;">微笑</td>
-<td style="text-align: center;">[微笑]</td>
-</tr>
-<tr>
-<td style="text-align: center;">2</td>
-<td style="text-align: center;">撇嘴</td>
-<td style="text-align: center;">[撇嘴]</td>
-</tr>
-<tr>
-<td style="text-align: center;">3</td>
-<td style="text-align: center;">色色表情</td>
-<td style="text-align: center;">[色]</td>
-</tr>
-<tr>
-<td style="text-align: center;">4</td>
-<td style="text-align: center;">发呆</td>
-<td style="text-align: center;">[发呆]</td>
-</tr>
-<tr>
-<td style="text-align: center;">5</td>
-<td style="text-align: center;">得意</td>
-<td style="text-align: center;">[得意]</td>
-</tr>
-<tr>
-<td style="text-align: center;">6</td>
-<td style="text-align: center;">流泪</td>
-<td style="text-align: center;">[流泪]</td>
-</tr>
-<tr>
-<td style="text-align: center;">7</td>
-<td style="text-align: center;">害羞</td>
-<td style="text-align: center;">[害羞]</td>
-</tr>
-<tr>
-<td style="text-align: center;">8</td>
-<td style="text-align: center;">闭嘴</td>
-<td style="text-align: center;">[闭嘴]</td>
-</tr>
-<tr>
-<td style="text-align: center;">9</td>
-<td style="text-align: center;">睡</td>
-<td style="text-align: center;">[睡]</td>
-</tr>
-<tr>
-<td style="text-align: center;">10</td>
-<td style="text-align: center;">大哭</td>
-<td style="text-align: center;">[大哭]</td>
-</tr>
-<tr>
-<td style="text-align: center;">11</td>
-<td style="text-align: center;">尴尬</td>
-<td style="text-align: center;">[尴尬]</td>
-</tr>
-<tr>
-<td style="text-align: center;">12</td>
-<td style="text-align: center;">发怒</td>
-<td style="text-align: center;">[发怒]</td>
-</tr>
-<tr>
-<td style="text-align: center;">13</td>
-<td style="text-align: center;">调皮</td>
-<td style="text-align: center;">[调皮]</td>
-</tr>
-<tr>
-<td style="text-align: center;">14</td>
-<td style="text-align: center;">呲牙</td>
-<td style="text-align: center;">[呲牙]</td>
-</tr>
-<tr>
-<td style="text-align: center;">15</td>
-<td style="text-align: center;">惊讶</td>
-<td style="text-align: center;">[惊讶]</td>
-</tr>
-<tr>
-<td style="text-align: center;">16</td>
-<td style="text-align: center;">难过</td>
-<td style="text-align: center;">[难过]</td>
-</tr>
-<tr>
-<td style="text-align: center;">17</td>
-<td style="text-align: center;">囧</td>
-<td style="text-align: center;">[囧]</td>
-</tr>
-<tr>
-<td style="text-align: center;">18</td>
-<td style="text-align: center;">抓狂</td>
-<td style="text-align: center;">[抓狂]</td>
-</tr>
-<tr>
-<td style="text-align: center;">19</td>
-<td style="text-align: center;">吐</td>
-<td style="text-align: center;">[吐]</td>
-</tr>
-<tr>
-<td style="text-align: center;">20</td>
-<td style="text-align: center;">偷笑</td>
-<td style="text-align: center;">[偷笑]</td>
-</tr>
-<tr>
-<td style="text-align: center;">21</td>
-<td style="text-align: center;">愉快</td>
-<td style="text-align: center;">[愉快]</td>
-</tr>
-<tr>
-<td style="text-align: center;">22</td>
-<td style="text-align: center;">白眼</td>
-<td style="text-align: center;">[白眼]</td>
-</tr>
-<tr>
-<td style="text-align: center;">23</td>
-<td style="text-align: center;">傲慢</td>
-<td style="text-align: center;">[傲慢]</td>
-</tr>
-<tr>
-<td style="text-align: center;">24</td>
-<td style="text-align: center;">困</td>
-<td style="text-align: center;">[困]</td>
-</tr>
-<tr>
-<td style="text-align: center;">25</td>
-<td style="text-align: center;">惊恐</td>
-<td style="text-align: center;">[惊恐]</td>
-</tr>
-<tr>
-<td style="text-align: center;">26</td>
-<td style="text-align: center;">憨笑</td>
-<td style="text-align: center;">[憨笑]</td>
-</tr>
-<tr>
-<td style="text-align: center;">27</td>
-<td style="text-align: center;">悠闲</td>
-<td style="text-align: center;">[悠闲]</td>
-</tr>
-<tr>
-<td style="text-align: center;">28</td>
-<td style="text-align: center;">咒骂</td>
-<td style="text-align: center;">[咒骂]</td>
-</tr>
-<tr>
-<td style="text-align: center;">29</td>
-<td style="text-align: center;">疑问</td>
-<td style="text-align: center;">[疑问]</td>
-</tr>
-<tr>
-<td style="text-align: center;">30</td>
-<td style="text-align: center;">嘘</td>
-<td style="text-align: center;">[嘘]</td>
-</tr>
-<tr>
-<td style="text-align: center;">31</td>
-<td style="text-align: center;">晕</td>
-<td style="text-align: center;">[晕]</td>
-</tr>
-<tr>
-<td style="text-align: center;">32</td>
-<td style="text-align: center;">衰</td>
-<td style="text-align: center;">[衰]</td>
-</tr>
-<tr>
-<td style="text-align: center;">33</td>
-<td style="text-align: center;">骷髅</td>
-<td style="text-align: center;">[骷髅]</td>
-</tr>
-<tr>
-<td style="text-align: center;">34</td>
-<td style="text-align: center;">敲打</td>
-<td style="text-align: center;">[敲打]</td>
-</tr>
-<tr>
-<td style="text-align: center;">35</td>
-<td style="text-align: center;">再见</td>
-<td style="text-align: center;">[再见]</td>
-</tr>
-<tr>
-<td style="text-align: center;">36</td>
-<td style="text-align: center;">擦汗</td>
-<td style="text-align: center;">[擦汗]</td>
-</tr>
-<tr>
-<td style="text-align: center;">37</td>
-<td style="text-align: center;">抠鼻</td>
-<td style="text-align: center;">[抠鼻]</td>
-</tr>
-<tr>
-<td style="text-align: center;">38</td>
-<td style="text-align: center;">鼓掌</td>
-<td style="text-align: center;">[鼓掌]</td>
-</tr>
-<tr>
-<td style="text-align: center;">39</td>
-<td style="text-align: center;">坏笑</td>
-<td style="text-align: center;">[坏笑]</td>
-</tr>
-<tr>
-<td style="text-align: center;">40</td>
-<td style="text-align: center;">右哼哼</td>
-<td style="text-align: center;">[右哼哼]</td>
-</tr>
-<tr>
-<td style="text-align: center;">41</td>
-<td style="text-align: center;">鄙视</td>
-<td style="text-align: center;">[鄙视]</td>
-</tr>
-<tr>
-<td style="text-align: center;">42</td>
-<td style="text-align: center;">委屈</td>
-<td style="text-align: center;">[委屈]</td>
-</tr>
-<tr>
-<td style="text-align: center;">43</td>
-<td style="text-align: center;">快哭了</td>
-<td style="text-align: center;">[快哭了]</td>
-</tr>
-<tr>
-<td style="text-align: center;">44</td>
-<td style="text-align: center;">阴险</td>
-<td style="text-align: center;">[阴险]</td>
-</tr>
-<tr>
-<td style="text-align: center;">45</td>
-<td style="text-align: center;">亲亲</td>
-<td style="text-align: center;">[亲亲]</td>
-</tr>
-<tr>
-<td style="text-align: center;">46</td>
-<td style="text-align: center;">可怜</td>
-<td style="text-align: center;">[可怜]</td>
-</tr>
-<tr>
-<td style="text-align: center;">47</td>
-<td style="text-align: center;">笑脸</td>
-<td style="text-align: center;">[笑脸]</td>
-</tr>
-<tr>
-<td style="text-align: center;">48</td>
-<td style="text-align: center;">生病</td>
-<td style="text-align: center;">[生病]</td>
-</tr>
-<tr>
-<td style="text-align: center;">49</td>
-<td style="text-align: center;">脸红</td>
-<td style="text-align: center;">[脸红]</td>
-</tr>
-<tr>
-<td style="text-align: center;">50</td>
-<td style="text-align: center;">破涕为笑</td>
-<td style="text-align: center;">[破涕为笑]</td>
-</tr>
-<tr>
-<td style="text-align: center;">51</td>
-<td style="text-align: center;">恐惧</td>
-<td style="text-align: center;">[恐惧]</td>
-</tr>
-<tr>
-<td style="text-align: center;">52</td>
-<td style="text-align: center;">失望</td>
-<td style="text-align: center;">[失望]</td>
-</tr>
-<tr>
-<td style="text-align: center;">53</td>
-<td style="text-align: center;">无语</td>
-<td style="text-align: center;">[无语]</td>
-</tr>
-<tr>
-<td style="text-align: center;">54</td>
-<td style="text-align: center;">嘿哈</td>
-<td style="text-align: center;">[嘿哈]</td>
-</tr>
-<tr>
-<td style="text-align: center;">55</td>
-<td style="text-align: center;">捂脸</td>
-<td style="text-align: center;">[捂脸]</td>
-</tr>
-<tr>
-<td style="text-align: center;">56</td>
-<td style="text-align: center;">奸笑</td>
-<td style="text-align: center;">[奸笑]</td>
-</tr>
-<tr>
-<td style="text-align: center;">57</td>
-<td style="text-align: center;">机智</td>
-<td style="text-align: center;">[机智]</td>
-</tr>
-<tr>
-<td style="text-align: center;">58</td>
-<td style="text-align: center;">皱眉</td>
-<td style="text-align: center;">[皱眉]</td>
-</tr>
-<tr>
-<td style="text-align: center;">59</td>
-<td style="text-align: center;">耶</td>
-<td style="text-align: center;">[耶]</td>
-</tr>
-<tr>
-<td style="text-align: center;">60</td>
-<td style="text-align: center;">吃瓜</td>
-<td style="text-align: center;">[吃瓜]</td>
-</tr>
-<tr>
-<td style="text-align: center;">61</td>
-<td style="text-align: center;">加油</td>
-<td style="text-align: center;">[加油]</td>
-</tr>
-<tr>
-<td style="text-align: center;">62</td>
-<td style="text-align: center;">汗</td>
-<td style="text-align: center;">[汗]</td>
-</tr>
-<tr>
-<td style="text-align: center;">63</td>
-<td style="text-align: center;">天啊</td>
-<td style="text-align: center;">[天啊]</td>
-</tr>
-<tr>
-<td style="text-align: center;">64</td>
-<td style="text-align: center;">嗯嗯嗯</td>
-<td style="text-align: center;">[Emm]</td>
-</tr>
-<tr>
-<td style="text-align: center;">65</td>
-<td style="text-align: center;">社会社会</td>
-<td style="text-align: center;">[社会社会]</td>
-</tr>
-<tr>
-<td style="text-align: center;">66</td>
-<td style="text-align: center;">旺柴</td>
-<td style="text-align: center;">[旺柴]</td>
-</tr>
-<tr>
-<td style="text-align: center;">67</td>
-<td style="text-align: center;">好的</td>
-<td style="text-align: center;">[好的]</td>
-</tr>
-<tr>
-<td style="text-align: center;">68</td>
-<td style="text-align: center;">打脸</td>
-<td style="text-align: center;">[打脸]</td>
-</tr>
-<tr>
-<td style="text-align: center;">69</td>
-<td style="text-align: center;">哇</td>
-<td style="text-align: center;">[哇]</td>
-</tr>
-<tr>
-<td style="text-align: center;">70</td>
-<td style="text-align: center;">翻白眼</td>
-<td style="text-align: center;">[翻白眼]</td>
-</tr>
-<tr>
-<td style="text-align: center;">71</td>
-<td style="text-align: center;">666</td>
-<td style="text-align: center;">[666]</td>
-</tr>
-<tr>
-<td style="text-align: center;">72</td>
-<td style="text-align: center;">让我看看</td>
-<td style="text-align: center;">[让我看看]</td>
-</tr>
-<tr>
-<td style="text-align: center;">73</td>
-<td style="text-align: center;">叹气</td>
-<td style="text-align: center;">[叹气]</td>
-</tr>
-<tr>
-<td style="text-align: center;">74</td>
-<td style="text-align: center;">苦涩</td>
-<td style="text-align: center;">[苦涩]</td>
-</tr>
-<tr>
-<td style="text-align: center;">75</td>
-<td style="text-align: center;">裂开</td>
-<td style="text-align: center;">[裂开]</td>
-</tr>
-<tr>
-<td style="text-align: center;">76</td>
-<td style="text-align: center;">嘴唇</td>
-<td style="text-align: center;">[嘴唇]</td>
-</tr>
-<tr>
-<td style="text-align: center;">77</td>
-<td style="text-align: center;">爱心</td>
-<td style="text-align: center;">[爱心]</td>
-</tr>
-<tr>
-<td style="text-align: center;">78</td>
-<td style="text-align: center;">心碎</td>
-<td style="text-align: center;">[心碎]</td>
-</tr>
-<tr>
-<td style="text-align: center;">79</td>
-<td style="text-align: center;">拥抱</td>
-<td style="text-align: center;">[拥抱]</td>
-</tr>
-<tr>
-<td style="text-align: center;">80</td>
-<td style="text-align: center;">强</td>
-<td style="text-align: center;">[强]</td>
-</tr>
-<tr>
-<td style="text-align: center;">81</td>
-<td style="text-align: center;">弱</td>
-<td style="text-align: center;">[弱]</td>
-</tr>
-<tr>
-<td style="text-align: center;">82</td>
-<td style="text-align: center;">握手</td>
-<td style="text-align: center;">[握手]</td>
-</tr>
-<tr>
-<td style="text-align: center;">83</td>
-<td style="text-align: center;">胜利</td>
-<td style="text-align: center;">[胜利]</td>
-</tr>
-<tr>
-<td style="text-align: center;">84</td>
-<td style="text-align: center;">抱拳</td>
-<td style="text-align: center;">[抱拳]</td>
-</tr>
-<tr>
-<td style="text-align: center;">85</td>
-<td style="text-align: center;">勾引</td>
-<td style="text-align: center;">[勾引]</td>
-</tr>
-<tr>
-<td style="text-align: center;">86</td>
-<td style="text-align: center;">拳头</td>
-<td style="text-align: center;">[拳头]</td>
-</tr>
-<tr>
-<td style="text-align: center;">87</td>
-<td style="text-align: center;">OK</td>
-<td style="text-align: center;">[OK]</td>
-</tr>
-<tr>
-<td style="text-align: center;">88</td>
-<td style="text-align: center;">合十</td>
-<td style="text-align: center;">[合十]</td>
-</tr>
-<tr>
-<td style="text-align: center;">89</td>
-<td style="text-align: center;">啤酒</td>
-<td style="text-align: center;">[啤酒]</td>
-</tr>
-<tr>
-<td style="text-align: center;">90</td>
-<td style="text-align: center;">咖啡</td>
-<td style="text-align: center;">[咖啡]</td>
-</tr>
-<tr>
-<td style="text-align: center;">91</td>
-<td style="text-align: center;">蛋糕</td>
-<td style="text-align: center;">[蛋糕]</td>
-</tr>
-<tr>
-<td style="text-align: center;">92</td>
-<td style="text-align: center;">玫瑰</td>
-<td style="text-align: center;">[玫瑰]</td>
-</tr>
-<tr>
-<td style="text-align: center;">93</td>
-<td style="text-align: center;">凋谢</td>
-<td style="text-align: center;">[凋谢]</td>
-</tr>
-<tr>
-<td style="text-align: center;">94</td>
-<td style="text-align: center;">菜刀</td>
-<td style="text-align: center;">[菜刀]</td>
-</tr>
-<tr>
-<td style="text-align: center;">95</td>
-<td style="text-align: center;">炸弹</td>
-<td style="text-align: center;">[炸弹]</td>
-</tr>
-<tr>
-<td style="text-align: center;">96</td>
-<td style="text-align: center;">便便</td>
-<td style="text-align: center;">[便便]</td>
-</tr>
-<tr>
-<td style="text-align: center;">97</td>
-<td style="text-align: center;">月亮</td>
-<td style="text-align: center;">[月亮]</td>
-</tr>
-<tr>
-<td style="text-align: center;">98</td>
-<td style="text-align: center;">太阳</td>
-<td style="text-align: center;">[太阳]</td>
-</tr>
-<tr>
-<td style="text-align: center;">99</td>
-<td style="text-align: center;">庆祝</td>
-<td style="text-align: center;">[庆祝]</td>
-</tr>
-<tr>
-<td style="text-align: center;">100</td>
-<td style="text-align: center;">礼物</td>
-<td style="text-align: center;">[礼物]</td>
-</tr>
-<tr>
-<td style="text-align: center;">101</td>
-<td style="text-align: center;">红包</td>
-<td style="text-align: center;">[红包]</td>
-</tr>
-<tr>
-<td style="text-align: center;">102</td>
-<td style="text-align: center;">發</td>
-<td style="text-align: center;">[發]</td>
-</tr>
-<tr>
-<td style="text-align: center;">103</td>
-<td style="text-align: center;">福</td>
-<td style="text-align: center;">[福]</td>
-</tr>
-<tr>
-<td style="text-align: center;">104</td>
-<td style="text-align: center;">烟花</td>
-<td style="text-align: center;">[烟花]</td>
-</tr>
-<tr>
-<td style="text-align: center;">105</td>
-<td style="text-align: center;">爆竹</td>
-<td style="text-align: center;">[爆竹]</td>
-</tr>
-<tr>
-<td style="text-align: center;">106</td>
-<td style="text-align: center;">猪头</td>
-<td style="text-align: center;">[猪头]</td>
-</tr>
-<tr>
-<td style="text-align: center;">107</td>
-<td style="text-align: center;">跳跳</td>
-<td style="text-align: center;">[跳跳]</td>
-</tr>
-<tr>
-<td style="text-align: center;">108</td>
-<td style="text-align: center;">发抖</td>
-<td style="text-align: center;">[发抖]</td>
-</tr>
-<tr>
-<td style="text-align: center;">109</td>
-<td style="text-align: center;">转圈</td>
-<td style="text-align: center;">[转圈]</td>
-</tr>
-</tbody>
-</table>
+<summary>所有表情名称/索引列表</summary>
+
+| 索引 (index) | 描述 (desc) | 表情名 (value) |
+| ---: | --- | --- |
+| 1 | 微笑 | [微笑] |
+| 2 | 撇嘴 | [撇嘴] |
+| 3 | 色色表情 | [色] |
+| 4 | 发呆 | [发呆] |
+| 5 | 得意 | [得意] |
+| 6 | 流泪 | [流泪] |
+| 7 | 害羞 | [害羞] |
+| 8 | 闭嘴 | [闭嘴] |
+| 9 | 睡 | [睡] |
+| 10 | 大哭 | [大哭] |
+| 11 | 尴尬 | [尴尬] |
+| 12 | 发怒 | [发怒] |
+| 13 | 调皮 | [调皮] |
+| 14 | 呲牙 | [呲牙] |
+| 15 | 惊讶 | [惊讶] |
+| 16 | 难过 | [难过] |
+| 17 | 囧 | [囧] |
+| 18 | 抓狂 | [抓狂] |
+| 19 | 吐 | [吐] |
+| 20 | 偷笑 | [偷笑] |
+| 21 | 愉快 | [愉快] |
+| 22 | 白眼 | [白眼] |
+| 23 | 傲慢 | [傲慢] |
+| 24 | 困 | [困] |
+| 25 | 惊恐 | [惊恐] |
+| 26 | 憨笑 | [憨笑] |
+| 27 | 悠闲 | [悠闲] |
+| 28 | 咒骂 | [咒骂] |
+| 29 | 疑问 | [疑问] |
+| 30 | 嘘 | [嘘] |
+| 31 | 晕 | [晕] |
+| 32 | 衰 | [衰] |
+| 33 | 骷髅 | [骷髅] |
+| 34 | 敲打 | [敲打] |
+| 35 | 再见 | [再见] |
+| 36 | 擦汗 | [擦汗] |
+| 37 | 抠鼻 | [抠鼻] |
+| 38 | 鼓掌 | [鼓掌] |
+| 39 | 坏笑 | [坏笑] |
+| 40 | 右哼哼 | [右哼哼] |
+| 41 | 鄙视 | [鄙视] |
+| 42 | 委屈 | [委屈] |
+| 43 | 快哭了 | [快哭了] |
+| 44 | 阴险 | [阴险] |
+| 45 | 亲亲 | [亲亲] |
+| 46 | 可怜 | [可怜] |
+| 47 | 笑脸 | [笑脸] |
+| 48 | 生病 | [生病] |
+| 49 | 脸红 | [脸红] |
+| 50 | 破涕为笑 | [破涕为笑] |
+| 51 | 恐惧 | [恐惧] |
+| 52 | 失望 | [失望] |
+| 53 | 无语 | [无语] |
+| 54 | 嘿哈 | [嘿哈] |
+| 55 | 捂脸 | [捂脸] |
+| 56 | 奸笑 | [奸笑] |
+| 57 | 机智 | [机智] |
+| 58 | 皱眉 | [皱眉] |
+| 59 | 耶 | [耶] |
+| 60 | 吃瓜 | [吃瓜] |
+| 61 | 加油 | [加油] |
+| 62 | 汗 | [汗] |
+| 63 | 天啊 | [天啊] |
+| 64 | 嗯嗯嗯 | [Emm] |
+| 65 | 社会社会 | [社会社会] |
+| 66 | 旺柴 | [旺柴] |
+| 67 | 好的 | [好的] |
+| 68 | 打脸 | [打脸] |
+| 69 | 哇 | [哇] |
+| 70 | 翻白眼 | [翻白眼] |
+| 71 | 666 | [666] |
+| 72 | 让我看看 | [让我看看] |
+| 73 | 叹气 | [叹气] |
+| 74 | 苦涩 | [苦涩] |
+| 75 | 裂开 | [裂开] |
+| 76 | 嘴唇 | [嘴唇] |
+| 77 | 爱心 | [爱心] |
+| 78 | 心碎 | [心碎] |
+| 79 | 拥抱 | [拥抱] |
+| 80 | 强 | [强] |
+| 81 | 弱 | [弱] |
+| 82 | 握手 | [握手] |
+| 83 | 胜利 | [胜利] |
+| 84 | 抱拳 | [抱拳] |
+| 85 | 勾引 | [勾引] |
+| 86 | 拳头 | [拳头] |
+| 87 | OK | [OK] |
+| 88 | 合十 | [合十] |
+| 89 | 啤酒 | [啤酒] |
+| 90 | 咖啡 | [咖啡] |
+| 91 | 蛋糕 | [蛋糕] |
+| 92 | 玫瑰 | [玫瑰] |
+| 93 | 凋谢 | [凋谢] |
+| 94 | 菜刀 | [菜刀] |
+| 95 | 炸弹 | [炸弹] |
+| 96 | 便便 | [便便] |
+| 97 | 月亮 | [月亮] |
+| 98 | 太阳 | [太阳] |
+| 99 | 庆祝 | [庆祝] |
+| 100 | 礼物 | [礼物] |
+| 101 | 红包 | [红包] |
+| 102 | 發 | [發] |
+| 103 | 福 | [福] |
+| 104 | 烟花 | [烟花] |
+| 105 | 爆竹 | [爆竹] |
+| 106 | 猪头 | [猪头] |
+| 107 | 跳跳 | [跳跳] |
+| 108 | 发抖 | [发抖] |
+| 109 | 转圈 | [转圈] |
 
 </detials>
 
