@@ -207,7 +207,7 @@ client
 
 ## 7. 官方客户端 SDK（多语言）
 
-不想手写 HTTP 请求的话，仓库已提供 **7 个语言**、由 `swagger.json` 自动生成的官方客户端 SDK，位于 `HttpSupport/Client/`。
+!>不想手写 HTTP 请求的话，仓库已提供 **7 个语言**、由 `swagger.json` 自动生成的官方客户端 SDK，位于 [HttpSupport/Client](https://github.com/scottfly189/WeChatAuto.SDK/tree/master/WeChatAuto4_X/HttpSupport/Client)中。
 
 统一约定：
 
