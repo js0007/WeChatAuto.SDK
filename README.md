@@ -65,7 +65,7 @@
 
 > [!IMPORTANT]
 > 使用前请用Claude code 安装.net10环境
-> 更多使用请参见: [使用指南](./docs/index.html)
+> 更多使用请参见: [使用指南](https://scottfly189.github.io/WeChatAuto.SDK/main.html#/README)
 
 1. 新建一个.net10控制台项目
 
