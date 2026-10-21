@@ -352,7 +352,7 @@ req.message = "你好";
 std::string result = client.sendMessage("wxid_xxx", req);
 ```
 
-> 每个语言目录内都自带 README 与单元测试；测试通过 mock/fake 传输层离线验证 URL、查询参数、`X-API-Key` 头与 JSON 请求体，**无需运行服务端**。更多细节见 `HttpSupport/Client/README.md` 及各语言目录下的 README。
+> 每个语言目录内都自带 README 与单元测试；测试通过 mock/fake 传输层离线验证 URL、查询参数、`X-API-Key` 头与 JSON 请求体。更多细节见 `HttpSupport/Client/README.md` 及各语言目录下的 README。
 
 ## 8. 接口参考
 
