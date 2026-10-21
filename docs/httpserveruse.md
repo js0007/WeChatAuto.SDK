@@ -21,7 +21,7 @@
 
 ## 使用步骤
 
-!> **注意**： HTTP服务需要先下载！ 👉 [下载地址](https://github.com/scottfly189/WeChatAuto.SDK/releases/tag/2.0.7)
+!> **注意**： HTTP服务需要先下载！ 👉 [下载](https://github.com/scottfly189/WeChatAuto.SDK/releases/download/2.0.7/community_allin.rar)
 
 
 #### 🚀请按下面的步骤使用:

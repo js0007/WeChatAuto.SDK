@@ -23,14 +23,17 @@
 |---|---|---|
 | 适合 | .NET / Windows 原生应用，需要事件回调、低延迟、完整 API | 后端/云服务、跨语言、多系统共享、快速集成 |
 | 入口 | `WeAutomation.Initialize(...)` → `WeChatClientFactory` → `WeChatClient` | 启动 Server，REST + Swagger，`http://<主机>:5000` |
-| 特点 | 类型安全、能力最全、深度定制 | 语言无关、进程隔离、可远程、开箱即用 |
+| 特点 | 类型安全、能力最全、深度定制 | 语言无关、进程隔离、可远程、开箱即用,仅需要UI设置，不需要一行代码就能开启消息监听/自动通过加好友 |
 
 !> 绝大多数场景推荐 HTTP WebAPI 方式；需要 dll/Nuget包、深度回调时选内嵌方式。
 
 ## 🧠 内嵌开发方式
 
-👉 请参考[内嵌开发方式指南](https://scottfly189.github.io/WeChatAuto.SDK/main.html#/inlineuse)
+👉 请参考 [内嵌开发方式指南](https://scottfly189.github.io/WeChatAuto.SDK/main.html#/inlineuse)
 
 ## 🌐 HTTP WebAPI开发方式
 
-👉 请参考[Http WebAPI开发方式指南](https://scottfly189.github.io/WeChatAuto.SDK/main.html#/httpserveruse)
+请先下载[HTTP WebAPI服务端](https://github.com/scottfly189/WeChatAuto.SDK/releases/download/2.0.7/community_allin.rar),并且HTTP服务端要与微信在同一台电脑,先打开微信，再打开```HTTP WebAPI服务端```;
+
+👉 然后请参考 [Http WebAPI开发方式指南](https://scottfly189.github.io/WeChatAuto.SDK/main.html#/httpserveruse)
+
