@@ -150,6 +150,13 @@ var client = clientFactory.GetWeChatClient(names.First());
 await client.SendMessage("某好友", "hello world!!");
 ```
 
+5. 编译、运行
+
+```bash
+dotnet build
+dotnet run
+```
+
 !> 运行前提：微信已登录且窗口可见；若报 `WechatNotOpenedException` / `WechatNotSupportUITreeException`，请回到 [2.2 UI Tree](#22-ui-tree最关键的前置条件) 排查。
 
 ---
