@@ -357,6 +357,9 @@ await client.SendVoiceMessage("某好友", @"C:\audio\hello.wav");
 
 #### 文字转语音（TTS，💎）
 
+!> 文字转语音及声音复刻内部使用了通义千问非实时语音合成模型: qwen-audio-3.0-tts-flash,详细了解请阅读[千问AI平台 - 语音合成](https://platform.qianwenai.com/docs/developer-guides/speech/tts-models)
+
+
 ```csharp
 // 系统默认走阿里千问 Qwen-Audio-TTS
 await client.SendVoiceMessageWithTTS(
@@ -373,6 +376,21 @@ await client.SendVoiceMessageWithTTS(
         Instructions = "用温柔的语气说，语速稍慢"
     });
 ```
+
+### 声音复刻（💎）
+
+```csharp
+// 上传参考音频克隆音色，返回 voice_id，可用于后续 TTS
+var voiceId = await client.CloneVoice(
+    "sk-你的千问APIKey",
+    "https://example.com/ref.wav");   // 参考音频公网 URL
+
+// 后续用它发语音
+await client.SendVoiceMessageWithTTS("某好友", "sk-xxx", "你好",
+    new VoiceOptions { Voice = voiceId });
+```
+
+!> 复刻的 `targetModel` 必须与合成时的 `model` 一致，不能跨模型使用。
 
 ### 7.4 获取消息与聊天历史
 
@@ -567,21 +585,6 @@ await client.ForwardMultipleMessage("某好友", "某群", rowCount: 5);
 // 转发单条
 await client.ForwardSingleMessage("某好友", "某条消息内容", "某群");
 ```
-
-### 7.12 声音复刻（💎）
-
-```csharp
-// 上传参考音频克隆音色，返回 voice_id，可用于后续 TTS
-var voiceId = await client.CloneVoice(
-    "sk-你的千问APIKey",
-    "https://example.com/ref.wav");   // 参考音频公网 URL
-
-// 后续用它发语音
-await client.SendVoiceMessageWithTTS("某好友", "sk-xxx", "你好",
-    new VoiceOptions { Voice = voiceId });
-```
-
-!> 复刻的 `targetModel` 必须与合成时的 `model` 一致，不能跨模型使用。
 
 ---
 
