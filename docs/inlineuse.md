@@ -340,8 +340,7 @@ await client.SendEmoji("某好友", 1);
 ```
 
 <details>
-<summary>所有表情名称/索引列表</summary>
-
+<summary>👉 所有表情名称/索引列表</summary>
 | 索引 (index) | 描述 (desc) | 表情名 (value) |
 | ---: | --- | --- |
 | 1 | 微笑 | [微笑] |
@@ -453,7 +452,6 @@ await client.SendEmoji("某好友", 1);
 | 107 | 跳跳 | [跳跳] |
 | 108 | 发抖 | [发抖] |
 | 109 | 转圈 | [转圈] |
-
 </detials>
 
 #### 语音 / 视频通话
