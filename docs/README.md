@@ -27,10 +27,10 @@
 
 !> 绝大多数场景推荐 HTTP WebAPI 方式；需要 dll/Nuget包、深度回调时选内嵌方式。
 
-## 内嵌开发方式
+## 🧠 内嵌开发方式
 
-请参考[内嵌开发方式指南](https://scottfly189.github.io/WeChatAuto.SDK/main.html#/inlineuse)
+👉 请参考[内嵌开发方式指南](https://scottfly189.github.io/WeChatAuto.SDK/main.html#/inlineuse)
 
-## HTTP WebAPI开发方式
+## 🌐 HTTP WebAPI开发方式
 
-请参考[Http WebAPI开发方式指南](https://scottfly189.github.io/WeChatAuto.SDK/main.html#/httpserveruse)
+👉 请参考[Http WebAPI开发方式指南](https://scottfly189.github.io/WeChatAuto.SDK/main.html#/httpserveruse)
