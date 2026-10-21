@@ -648,7 +648,7 @@ var f3 = client.GetFriendsFromCache("某好友");   // 重名时返回多个
 client.AddOrUpdateFriendFromCache(f1);
 client.RemoveFriendFromCache("某好友");
 
-// 加好友（手机号 / 微信号）
+// 通过手机号/微信号 加好友
 var results = await client.AddFriends(
     new[] { "13800138000", "wxid_xxxx" },
     new AddFriendsOptions
@@ -667,21 +667,36 @@ await client.RemoveFriend("某好友");
 ### 7.7 群管理
 
 ```csharp
+// 判断是否是自有群
+bool isOwner = await client.IsOwnerChatGroup("测试群");
+
 // 自有群
-await client.CreateOwnerChatGroup("测试群", "某好友", new[] { "张三", "李四" });
-await client.GetChatGroupMemberList("测试群");
+// 创建群聊：如果存在则打开群聊，否则创建一个新群聊（返回 Result，失败含原因）
+var createResult = await client.CreateOwnerChatGroup("测试群", "某好友", new[] { "张三", "李四" });
+// 获取群聊成员列表（群名可为空，空表示焦点群聊）
+var members = await client.GetChatGroupMemberList("测试群");
+// 添加群聊成员，适用于自有群（支持单个或数组）
 await client.AddOwnerChatGroupMember("测试群", "王五");
+// 移除群聊成员，适用于自有群（支持单个或数组）
 await client.RemoveOwnerChatGroupMember("测试群", "王五");
+// 修改群名，适用于自有群群名修改
 await client.ChangeOwnerChatGroupName("测试群", "新群名");
+// 修改自己在群中的昵称（nickName 为空则删除本群昵称）
+await client.ChangeChatGroupNickName("测试群", "我的昵称");
+// 改变群备注，群备注仅自己可见（newMemo 为空则删除备注）
 await client.ChangeChatGroupMemo("测试群", "这是备注");
+// 更新群聊公告，仅适用于自有群
 await client.UpdateGroupNotice("测试群", "大家好");
+// 获取群主昵称
 var owner = await client.GetGroupOwner("测试群");
-await client.QuitChatGroup("测试群");
+// 退出群聊（clearHistory 是否清除历史消息，默认 true）
+await client.QuitChatGroup("测试群", clearHistory: true);
 
 // 外部群
+// 邀请群聊成员（inviteReasonIfNeed：邀请原因，仅群管理员开启"进群需确认"时有效）
 await client.InviteChatGroupMember("某外部群", new List<string> { "张三", "李四" });
 
-// 群内加好友（微信严风控操作，谨慎分批）
+// 群内加好友（微信严风控操作，谨慎分批；options 可设置备注后缀/打招呼内容/标签）
 await client.AddChatGroupMemberToFriends("某外部群", new List<string> { "张三" });
 ```
 
