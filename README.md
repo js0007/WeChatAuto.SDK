@@ -15,7 +15,7 @@
 [![Rust](https://img.shields.io/badge/Rust-blue?logo=rust&logoColor=white)](https://www.rust-lang.org/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-**[Website](https://scottfly189.github.io/WeChatAuto.SDK/) · [Guides](https://scottfly189.github.io/WeChatAuto.SDK/main.html#/README) · [Faq](#-faq)**
+**[Website](https://scottfly189.github.io/WeChatAuto.SDK/) · [Guides](https://scottfly189.github.io/WeChatAuto.SDK/main.html#/README) · [FAQ](#-faq)**
 
 [为什么选择我们?](./docs/why.md)
 
@@ -158,7 +158,7 @@ Wechatauto.SDK分为社区版和VIP版，社区版是完全开源的，VIP版为
 
 本项目采用 MIT 许可证。详见 [LICENSE](LICENSE) 文件。
 
-## 🔆 Faq
+## 🔆 FAQ
 <details>
 <summary>❓ 运行WechatAuto.sdk的示例自动化不了微信客户端？</summary>
 回答：请按下面的步骤检查：
