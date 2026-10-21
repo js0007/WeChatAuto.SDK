@@ -340,8 +340,8 @@ await client.SendEmoji("某好友", 1);
 
 ```
 
-<details>
-<summary>👉 所有表情名称/索引列表</summary>
+👉 <details>
+<summary>所有表情名称/索引列表</summary>
 
 |索引(index)|描述 (desc)|表情名 (value)|
 |:---:|:---:|:---:|
