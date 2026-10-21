@@ -64,6 +64,6 @@ WeAutomation.Initialize(builder.Services, options =>
 
 如下图所示：
 
-![剪切板](./clipboard.png)
+![剪切板](./images/clipboard.png)
 
 
