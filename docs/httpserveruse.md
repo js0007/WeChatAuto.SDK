@@ -8,7 +8,8 @@
 - 团队/业务方不想碰 .NET，只想用 HTTP 快速集成。
 - 需要开箱即用的 GUI 管理界面、Swagger 在线文档与调试、定时发送、好友自动通过等现成功能。
 - 希望业务与自动化解耦：自动化作为独立服务运维，业务代码只依赖稳定的 HTTP 契约。
-  
+
+
 ## 优点
 - 语言无关：任何能发 HTTP、解析 JSON 的语言都能用，无需依赖 .NET;
 - 进程隔离：自动化跑在独立 Server 进程里，业务系统崩溃不影响微信自动化；SDK 升级只需替换 Server;
@@ -20,8 +21,10 @@
 
 ## 使用步骤
 
->[IMPORTANT]
-> HTTP服务需要先下载再运行！，👉 [下载地址](https://github.com/scottfly189/WeChatAuto.SDK/releases/tag/2.0.7)
+>[!IMPORTANT]
+> HTTP服务需要先下载再运行！|
+> 
+> 👉 [下载地址](https://github.com/scottfly189/WeChatAuto.SDK/releases/tag/2.0.7)
 
 
 #### 🚀请按下面的步骤使用:
