@@ -38,6 +38,12 @@
 !> 也可以浏览[在线Swagger](https://scottfly189.github.io/WeChatAuto.SDK/api-site/index.html),但是请不要操作，因为服务器没有打开对应的微信,具体还是以你本地打开的HTTP WebAPI服务为准！
 
 # 二、HTTP服务使用指南
+!> 请使用者在使用前阅读本 `HTTP服务使用指南`,重要！
+
+1. 请先下载[HTTP服务端](https://github.com/scottfly189/WeChatAuto.SDK/releases/tag/2.0.7),放置在本机/服务器的某个目录，然后解压缩;
+2. 在解压缩的目录中打开 `Server.exe` 应用，如下图所示:
+
+![打开server](./images/server_1_open_2.png)
 
 
 # 三、HTTP WebAPI 接入指南
