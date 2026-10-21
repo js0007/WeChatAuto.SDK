@@ -241,8 +241,3 @@ WeAutomation.Initialize(builder.Services, options =>
 ## ⚒️ 免责声明
 
 本 SDK 仅供学习和研究使用，请遵守微信使用条款，不得用于任何违法违规用途。使用本 SDK 产生的任何后果由使用者自行承担。
-
-
-WeChatAuto.SDK 通过 UI Automation 与微信客户端交互。[^1]
-
-[^1]: 具体能力取决于微信版本、UI 结构和系统环境。
