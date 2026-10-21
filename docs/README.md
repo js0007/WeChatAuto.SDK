@@ -1,3 +1,5 @@
+# 🔆 WECHATAUTO.SDK简介
+
 [![.NET](https://img.shields.io/badge/.NET-6.0%2B-blue)](https://dotnet.microsoft.com/)
 [![Python](https://img.shields.io/badge/Python-3.13%2B-blue?logo=python&logoColor=white)](https://www.python.org/)
 [![C++](https://img.shields.io/badge/C%2B%2B-blue?logo=cplusplus&logoColor=white)](https://isocpp.org/)
@@ -6,8 +8,6 @@
 [![Node.js](https://img.shields.io/badge/Node.js-blue?logo=nodedotjs&logoColor=white)](https://nodejs.org/)
 [![Rust](https://img.shields.io/badge/Rust-blue?logo=rust&logoColor=white)](https://www.rust-lang.org/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-
-# 🔆 WECHATAUTO.SDK简介
 
 !> 不Hook/内存注入、不修改微信客户端,不数据库破解，不越权访问微信数据,不被封号,通过 UI Automation 操作微信,不写一行代码获取微信消息，让你的微信 Agent/Wechat Bot 快速开发、快速上线、并安全发布到用户端
 
