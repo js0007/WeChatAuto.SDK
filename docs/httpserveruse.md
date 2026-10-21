@@ -25,15 +25,15 @@
 
 
 #### 🚀请按下面的步骤使用:
-- 请先下载[HTTP服务端](https://github.com/scottfly189/WeChatAuto.SDK/releases/tag/2.0.7),放置在本机/服务器的某个目录，然后解压缩
-- HTTP服务要与需要自动化的微信放在同一台电脑上 
-- 先打开微信，并登入自己账号，保持微信窗口为打开状态(非关闭状态); 
-- 最后打开HTTP服务(运行解压缩目录的Server.exe)
-- 双击或者右键屏幕右下角的HTTP服务，在弹出的控制台窗口中
-- HTTP服务请参见:[HTTP服务使用指南](#http服务使用指南)
-- HTTP WebAPI参考请参见:[HTTP WebAPI 接入指南](#http-webapi-接入指南)
-- 其他问题请参见[FAQ](https://github.com/scottfly189/WeChatAuto.SDK/blob/master/docs/faq.md)
-- 有什么问题或者功能增强要求，请提[Issues](https://github.com/scottfly189/WeChatAuto.SDK/issues)
+- 请先下载[HTTP服务端](https://github.com/scottfly189/WeChatAuto.SDK/releases/tag/2.0.7),放置在本机/服务器的某个目录，然后解压缩;
+- HTTP服务要与需要自动化的微信放在同一台电脑上;
+- 先打开微信，并登入自己账号，保持微信窗口为打开状态(非关闭状态),支持多微信; 
+- 最后打开HTTP服务(运行解压缩目录的Server.exe);
+- 双击或者右键屏幕右下角的HTTP服务，在弹出的控制台窗口中点击链接打开Swagger页面，请可以查看各类API了,也可以在线调试;
+- HTTP服务请参考:[HTTP服务使用指南](#http服务使用指南);
+- HTTP WebAPI参考请参考:[HTTP WebAPI 接入指南](#http-webapi-接入指南);
+- 其他问题请参见[FAQ](https://github.com/scottfly189/WeChatAuto.SDK/blob/master/docs/faq.md);
+- 有什么问题或者功能增强要求，请提[Issues](https://github.com/scottfly189/WeChatAuto.SDK/issues);
 
 # HTTP服务使用指南
 
