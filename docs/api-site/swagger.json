@@ -1,0 +1,3195 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "WECHATAUTO.SDK",
+    "description": "💯 <b>安全、快速构建微信 Agent 的开发基座</b> - <b><font color='red'>不注入</font></b>、<b><font color='red'>不破解</font></b>、<b><font color='red'>不写一行代码获取微信聊天记录</font></b>，让你<font color='red'>快速上线</font>你的微信应用，并<font color='red'>安全发布</font>到用户端！",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/v1/clients": {
+      "get": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "获取全部微信客户端的概要信息列表。",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}": {
+      "get": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "获取指定微信客户端的概要信息（昵称、wxid、头像路径、进程ID、窗口句柄、任务栏索引）。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/owner-info": {
+      "get": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "获取本微信的个人信息（头像文件位置、wxid、昵称）。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/avatar": {
+      "post": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "保存本微信头像到指定路径。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveAvatarRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveAvatarRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SaveAvatarRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/notify-icon/click": {
+      "post": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "点击任务栏微信图标，按索引或微信名称定位。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotifyIconClickRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotifyIconClickRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotifyIconClickRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/conversations": {
+      "get": {
+        "tags": [
+          "Conversations"
+        ],
+        "summary": "获取会话列表所有会话的标题。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/conversations/visible-titles": {
+      "get": {
+        "tags": [
+          "Conversations"
+        ],
+        "summary": "获取会话列表可见会话的标题。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/conversations/visible": {
+      "get": {
+        "tags": [
+          "Conversations"
+        ],
+        "summary": "获取可见会话列表（含名称、未读消息数、头像等）。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/conversations/search": {
+      "post": {
+        "tags": [
+          "Conversations"
+        ],
+        "summary": "搜索好友/群聊。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchConversationRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchConversationRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchConversationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/conversations/locate": {
+      "post": {
+        "tags": [
+          "Conversations"
+        ],
+        "summary": "定位会话，滚动会话列表使指定会话可见。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LocateConversationRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LocateConversationRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LocateConversationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/conversations/set-do-not-disturb": {
+      "post": {
+        "tags": [
+          "Conversations"
+        ],
+        "summary": "设置会话消息免打扰。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetDoNotDisturbRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetDoNotDisturbRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetDoNotDisturbRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/conversations/set-top-most": {
+      "post": {
+        "tags": [
+          "Conversations"
+        ],
+        "summary": "设置会话置顶。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetTopMostRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetTopMostRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetTopMostRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/friends/add-window/open": {
+      "post": {
+        "tags": [
+          "Friends"
+        ],
+        "summary": "打开新增朋友窗口。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/friends/add-window/close": {
+      "post": {
+        "tags": [
+          "Friends"
+        ],
+        "summary": "关闭新增朋友窗口。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/friends/add": {
+      "post": {
+        "tags": [
+          "Friends"
+        ],
+        "summary": "通过手机号码/微信号查找并添加好友。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddFriendsRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddFriendsRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddFriendsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/friends": {
+      "get": {
+        "tags": [
+          "Friends"
+        ],
+        "summary": "获取所有好友的信息列表（默认优先从缓存读取）。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fromCache",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/friends/names": {
+      "get": {
+        "tags": [
+          "Friends"
+        ],
+        "summary": "获取所有好友名称列表（有备注优先备注名）。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/friends/{nickName}": {
+      "delete": {
+        "tags": [
+          "Friends"
+        ],
+        "summary": "从通讯录移除好友。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "nickName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/friends/cache": {
+      "get": {
+        "tags": [
+          "Friends"
+        ],
+        "summary": "获取缓存中的全部好友信息列表。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Friends"
+        ],
+        "summary": "手动新增或修改缓存中的好友对象。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FriendInfo"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FriendInfo"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/FriendInfo"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/friends/cache/by-name/{who}": {
+      "get": {
+        "tags": [
+          "Friends"
+        ],
+        "summary": "按名称从缓存获取好友列表（适用于昵称重复场景）。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "who",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/friends/cache/by-wxid/{wxid}": {
+      "get": {
+        "tags": [
+          "Friends"
+        ],
+        "summary": "按 wxid 从缓存获取好友信息。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wxid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Friends"
+        ],
+        "summary": "按 wxid 从缓存移除好友。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wxid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/friends/cache/{who}": {
+      "get": {
+        "tags": [
+          "Friends"
+        ],
+        "summary": "按名称从缓存获取单个好友信息。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "who",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Friends"
+        ],
+        "summary": "按名称从缓存移除好友。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "who",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/groups/{groupName}/is-owner": {
+      "get": {
+        "tags": [
+          "Groups"
+        ],
+        "summary": "判断群聊是否为自有群。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "groupName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/groups/{groupName}/owner": {
+      "get": {
+        "tags": [
+          "Groups"
+        ],
+        "summary": "获取群主昵称。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "groupName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/groups/members": {
+      "get": {
+        "tags": [
+          "Groups"
+        ],
+        "summary": "获取群聊成员列表。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "groupName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Groups"
+        ],
+        "summary": "添加群聊成员（适用于自有群）。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupMemberRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupMemberRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupMemberRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Groups"
+        ],
+        "summary": "移除群聊成员（适用于自有群）。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupMemberRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupMemberRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GroupMemberRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/groups/{groupName}": {
+      "delete": {
+        "tags": [
+          "Groups"
+        ],
+        "summary": "退出群聊。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "groupName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "clearHistory",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/groups": {
+      "post": {
+        "tags": [
+          "Groups"
+        ],
+        "summary": "创建群聊，已存在则打开群聊。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateGroupRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateGroupRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateGroupRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/groups/name": {
+      "put": {
+        "tags": [
+          "Groups"
+        ],
+        "summary": "修改群名（适用于自有群）。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RenameGroupRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RenameGroupRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RenameGroupRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/groups/nickname": {
+      "put": {
+        "tags": [
+          "Groups"
+        ],
+        "summary": "修改自己在群中的昵称。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeGroupNickNameRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeGroupNickNameRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeGroupNickNameRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/groups/memo": {
+      "put": {
+        "tags": [
+          "Groups"
+        ],
+        "summary": "修改群备注（仅自己可见）。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeGroupMemoRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeGroupMemoRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeGroupMemoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/groups/notice": {
+      "put": {
+        "tags": [
+          "Groups"
+        ],
+        "summary": "更新群公告（仅适用于自有群）。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateGroupNoticeRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateGroupNoticeRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateGroupNoticeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/groups/invite": {
+      "post": {
+        "tags": [
+          "Groups"
+        ],
+        "summary": "邀请群聊成员（适用于外部群）。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InviteGroupMemberRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InviteGroupMemberRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/InviteGroupMemberRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/groups/add-members-to-friends": {
+      "post": {
+        "tags": [
+          "Groups"
+        ],
+        "summary": "把群聊成员加为自己的好友（适用于外部群，注意微信风控）。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddGroupMemberToFriendsRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddGroupMemberToFriendsRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddGroupMemberToFriendsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/messages/title": {
+      "get": {
+        "tags": [
+          "Messages"
+        ],
+        "summary": "获取当前聊天窗口的标题对象。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/messages/only-title": {
+      "get": {
+        "tags": [
+          "Messages"
+        ],
+        "summary": "获取当前聊天窗口的标题名称。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/messages/focus-input": {
+      "post": {
+        "tags": [
+          "Messages"
+        ],
+        "summary": "聚焦当前窗口的消息输入区。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/messages/send": {
+      "post": {
+        "tags": [
+          "Messages"
+        ],
+        "summary": "发送文本消息（指定对象或当前聊天窗口，支持 @ 与引用）。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendMessageRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendMessageRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendMessageRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/messages/send-file": {
+      "post": {
+        "tags": [
+          "Messages"
+        ],
+        "summary": "发送文件。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendFileRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendFileRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendFileRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/messages/send-emoji": {
+      "post": {
+        "tags": [
+          "Messages"
+        ],
+        "summary": "发送表情（按名称/描述/索引）。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendEmojiRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendEmojiRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendEmojiRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/messages/send-voice-chat": {
+      "post": {
+        "tags": [
+          "Messages"
+        ],
+        "summary": "发起单人语音聊天。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WhoRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WhoRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/WhoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/messages/send-video-chat": {
+      "post": {
+        "tags": [
+          "Messages"
+        ],
+        "summary": "发起单人视频聊天。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WhoRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WhoRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/WhoRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/messages/send-voice-chats": {
+      "post": {
+        "tags": [
+          "Messages"
+        ],
+        "summary": "发起多人语音聊天（群聊）。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendVoiceChatsRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendVoiceChatsRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendVoiceChatsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/messages/send-voice-message": {
+      "post": {
+        "tags": [
+          "Messages"
+        ],
+        "summary": "发送语音消息（需虚拟声卡 Cable input/Cable output）。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendVoiceMessageRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendVoiceMessageRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendVoiceMessageRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/messages/send-voice-message-tts": {
+      "post": {
+        "tags": [
+          "Messages"
+        ],
+        "summary": "文字转语音发送（默认阿里千问 Qwen-Audio-TTS）。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendVoiceMessageTtsRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendVoiceMessageTtsRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendVoiceMessageTtsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/messages/history": {
+      "get": {
+        "tags": [
+          "Messages"
+        ],
+        "summary": "获取聊天历史（支持按日期或时间段查询）。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "who",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "date",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "start_date",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/messages/tap": {
+      "post": {
+        "tags": [
+          "Messages"
+        ],
+        "summary": "拍一拍当前聊天窗口的好友。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TapRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TapRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TapRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/messages/reference": {
+      "post": {
+        "tags": [
+          "Messages"
+        ],
+        "summary": "引用当前窗口的好友消息。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReferenceRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReferenceRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReferenceRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/messages/reference-last": {
+      "post": {
+        "tags": [
+          "Messages"
+        ],
+        "summary": "引用当前窗口最后一条消息。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/navigation/switch": {
+      "post": {
+        "tags": [
+          "Navigation"
+        ],
+        "summary": "切换导航栏。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SwitchNavigationRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SwitchNavigationRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SwitchNavigationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/navigation/close": {
+      "post": {
+        "tags": [
+          "Navigation"
+        ],
+        "summary": "关闭通过导航栏打开的窗口（聊天文件、朋友圈、视频号等）。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SwitchNavigationRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SwitchNavigationRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SwitchNavigationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/window/maximize": {
+      "post": {
+        "tags": [
+          "Window"
+        ],
+        "summary": "最大化微信窗口。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/window/restore": {
+      "post": {
+        "tags": [
+          "Window"
+        ],
+        "summary": "还原微信窗口。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/window/pin": {
+      "post": {
+        "tags": [
+          "Window"
+        ],
+        "summary": "置顶微信窗口。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/window/unpin": {
+      "post": {
+        "tags": [
+          "Window"
+        ],
+        "summary": "取消置顶微信窗口。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/window/focus": {
+      "post": {
+        "tags": [
+          "Window"
+        ],
+        "summary": "使主窗口获取焦点。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/window/close-search-window": {
+      "post": {
+        "tags": [
+          "Window"
+        ],
+        "summary": "关闭查询窗口（已打开则关闭）。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubWindowRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubWindowRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubWindowRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/window/open-sub-window": {
+      "post": {
+        "tags": [
+          "Window"
+        ],
+        "summary": "打开指定对象的子窗口。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubWindowRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubWindowRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubWindowRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/window/close-sub-window": {
+      "post": {
+        "tags": [
+          "Window"
+        ],
+        "summary": "关闭指定对象的子窗口（已存在则关闭）。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubWindowRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubWindowRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubWindowRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/window/handler": {
+      "get": {
+        "tags": [
+          "Window"
+        ],
+        "summary": "获取本微信窗口句柄。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v1/clients/{clientId}/window/process-id": {
+      "get": {
+        "tags": [
+          "Window"
+        ],
+        "summary": "获取本微信窗口进程 ID。",
+        "parameters": [
+          {
+            "name": "clientId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AddFriendsOptions": {
+        "type": "object",
+        "properties": {
+          "interval_time": {
+            "type": "integer",
+            "description": "间隔时间,以秒为单位，默认为三秒，如果担心风控，可以把此时间设置长一点",
+            "format": "int32"
+          },
+          "is_close_win": {
+            "type": "boolean",
+            "description": "是否关闭增加朋友窗口,默认关闭，可以设置为false不关闭"
+          },
+          "say_hi": {
+            "type": "string",
+            "description": "加好友时打招呼内容,如果为空，则保持微信默认",
+            "nullable": true
+          },
+          "suffix": {
+            "type": "string",
+            "description": "备注后缀，如：设置suffix为\"test\",则备注为:xxxx_test,可以未来以备注的后缀来区分不同的好友分类",
+            "nullable": true
+          },
+          "label": {
+            "type": "string",
+            "description": "设置标签",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "增加朋友选项"
+      },
+      "AddFriendsRequest": {
+        "type": "object",
+        "properties": {
+          "friends": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "options": {
+            "$ref": "#/components/schemas/AddFriendsOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "通过手机号码或微信号添加好友。"
+      },
+      "AddGroupMemberToFriendsRequest": {
+        "type": "object",
+        "properties": {
+          "group_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "options": {
+            "$ref": "#/components/schemas/AddFriendsOptions"
+          }
+        },
+        "additionalProperties": false,
+        "description": "从群聊中添加好友。"
+      },
+      "ChangeGroupMemoRequest": {
+        "type": "object",
+        "properties": {
+          "group_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "new_memo": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "修改群备注。"
+      },
+      "ChangeGroupNickNameRequest": {
+        "type": "object",
+        "properties": {
+          "group_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "nick_name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "修改自己在群中的昵称。"
+      },
+      "ChatRefer": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "description": "日期,如果不设置则不进行日期筛选",
+            "format": "date"
+          },
+          "message": {
+            "$ref": "#/components/schemas/ChatSimpleMessage"
+          },
+          "is_close_search_win": {
+            "type": "boolean",
+            "description": "是否关闭查找窗口，默认是关闭，如果设置为false,则不关闭查找窗口，速度会略快，但需要自行关闭查找窗口."
+          }
+        },
+        "additionalProperties": false,
+        "description": "消息引用"
+      },
+      "ChatSimpleMessage": {
+        "type": "object",
+        "properties": {
+          "who": {
+            "type": "string",
+            "description": "微信名称",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "description": "消息",
+            "nullable": true
+          },
+          "send_date_time": {
+            "type": "string",
+            "description": "消息日期",
+            "nullable": true
+          },
+          "date_time": {
+            "type": "string",
+            "description": "消息日期,日期时间格式",
+            "format": "date-time"
+          },
+          "unique_string": {
+            "type": "string",
+            "description": "唯一字符串",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ChatType": {
+        "enum": [
+          "好友",
+          "企业微信",
+          "群聊",
+          "公众号",
+          "订阅号",
+          "服务通知",
+          "腾讯新闻",
+          "微信团队",
+          "文件传输助手",
+          "其他"
+        ],
+        "type": "string",
+        "description": "聊天类型"
+      },
+      "Color": {
+        "type": "object",
+        "properties": {
+          "r": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "g": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "b": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "a": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "is_known_color": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "is_empty": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "is_named_color": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "is_system_color": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ColorPalette": {
+        "type": "object",
+        "properties": {
+          "flags": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "entries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Color"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateGroupRequest": {
+        "type": "object",
+        "properties": {
+          "group_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "first_who": {
+            "type": "string",
+            "nullable": true
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "创建群聊。"
+      },
+      "FriendInfo": {
+        "type": "object",
+        "properties": {
+          "nick_name": {
+            "type": "string",
+            "description": "昵称",
+            "nullable": true
+          },
+          "memo_name": {
+            "type": "string",
+            "description": "备注名",
+            "nullable": true
+          },
+          "area": {
+            "type": "string",
+            "description": "地区,建议仅供参考",
+            "nullable": true
+          },
+          "lable": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "标签",
+            "nullable": true
+          },
+          "same_group_number": {
+            "type": "string",
+            "description": "共同群数量",
+            "nullable": true
+          },
+          "signature": {
+            "type": "string",
+            "description": "个性签名",
+            "nullable": true
+          },
+          "source": {
+            "type": "string",
+            "description": "来源",
+            "nullable": true
+          },
+          "wx_id": {
+            "type": "string",
+            "description": "微信ID",
+            "nullable": true
+          },
+          "avatar_path": {
+            "type": "string",
+            "description": "头像路径",
+            "nullable": true
+          },
+          "avatar_image": {
+            "$ref": "#/components/schemas/Image"
+          },
+          "avatar_image_base64": {
+            "type": "string",
+            "nullable": true
+          },
+          "friend_search_result": {
+            "$ref": "#/components/schemas/FriendSearchResultEnums"
+          },
+          "chat_type": {
+            "$ref": "#/components/schemas/ChatType"
+          },
+          "add_date_time": {
+            "type": "string",
+            "description": "添加好友时间，>4.x版本才有此属性",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "description": "微信中使用的名称\r\n本质是: 如果昵称不等于备注名，则以备注名不为主.",
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "个人信息"
+      },
+      "FriendSearchResultEnums": {
+        "enum": [
+          "Friend",
+          "No_Find",
+          "NotFriend"
+        ],
+        "type": "string",
+        "description": "通过wxid查询，或者通过手机号查询结果枚举"
+      },
+      "GroupMemberRequest": {
+        "type": "object",
+        "properties": {
+          "group_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "添加/移除群成员。group_name 为空时作用于当前焦点群聊。"
+      },
+      "Image": {
+        "type": "object",
+        "properties": {
+          "tag": { },
+          "physical_dimension": {
+            "$ref": "#/components/schemas/SizeF"
+          },
+          "size": {
+            "$ref": "#/components/schemas/Size"
+          },
+          "width": {
+            "type": "integer",
+            "format": "int32",
+            "default": false,
+            "readOnly": true
+          },
+          "height": {
+            "type": "integer",
+            "format": "int32",
+            "default": false,
+            "readOnly": true
+          },
+          "horizontal_resolution": {
+            "type": "number",
+            "format": "float",
+            "readOnly": true
+          },
+          "vertical_resolution": {
+            "type": "number",
+            "format": "float",
+            "readOnly": true
+          },
+          "flags": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "raw_format": {
+            "$ref": "#/components/schemas/ImageFormat"
+          },
+          "pixel_format": {
+            "$ref": "#/components/schemas/PixelFormat"
+          },
+          "property_id_list": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "property_items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PropertyItem"
+            },
+            "nullable": true,
+            "readOnly": true
+          },
+          "palette": {
+            "$ref": "#/components/schemas/ColorPalette"
+          },
+          "frame_dimensions_list": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ImageFormat": {
+        "type": "object",
+        "properties": {
+          "guid": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false
+      },
+      "InviteGroupMemberRequest": {
+        "type": "object",
+        "properties": {
+          "group_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "invite_reason": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "邀请群成员（外部群）。"
+      },
+      "LocateConversationRequest": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "定位会话。"
+      },
+      "NavigationType": {
+        "enum": [
+          "聊天",
+          "通讯录",
+          "收藏",
+          "聊天文件",
+          "朋友圈",
+          "搜一搜",
+          "视频号",
+          "看一看",
+          "小程序面板",
+          "手机",
+          "设置及其他",
+          "微信",
+          "游戏中心",
+          "更多"
+        ],
+        "type": "string",
+        "description": "导航栏类型"
+      },
+      "NotifyIconClickRequest": {
+        "type": "object",
+        "properties": {
+          "index": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "wechat_name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "点击任务栏微信图标。index 与 wechat_name 二选一。"
+      },
+      "PixelFormat": {
+        "enum": [
+          "DontCare",
+          "Max",
+          "Indexed",
+          "Gdi",
+          "Format16bppRgb555",
+          "Format16bppRgb565",
+          "Format24bppRgb",
+          "Format32bppRgb",
+          "Format1bppIndexed",
+          "Format4bppIndexed",
+          "Format8bppIndexed",
+          "Alpha",
+          "Format16bppArgb1555",
+          "PAlpha",
+          "Format32bppPArgb",
+          "Extended",
+          "Format16bppGrayScale",
+          "Format48bppRgb",
+          "Format64bppPArgb",
+          "Canonical",
+          "Format32bppArgb",
+          "Format64bppArgb"
+        ],
+        "type": "string"
+      },
+      "PropertyItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "len": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "type": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "value": {
+            "type": "string",
+            "format": "byte",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ReferenceRequest": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "$ref": "#/components/schemas/ChatSimpleMessage"
+          },
+          "who": {
+            "type": "string",
+            "nullable": true
+          },
+          "message_content": {
+            "type": "string",
+            "nullable": true
+          },
+          "prev_scroll_number": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "引用消息。优先使用 message（ChatSimpleMessage），否则使用 who + message_content。"
+      },
+      "RenameGroupRequest": {
+        "type": "object",
+        "properties": {
+          "old_group_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "new_group_name": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "修改群名。"
+      },
+      "SaveAvatarRequest": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "保存头像到指定路径。"
+      },
+      "SearchConversationRequest": {
+        "type": "object",
+        "properties": {
+          "who": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "搜索会话。"
+      },
+      "SendEmojiRequest": {
+        "type": "object",
+        "properties": {
+          "who": {
+            "type": "string",
+            "nullable": true
+          },
+          "emoji": {
+            "type": "string",
+            "description": "表情名称或描述。",
+            "nullable": true
+          },
+          "index": {
+            "type": "integer",
+            "description": "表情索引。",
+            "format": "int32",
+            "nullable": true
+          },
+          "at_users": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "发送表情。emoji 与 index 二选一（优先使用 index）。"
+      },
+      "SendFileRequest": {
+        "type": "object",
+        "properties": {
+          "who": {
+            "type": "string",
+            "nullable": true
+          },
+          "files": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "发送文件。who 为空时发送给当前焦点聊天窗口。"
+      },
+      "SendMessageRequest": {
+        "type": "object",
+        "properties": {
+          "who": {
+            "type": "string",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "at_users": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "被 @ 的好友列表。",
+            "nullable": true
+          },
+          "refer": {
+            "$ref": "#/components/schemas/ChatRefer"
+          }
+        },
+        "additionalProperties": false,
+        "description": "发送文本消息。who 为空时发送给当前焦点聊天窗口。"
+      },
+      "SendVoiceChatsRequest": {
+        "type": "object",
+        "properties": {
+          "who": {
+            "type": "string",
+            "nullable": true
+          },
+          "partner": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "发起多人语音聊天。who 为空时作用于当前焦点聊天窗口。"
+      },
+      "SendVoiceMessageRequest": {
+        "type": "object",
+        "properties": {
+          "who": {
+            "type": "string",
+            "nullable": true
+          },
+          "file_path": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "发送语音消息。who 为空时发送给当前焦点聊天窗口。"
+      },
+      "SendVoiceMessageTtsRequest": {
+        "type": "object",
+        "properties": {
+          "who": {
+            "type": "string",
+            "nullable": true
+          },
+          "api_key": {
+            "type": "string",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "options": {
+            "$ref": "#/components/schemas/VoiceOptions"
+          },
+          "optimize_with_llm": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "文字转语音发送。"
+      },
+      "SetDoNotDisturbRequest": {
+        "type": "object",
+        "properties": {
+          "who": {
+            "type": "string",
+            "nullable": true
+          },
+          "setting": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "设置会话免打扰。who 为空时作用于当前窗口。"
+      },
+      "SetTopMostRequest": {
+        "type": "object",
+        "properties": {
+          "who": {
+            "type": "string",
+            "nullable": true
+          },
+          "setting": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "description": "设置会话置顶。who 为空时作用于当前窗口。"
+      },
+      "Size": {
+        "type": "object",
+        "properties": {
+          "is_empty": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "width": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "height": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SizeF": {
+        "type": "object",
+        "properties": {
+          "is_empty": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "width": {
+            "type": "number",
+            "format": "float"
+          },
+          "height": {
+            "type": "number",
+            "format": "float"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SubWindowRequest": {
+        "type": "object",
+        "properties": {
+          "who": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "打开/关闭指定好友或群的子窗口。"
+      },
+      "SwitchNavigationRequest": {
+        "type": "object",
+        "properties": {
+          "navigation_type": {
+            "$ref": "#/components/schemas/NavigationType"
+          }
+        },
+        "additionalProperties": false,
+        "description": "切换/关闭导航栏窗口。"
+      },
+      "TapRequest": {
+        "type": "object",
+        "properties": {
+          "who": {
+            "type": "string",
+            "nullable": true
+          },
+          "prev_scroll_number": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "拍一拍。"
+      },
+      "UpdateGroupNoticeRequest": {
+        "type": "object",
+        "properties": {
+          "group_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "group_notice": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "更新群公告。"
+      },
+      "VoiceOptions": {
+        "type": "object",
+        "properties": {
+          "voice": {
+            "type": "string",
+            "description": "音色\r\n系统音色，或者 自定义音色（克隆的音色或者自定义生成的音色）",
+            "nullable": true
+          },
+          "model": {
+            "type": "string",
+            "description": "语音合成模型。Qwen-Audio-TTS 系列均支持指令控制、声音复刻与流式输出。\r\n可选值：qwen-audio-3.1-tts-flash（默认，系统音色最丰富）、qwen-audio-3.0-tts-flash、qwen-audio-3.0-tts-plus（官方推荐，适合克隆/设计音色）。",
+            "nullable": true
+          },
+          "language_type": {
+            "type": "string",
+            "description": "语言类型。Qwen-Audio-TTS 已不再使用该参数（由音色自身或指令控制决定），保留仅为向后兼容。",
+            "nullable": true
+          },
+          "instructions": {
+            "type": "string",
+            "description": "指令控制文本。Qwen-Audio-TTS 通过 instruction 参数以自然语言控制方言、情感、语速、音色等合成效果。\r\n系统音色与声音复刻音色均可输入任意指令。",
+            "nullable": true
+          },
+          "volume": {
+            "type": "integer",
+            "description": "音量。可选，默认 50，范围 [0, 100]。为 null 时不发送，由 API 使用默认值。",
+            "format": "int32",
+            "nullable": true
+          },
+          "rate": {
+            "type": "number",
+            "description": "语速。可选，默认 1.0，范围 [0.5, 2.0]。为 null 时不发送，交由 instruction 控制，\r\n避免与指令中的语速描述冲突。",
+            "format": "float",
+            "nullable": true
+          },
+          "pitch": {
+            "type": "number",
+            "description": "音调。可选，默认 1.0，范围 [0.5, 2.0]。为 null 时不发送。",
+            "format": "float",
+            "nullable": true
+          },
+          "seed": {
+            "type": "integer",
+            "description": "随机种子。可选，范围 [0, 65535]。相同文本、音色与参数下，相同 seed 可复现相同合成结果。",
+            "format": "int32",
+            "nullable": true
+          },
+          "optimize_instructions": {
+            "type": "boolean",
+            "description": "是否在发送前用LLM进行口语化校核"
+          },
+          "is_stream": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "WhoRequest": {
+        "type": "object",
+        "properties": {
+          "who": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "仅携带 who（可为空，作用于当前焦点窗口）的请求。"
+      }
+    },
+    "securitySchemes": {
+      "ApiKey": {
+        "type": "apiKey",
+        "description": "App.json 的 Http.ApiKey 配置的值（为空则不校验）。",
+        "name": "X-API-Key",
+        "in": "header"
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiKey": [ ]
+    }
+  ],
+  "tags": [
+    {
+      "name": "Clients"
+    },
+    {
+      "name": "Conversations"
+    },
+    {
+      "name": "Friends"
+    },
+    {
+      "name": "Groups"
+    },
+    {
+      "name": "Messages"
+    },
+    {
+      "name": "Navigation"
+    },
+    {
+      "name": "Window"
+    }
+  ]
+}

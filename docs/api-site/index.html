@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WeChatAuto.SDK API</title>
+  <link rel="stylesheet" href="./swagger-ui.css" />
+  <style>
+    html { box-sizing: border-box; overflow: -moz-scrollbars-vertical; overflow-y: scroll; }
+    *, *:before, *:after { box-sizing: inherit; }
+    body { margin: 0; background: #fafafa; }
+    .topbar { display: none; }
+  </style>
+</head>
+<body>
+  <div id="swagger-ui"></div>
+  <script src="./swagger-ui-bundle.js"></script>
+  <script src="./swagger-ui-standalone-preset.js"></script>
+  <script>
+    function renderSwagger(spec) {
+      window.ui = SwaggerUIBundle({
+        spec: spec,
+        dom_id: "#swagger-ui",
+        deepLinking: true,
+        presets: [SwaggerUIBundle.presets.apis, SwaggerUIStandalonePreset],
+        layout: "StandaloneLayout",
+        // 全局鉴权：默认把 X-API-Key 请求头应用到所有接口（App.json 的 Http.ApiKey 为空则无需配置）。
+        persistAuthorization: true
+      });
+    }
+
+    function showError(message) {
+      var el = document.getElementById("swagger-ui");
+      el.innerHTML =
+        '<div style="max-width:760px;margin:60px auto;padding:24px;background:#fff;border:1px solid #e0a8a8;border-radius:8px;color:#a33;font-family:ui-monospace,Consolas,monospace;font-size:14px;line-height:1.6;">' +
+        '<strong>无法加载 swagger.json</strong>' +
+        '<pre style="white-space:pre-wrap;background:#fdf2f2;padding:12px;border-radius:6px;">' +
+        message.replace(/[<>&]/g, function (c) { return { "<": "&lt;", ">": "&gt;", "&": "&amp;" }[c]; }) +
+        '</pre>' +
+        '<p style="margin:0;">请确认：① <code>swagger.json</code> 与 <code>index.html</code> 在同一目录；② 通过 HTTP 服务器（Live Server / Nginx）访问，而不是用 <code>file://</code> 直接双击打开（file:// 下 fetch 会被浏览器拦截）。</p>' +
+        '</div>';
+    }
+
+    window.onload = function () {
+      // 手动 fetch + JSON.parse，而不是直接把 url 交给 Swagger UI：
+      // 这样能避开其内部 YAML 解析对异常返回（如 404 的 HTML 页）的误判，并给出明确错误。
+      fetch("./swagger.json", { cache: "no-store" })
+        .then(function (resp) {
+          if (!resp.ok) throw new Error("HTTP " + resp.status + " " + resp.statusText);
+          return resp.text();
+        })
+        .then(function (text) {
+          var spec;
+          try {
+            spec = JSON.parse(text);
+          } catch (e) {
+            throw new Error("swagger.json 不是合法 JSON：" + e.message);
+          }
+          if (!spec.openapi && !spec.swagger) {
+            throw new Error("swagger.json 缺少 openapi / swagger 版本字段（可能拿到的是 404 页面或空文件）");
+          }
+          // 兜底：Swashbuckle 会生成 openapi: 3.0.4，但 Swagger UI 5.17.x 的版本正则只认
+          // 3.0.0~3.0.3（见其 isOAS30 正则 /^3\.0\.([0123])/），3.0.4 会被判为“无版本字段”。归一化到 3.0.3。
+          if (spec.openapi === "3.0.4") spec.openapi = "3.0.3";
+          renderSwagger(spec);
+        })
+        .catch(function (err) {
+          console.error("[swagger] 加载失败：", err);
+          showError(err && err.message ? err.message : String(err));
+        });
+    };
+  </script>
+</body>
+</html>
