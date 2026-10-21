@@ -43,11 +43,36 @@
 1. 请先下载[HTTP服务端](https://github.com/scottfly189/WeChatAuto.SDK/releases/download/2.0.7/community_allin.rar),放置在本机/服务器的某个目录，然后解压缩;
 2. 在解压缩的目录中打开 `Server.exe` 应用，如下图所示:
 
-![打开server](./images/server_1_open_2.png)
+![打开server](./images/server_1_open.png)
 
 3. 运行后，如果成功会在右下角产生一个notifyicon图标，双击这个图标，可以看到主控台，如下图所示:
 
-![打开主控台](./images/server_1_open_2.png)
+![打开主控台](./images/server_2_main.png)
+
+
+![日志](./images/server_3_log.png)
+
+![吸附窗口](./images/server_4_main.png)
+
+
+![监听消息配置](./images/server_4_message_config.png)
+
+
+
+![数据库配置](./images/server_4_database_config.png)
+
+![数据库查看](./images/server_4_database_view.png)
+
+
+<details>
+<summary>扩展学习：工具集</summary>
+1. 发送消息
+2. 发送语音消息
+3. 定时发送
+4. 消息转发
+5. 自动接入好友申请
+</details>
+
 
 
 # 三、HTTP WebAPI 接入指南
