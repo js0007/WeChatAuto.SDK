@@ -25,7 +25,7 @@
 
 
 #### 🚀请按下面的步骤使用:
-- 请先下载[HTTP服务端](https://github.com/scottfly189/WeChatAuto.SDK/releases/tag/2.0.7),放置在本机/服务器的某个目录，然后解压缩;
+- 请先下载[HTTP服务端](https://github.com/scottfly189/WeChatAuto.SDK/releases/download/2.0.7/community_allin.rar),放置在本机/服务器的某个目录，然后解压缩;
 - HTTP服务要与需要自动化的微信放在同一台电脑上;
 - 先打开微信，并登入自己账号，保持微信窗口为打开状态(非关闭状态),支持多微信; 
 - 最后打开HTTP服务(运行解压缩目录的Server.exe);
@@ -40,10 +40,14 @@
 # 二、HTTP服务使用指南
 !> 请使用者在使用前阅读本 `HTTP服务使用指南`,重要！
 
-1. 请先下载[HTTP服务端](https://github.com/scottfly189/WeChatAuto.SDK/releases/tag/2.0.7),放置在本机/服务器的某个目录，然后解压缩;
+1. 请先下载[HTTP服务端](https://github.com/scottfly189/WeChatAuto.SDK/releases/download/2.0.7/community_allin.rar),放置在本机/服务器的某个目录，然后解压缩;
 2. 在解压缩的目录中打开 `Server.exe` 应用，如下图所示:
 
 ![打开server](./images/server_1_open_2.png)
+
+3. 运行后，如果成功会在右下角产生一个notifyicon图标，双击这个图标，可以看到主控台，如下图所示:
+
+![打开主控台](./images/server_1_open_2.png)
 
 
 # 三、HTTP WebAPI 接入指南
