@@ -1,4 +1,4 @@
-# WECHATAUTO.SDK简介
+## 🔆 WECHATAUTO.SDK简介
 
 !> 不Hook/内存注入、不修改微信客户端,不数据库破解，不越权访问微信数据,不被封号,通过 UI Automation 操作微信,不写一行代码获取微信消息，让你的微信 Agent/Wechat Bot 快速开发、快速上线、并安全发布到用户端
 
@@ -17,7 +17,7 @@
 - 🔌 **可选硬件级键鼠模拟器** — 配套 USB HID 硬件（SKSimulator），在硬件层注入键鼠信号，输入等同真人，显著降低风控误判。
 - 💎 **社区版免费 + VIP 版增值** — 社区版覆盖基础消息/好友/群/通讯录全能力，VIP 版增强消息监听、朋友圈管理、消息转发与声音复刻。
 
-## 🚀 开发模式
+## 💯 开发模式
 ### 两种开发模式，按需接入
 | | 内嵌方式 | HTTP WebAPI 方式 |
 |---|---|---|
@@ -25,4 +25,4 @@
 | 入口 | `WeAutomation.Initialize(...)` → `WeChatClientFactory` → `WeChatClient` | 启动 Server，REST + Swagger，`http://<主机>:5000` |
 | 特点 | 类型安全、能力最全、深度定制 | 语言无关、进程隔离、可远程、开箱即用 |
 
-!> 绝大多数场景推荐 HTTP WebAPI 方式；需要 dll 内嵌、深度回调时选内嵌方式。
+!> 绝大多数场景推荐 HTTP WebAPI 方式；需要 dll/Nuget包、深度回调时选内嵌方式。
