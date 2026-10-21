@@ -1,5 +1,4 @@
-!> 如果你使用的不是.Net或者并不想关心WeChatAuto.SDK的生命周期/并不想把WeChatAuto.SDK深度集成在自己的应用中，推荐使用此方式.
-> 测试
+!> 如果你使用的不是.Net或者并不想关心WeChatAuto.SDK的生命周期/并不想把WeChatAuto.SDK深度集成在自己的应用中，推荐使用此方式,获取好友/群的消息、自动接入好友申请等操作不需要写一行代码，只要通过设置就可以实现，极大的降低集成工作量，也是**官方推荐**的方式.
 
 # HTTP WebAPI介绍
 
@@ -16,23 +15,25 @@
 - 可远程 / 多端共享：监听所有网卡（0.0.0.0），本机、局域网、云服务器都能访问;
 - 开箱即用：自带 GUI 管理界面、Swagger 文档（可在线试调）、定时任务、好友自动通过等成品功能;
 - 标准化契约：REST + snake_case JSON + 错误码（RFC 7807），可用 openapi-generator / Kiota / openapi-python-client / progenitor 自动生成各语言客户端;
-- 有鉴权：X-API-Key 请求头鉴权，配合 Nginx/Caddy 反向代理加 HTTPS 可安全上公网
-- 获取好友/群的消息、自动接入好友申请等操作不需要写一行代码，只要通过设置就可以实现;
+- 有鉴权：X-API-Key 请求头鉴权，配合 Nginx/Caddy 反向代理加 HTTPS 可安全上公网;
+- 获取好友/群的消息、自动接入好友申请等操作不需要写一行代码，只要通过设置就可以实现，极大的降低集成工作量;
 
 ## 使用步骤
 
+>[IMPORTANT]
+> HTTP服务需要先下载再运行！，👉 [下载地址](https://github.com/scottfly189/WeChatAuto.SDK/releases/tag/2.0.7)
 
 
-### 请按下面的步骤使用:
-> 请先下载[HTTP服务端](),放置在本机/服务器的某个目录，然后解压缩;
-> 
-> HTTP服务要与需要自动化的微信放在同一台电脑上;
-> 
-> 先打开微信，并登入自己账号，保持微信窗口为打开状态(非关闭状态);
-> 
-> 最后打开HTTP服务(运行解压缩目录的Server.exe);
-> 
-
+### 🚀请按下面的步骤使用:
+- 请先下载[HTTP服务端](https://github.com/scottfly189/WeChatAuto.SDK/releases/tag/2.0.7),放置在本机/服务器的某个目录，然后解压缩
+- HTTP服务要与需要自动化的微信放在同一台电脑上 
+- 先打开微信，并登入自己账号，保持微信窗口为打开状态(非关闭状态); 
+- 最后打开HTTP服务(运行解压缩目录的Server.exe)
+- 双击或者右键屏幕右下角的HTTP服务，在弹出的控制台窗口中
+- HTTP服务请参见:[HTTP服务使用指南](#http服务使用指南)
+- HTTP WebAPI参考请参见:[HTTP WebAPI 接入指南](#http-webapi-接入指南)
+- 其他问题请参见[FAQ](https://github.com/scottfly189/WeChatAuto.SDK/blob/master/docs/faq.md)
+- 有什么问题或者功能增强要求，请提[Issues](https://github.com/scottfly189/WeChatAuto.SDK/issues)
 
 # HTTP服务使用指南
 
