@@ -157,6 +157,12 @@ dotnet build
 dotnet run
 ```
 
+示例库说明:
+
+- [FirstDemo](https://github.com/scottfly189/WeChatAuto.SDK/tree/master/WeChatAuto4_X/Examples/FirstDemo): 一个控制台应用，用来给好友发送微信消息;
+- [WinForm_Demo](https://github.com/scottfly189/WeChatAuto.SDK/tree/master/WeChatAuto4_X/Examples/WinForm_Demo): 一个Winform接入应用，开发者注意学习如何在Winform中管理`clientFactory`的生命周期;
+
+
 !> 运行前提：微信已登录且窗口可见；若报 `WechatNotOpenedException` / `WechatNotSupportUITreeException`，请回到 [2.2 UI Tree](#22-ui-tree最关键的前置条件) 排查。
 
 ---
