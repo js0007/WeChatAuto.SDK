@@ -8,7 +8,7 @@
 
 | | 内嵌方式（本文档） | HTTP WebAPI 方式 |
 |---|---|---|
-| 适合 | .NET / Windows 原生应用，需要事件回调、低延迟、完整 API | 后端/云服务、跨语言、多系统共享、快速集成 |
+| 适合 | .NET / Windows 原生应用，需要事件回调、低延迟、完整 API,深度将SDK集成在自己应用中 | 后端/云服务、跨语言、多系统共享、快速集成 |
 | 入口 | `WeAutomation.Initialize(...)` → `WeChatClientFactory` → `WeChatClient` | 启动 Server，REST + Swagger |
 | 特点 | 类型安全、能力最全、深度定制 | 语言无关、进程隔离、可远程、开箱即用 |
 
