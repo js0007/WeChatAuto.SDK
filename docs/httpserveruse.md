@@ -23,7 +23,7 @@
 
 !> `WeChatAuto.SDK`通过`HTTP服务`服务端的UI应用直接可以获取微信消息/自动通过加好友申请！
 
-![接入原理](./images/server_ui.png)
+<img src='./images/server_ui.png' width='1200'/>
 
 **一般开发Wechat bot或者把微信能力集成在自己应用中的开发者有两个诉求:**
 
