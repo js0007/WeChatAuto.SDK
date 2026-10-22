@@ -44,7 +44,5 @@
 
 ## 🌐 HTTP WebAPI开发方式
 
-请先下载[HTTP WebAPI服务端](https://github.com/scottfly189/WeChatAuto.SDK/releases/download/2.0.7/community_allin.rar),并且HTTP服务端要与微信在同一台电脑,先打开微信，再打开```HTTP WebAPI服务端```;
-
-👉 然后请参考 [Http WebAPI开发方式指南](https://scottfly189.github.io/WeChatAuto.SDK/main.html#/httpserveruse)
+👉 请参考 [Http WebAPI开发方式指南](https://scottfly189.github.io/WeChatAuto.SDK/main.html#/httpserveruse)
 
