@@ -183,7 +183,13 @@
 
 ---
 
-## 1. 接入信息
+## 1. 配置文件
+
+<img src='./images/appconfig.png' width='1200'/>
+
+> 根目录的App.json为配置文件，可以在这里更改HTTP监听端口、设置鉴权的Key等
+
+## 2. 接入信息
 
 | 项 | 说明 |
 |---|---|
@@ -194,7 +200,7 @@
 
 > 部署到公网/云服务器时，强烈建议通过反向代理（Nginx / Caddy）加 HTTPS，并设置 API Key（见下一节）。
 
-## 2. 鉴权（API Key）
+## 3. 鉴权（API Key）
 
 - 请求头：`X-API-Key: <你的Key>`
 - 配置位置：`App.json` → `Http.ApiKey`
@@ -213,7 +219,7 @@
 
 > 浏览 Swagger 文档（`/swagger`）**不需要** API Key；只有实际调用 `/api/**` 才需要。
 
-## 3. 全局约定
+## 4. 全局约定
 
 | 项 | 约定 |
 |---|---|
@@ -223,7 +229,7 @@
 | 日期时间 | ISO 8601，如 `2026-10-19` 或 `2026-10-19T14:30:00`；未写时区时按服务运行机器的本地时间解释 |
 | 空返回的操作 | 写操作（POST / PUT / DELETE）成功通常返回 `204 No Content`，**没有响应体**，不要去找 body |
 
-## 4. 状态码与错误
+## 5. 状态码与错误
 
 | 状态码 | 含义 |
 |---|---|
@@ -240,27 +246,27 @@
 { "status": 404, "title": "微信客户端不存在", "detail": "..." }
 ```
 
-## 5. 核心概念（务必先读）
+## 6 核心概念（务必先读）
 
-### 5.1 `clientId` 是什么
+### 6.1 `clientId` 是什么
 
 几乎所有接口路径都是 `api/v1/clients/{clientId}/...`。`clientId` **同时接受微信昵称或 wxid**，且**区分大小写、精确匹配**。
 
 - 先调用 `GET /api/v1/clients` 拿到所有客户端的 `wx_id`；
 - **推荐用 `wx_id`**：唯一且稳定；昵称可能重复、可能被用户改掉。
 
-### 5.2 `who` / `group_name` 为空 = 当前焦点窗口
+### 6.2 `who` / `group_name` 为空 = 当前焦点窗口
 
 发消息、群操作等接口里的 `who`（或 `group_name`）字段**可留空**，留空表示作用于**当前焦点所在的聊天窗口**。这是有状态的行为，调用前请确保焦点在目标会话上（可配合 `POST .../conversations/locate` 先定位会话）。
 
-### 5.3 副作用与微信风控
+### 6.3 副作用与微信风控
 
 本服务驱动的是**真实微信客户端**（UI 自动化），不是幂等的纯 CRUD：
 
 - 加好友、邀请群成员、把群成员加为好友等操作存在微信风控，**控制频率、谨慎批量**；
 - 发送语音消息需要虚拟声卡（Cable input / Cable output）支持。
 
-## 6. 快速上手（端到端）
+## 7. 快速上手（端到端）
 
 三步：列客户端 → 取 clientId → 发消息。
 
@@ -340,7 +346,7 @@ client
     .send().await?;
 ```
 
-## 7. 官方客户端 SDK（多语言）
+## 8. 官方客户端 SDK（多语言）
 
 !>不想手写 HTTP 请求的话，仓库已提供 **7 个语言**的客户端封装、由 `swagger.json` 自动生成的官方客户端 SDK，位于 [HttpSupport/Client](https://github.com/scottfly189/WeChatAuto.SDK/tree/master/WeChatAuto4_X/HttpSupport/Client)中。
 
@@ -454,7 +460,7 @@ std::string result = client.sendMessage("wxid_xxx", req);
 
 > 每个语言目录内都自带 README 与单元测试；测试通过 mock/fake 传输层离线验证 URL、查询参数、`X-API-Key` 头与 JSON 请求体。更多细节见 `HttpSupport/Client/README.md` 及各语言目录下的 README。
 
-## 8. 接口参考
+## 9. 接口参考
 
 完整接口清单（客户端、消息、好友、群聊、会话、导航、窗口）见 Swagger UI：
 
@@ -462,7 +468,7 @@ std::string result = client.sendMessage("wxid_xxx", req);
 
 该页面可直接在线试调（先点右上角 **Authorize** 填入 API Key）。
 
-## 9. 常见问题
+## 10. 常见问题
 
 - **404 微信客户端不存在**：`clientId` 填错，或大小写/精确匹配不符——先用 `GET /api/v1/clients` 取准确的 `wx_id`。
 - **返回 204 没有 body，是不是失败了**：不是，写操作成功就是 204。
