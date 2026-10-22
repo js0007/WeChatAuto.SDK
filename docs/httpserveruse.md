@@ -35,7 +35,21 @@ WeChatAuto.SDK HTTP WebAPI版本技术方案如下:
 1. 提供`HTTP服务`服务端的UI应用,只要点击`监听`按钮,就可以监听微信消息([并支持三种消息监听方式](#二http服务使用指南))-->并写入数据库，开发者仅需要查询数据库，就可以获取好友/群的消息,`无须开发任何一行代码`。
 2. `HTTP服务`服务端的UI应用只要正确开启会提供`HTTP WebAPI`服务，任何开发语言都可以通过发送`Http`请求调用微信的能力：如发送消息、进行群管理等;
 
+🏌️‍♂️ 数据表`wechat_message`字段定义如下(支持多微信消息聚合):
 
+| 字段名 | 数据类型 | 约束/长度 | 可空 | 默认值 | 说明 |
+| --- | --- | --- | --- | --- | --- |
+| `Id` | int | 主键、自增 | 否 | — | 数据库主键。注意 SQLite 自增主键只支持 int（long 会被 SqlSugar 映射为 bigint，触发 AUTOINCREMENT 错误），故使用 int |
+| `FromWechat` | string | 100 | 否 | `""` | 微信账号，表示这条消息属于哪个微信账号，用于多微信号场景 |
+| `Who` | string | 100 | 否 | `""` | 被监听的微信好友/群昵称，如：人工智能自动化技术讨论群 |
+| `Sender` | string | 100 | 是 | `""` | 发送者昵称 |
+| `MessageType` | string | 50 | 是 | `""` | 消息类型 |
+| `Content` | string | TEXT | 是 | `""` | 消息内容 |
+| `MessageTime` | string | 50 | 是 | `null` | 微信消息发生时间，仅精确到分钟，取自微信，可能为空 |
+| `ImageFilePath` | string | 500 | 是 | `null` | 当消息为图片时，图片保存在磁盘的位置 |
+| `IsSelf` | bool | — | 否 | `false` | 消息是否由自己发送 |
+| `IsBotProcessed` | bool | — | 否 | `false` | 消息是否被 Bot 处理 |
+| `CreateTime` | DateTime | — | 否 | `DateTime.Now` | 消息被 SDK 写入的时间（插入时由服务器时间生成，且仅在插入时写入，更新时忽略） |
 
 ## 4. 使用步骤
 
