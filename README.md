@@ -54,13 +54,6 @@
 > [!NOTE]
 > SDK支持两种使用方式: ```内嵌方式```(Embedded) 与 ```HTTP WebAPI``` 方式<br/>
 
-### 如何选择开发方式?
-
-- **内嵌方式**（Embedded）方式: 引用 WeChatAuto 类库（csproj / NuGet），在自己进程内直接调用 API，原生支持.NET,其他语言使用```P/Invoke```的方式调用```DLL```,适用于SDK直接编译进你的应用场景;<br/>
-- **HTTP WebAPI** 方式: 运行独立的 Http Server 程序,吸附在你的微信上,对外暴露 REST 接口,任何能发HTTP请求的语言（.NET / Python / Rust / Go / Java / Node.js …），并且只需使用UI进行设置，不写一行代码，就能实现获取微信消息、自动接入微信好友请求等功能，也是**推荐**的使用方式;<br/>
-
-👉 两者共享同一套核心能力（发送消息/文件/表情/语音、群操作、好友监听、朋友圈、导航等）；HTTP WebAPI 的每个接口注释里都标注了"对应 WeChatClient.xxx"。
-
 #### 🚀 快速开始（30 秒上手）
 
 > [!IMPORTANT]

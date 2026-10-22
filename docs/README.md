@@ -36,6 +36,8 @@
 | 入口 | `WeAutomation.Initialize(...)` → `WeChatClientFactory` → `WeChatClient` | 启动 Server，REST + Swagger，`http://<主机>:5000` |
 | 特点 | 类型安全、能力最全、深度定制 | 语言无关、进程隔离、可远程、开箱即用,仅需要UI设置，不需要一行代码就能开启消息监听/自动通过加好友 |
 
+👉 两者共享同一套核心能力（发送消息/文件/表情/语音、群操作、好友监听、朋友圈、导航等）；HTTP WebAPI 的每个接口注释里都标注了"对应 WeChatClient.xxx"。
+
 !> 绝大多数场景推荐 HTTP WebAPI 方式；需要 dll/Nuget包、深度回调时选内嵌方式。
 
 ## 🧠 内嵌开发方式
