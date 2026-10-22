@@ -38,16 +38,22 @@
 !> 也可以浏览[在线Swagger](https://scottfly189.github.io/WeChatAuto.SDK/api-site/index.html),但请不要操作，因为服务器没有打开对应的微信,具体还是以你本地打开的HTTP WebAPI服务为准！
 
 # 二、HTTP服务使用指南
-!> 请使用者在使用前阅读本 `HTTP服务使用指南`,重要！
+!> 后面的WebAPI调用依赖打开`HTTP服务```, 请使用者在使用前阅读本 `HTTP服务使用指南`,重要！
 
 1. 请先下载[HTTP服务端](https://github.com/scottfly189/WeChatAuto.SDK/releases/download/2.0.7/community_allin.rar),放置在本机/服务器的某个目录，然后解压缩;
 2. 在解压缩的目录中打开 `Server.exe` 应用，如下图所示:
 
 ![打开server](./images/server_1_open.png)
 
-3. 运行后，如果成功会在右下角产生一个notifyicon图标，双击这个图标，可以看到主控台，如下图所示:
+3. 运行后，如果成功运行，会在右下角产生一个notifyicon图标，双击这个图标，可以看到主控台，如下图所示:
 
 ![打开主控台](./images/server_2_main.png)
+
+!> 这里是HTTP WebAPI的主控台，如果看到以上的界面，证明Http Server正常工作中！
+
+- 点击`HTTP Server`右边的链接，可以打开SWagger页面，可以在弹出的Swagger页面查看API定义及进行在线测试;
+
+4. 
 
 
 ![日志](./images/server_3_log.png)
