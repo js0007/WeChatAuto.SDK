@@ -1,4 +1,4 @@
-!> 如果你不是 .NET、不想管理 SDK 生命周期，或需要跨语言/远程调用,请使用 [HTTP WebAPI 方式](https://scottfly189.github.io/WeChatAuto.SDK/main.html#/httpserveruse)，`不需要书写一行代码获取微信消息`，官方推荐!
+!> 如果你不是 .NET、不想管理 SDK 生命周期，或需要跨语言/远程调用,请使用 [HTTP WebAPI 方式](https://scottfly189.github.io/WeChatAuto.SDK/main.html#/httpserveruse)，**`不需要书写一行代码获取微信消息`**，官方推荐!
 
 # 一、HTTP WebAPI介绍
 
@@ -50,6 +50,8 @@
 **2. 在解压缩的目录中打开 `Server.exe` 应用，如下图所示:**
 
 ![打开server](./images/server_1_open.png)
+
+双击`Server.exe`就可以运行本服务端
 
 **3. 运行后，如果成功运行，会在右下角产生一个notifyicon图标，双击这个图标，可以看到主控台，如下图所示:**
 
