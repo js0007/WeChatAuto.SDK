@@ -36,6 +36,8 @@ namespace WeChatAuto.Components
         private readonly WeChatRecordVideo _recordVideo;
         private SemaphoreSlim monitorEvent = new SemaphoreSlim(1, 1);    //所有自动监听都应该受这个约束
 
+        public string WechatVersion = "";  //微信版本号.
+
         public readonly static string MainActionThreadName = "wechatauto.sdk";
         public static UIThreadInvoker MainActionThreadInvoker;   //就是多微信的情况下，也是启用一个线程,因为这样虽然慢，但能实现更强的功能.
 
@@ -153,13 +155,13 @@ namespace WeChatAuto.Components
                 {
                     if (WeAutomation.Config.IsOptimizeMainWindowLayout)
                     {
-                        //优化主窗口显示位置
+                        //优化主窗口显示位置(新方法)
                         _GetAllWechatProcessId(automation)
                         .Bind(processIds => _InitWechatFramework(automation, processIds));
                     }
                     else
                     {
-                        //不优化主窗口显示位置
+                        //不优化主窗口显示位置(旧方法，已舍序)
                         _GetTaskBarRoot(automation)
                         .Bind(taskBar => _GetNotifyIcons(taskBar))
                         .Bind(buttons => _ProcessNotifyButtons(automation, buttons));
@@ -277,7 +279,7 @@ namespace WeChatAuto.Components
                 result.Add(win.Properties.ProcessId);
             }
 
-            result = result.OrderBy(u=>u).ToList();
+            result = result.OrderBy(u => u).ToList();
 
             return result.ToMaybe();
         }
@@ -291,6 +293,7 @@ namespace WeChatAuto.Components
                 var wechatList = new List<string>();
                 Window beforeWin = null;
 
+                __ShowWeChatVersion__(processList);
                 __ForceOpenUITree__(processList, automation);
                 foreach (var process in processList)
                 {
@@ -300,8 +303,12 @@ namespace WeChatAuto.Components
                 this._IsInit = true;
                 _logger.Trace("************************************************************");
                 _logger.Trace("*                POWER BY WECHATAUTO.SDK                   *");
-                _logger.Trace($"* 微信客户端: 共 {_wxClientList.Count} 个" + "                                       *");
+                _logger.Trace($"* 微信客户端: 共 {_wxClientList.Count} 个");
                 _logger.Trace($"* 客户端列表: [{string.Join(", ", _wxClientList.Keys)}]");
+                if (!string.IsNullOrWhiteSpace(this.WechatVersion))
+                {
+                    _logger.Trace($"* 当前微信版本号: {this.WechatVersion}");
+                }
                 _logger.Trace("************************************************************");
                 return _IsInit.ToMaybe();
             }
@@ -309,6 +316,25 @@ namespace WeChatAuto.Components
             {
                 System.Diagnostics.Debug.WriteLine($"获取UI Tree时出错，错误原因:{ex.ToString()}");
                 throw;
+            }
+        }
+
+        private void __ShowWeChatVersion__(List<int> processList)
+        {
+            if (processList.Count() == 0)
+                return;
+            var processId = processList.First();
+            try
+            {
+                var version = WeChatVersionHelper.GetRunnintVersion(processId);
+                if (!string.IsNullOrWhiteSpace(version))
+                {
+                    this.WechatVersion = version;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error($"获取微信版本号出错:{ex.ToString()}");
             }
         }
 
