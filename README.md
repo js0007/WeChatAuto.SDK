@@ -54,7 +54,7 @@
 > [!NOTE]
 > SDK支持两种使用方式: ```内嵌方式```(Embedded) 与 ```HTTP WebAPI``` 方式
 > 
-> 测试
+> 本质上`HTTP WebAPI`的方式为: WeChatAuto.SDK直接把微信消息帮你抓取，然后送到你指定的数据库，你的Bot应用直接访问数据库即可！[接入指南](https://scottfly189.github.io/WeChatAuto.SDK/main.html#/README)
 
 #### 🚀 快速开始（30 秒上手）
 
