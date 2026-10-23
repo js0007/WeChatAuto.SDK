@@ -38,7 +38,7 @@
 </div>
 
 > [!TIP]
-> 体验提示：如果需要体验WeChatAuto.SDK的通力，我架设了一个测试导航机器人，欢迎添加微信好友体验，👉 [我要体验](./MD/Experience.md)
+> <font color="green">体验提示：如果需要体验WeChatAuto.SDK的通力，我架设了一个测试导航机器人，欢迎添加微信好友体验，👉 [我要体验](./MD/Experience.md).</font>
 
 
 ## 📋 系统要求

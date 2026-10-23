@@ -1,5 +1,3 @@
-<div align="center">
-
 # WECHATAUTO.SDK - 安全构建微信Agent的开发基座
 
 #### 一款为Harness/SI提供操作微信核心能力的SDK，不注入(内存Hook),不数据库破解，不越权访问微信数据,通过 UI Automation 操作微信,不写一行代码获取微信消息
@@ -26,14 +24,13 @@
 > 支持微信版本为 >= 4.1.9.30 and <= 最新版微信，推荐使用最新版本的微信,WeChatAuto.SDK分两个版本： 社区版 与 VIP版，VIP版与社区版底层核心代码都一样，业务层多了一些高级功能,
 > 具体请参考 [WECHATAUTO.SDK能力表](./docs/ability.md).
 
-<div align="center">
 <br />
 
-<img src="Images/main_1.png" alt="WECHATAUTO.SDK主界面" width="1200" />
+<img src="../Images/main_1.png" alt="WECHATAUTO.SDK主界面" width="1200" />
 
 <br/>
 
-<img src="Images/second.png" alt="WECHATAUTO.SDK 吸附框" width="1200" />
+<img src="../Images/second.png" alt="WECHATAUTO.SDK 吸附框" width="1200" />
 <br/>
 </div>
 
