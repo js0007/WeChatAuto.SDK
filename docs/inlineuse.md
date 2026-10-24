@@ -49,6 +49,12 @@ SDK 通过 Windows UI Automation（FlaUI/UIA3）驱动微信，前提是微信�
 - 在 `声音 → 设置 → 输入设备` 改成 `Cable output`；
 - 未安装请在 [VBCABLE_Driver_Pack45.zip](https://github.com/alexzhao189/wechatautosdk/blob/main/Resources/VBCABLE_Driver_Pack45.zip) 下载。
 
+### 2.5 技术基础知识准备
+
+- 要想熟悉调用/看懂SDK的源码，最好能熟悉一下.net的`OneOf`库的使用，这个类似`Typescript`的union类型;
+- SDK使用`MessagePack`做为缓存，并且也使用了`SqlSugarCore`以支持各种数据库，如果有条件，也请先了解;
+- 如果你能深入`FlaUI`,就能为社区做代码贡献啦！
+
 ---
 
 ## 三、安装
