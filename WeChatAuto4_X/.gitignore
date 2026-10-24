@@ -40,3 +40,4 @@ __pycache__/
 /tools/
 /HttpSupport/Server/
 publish.cmd
+Examples/SystemMessageMonitor/
