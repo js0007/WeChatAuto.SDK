@@ -21,9 +21,10 @@ namespace WeAutoCommon.Utils
         /// </summary>
         /// <param name="minTime">最小时间,单位:毫秒</param>
         /// <param name="maxTime">最大时间,单位:毫秒</param>
-        public static async Task WaitAsync(int minTime, int maxTime)
+        /// <param name="token"></param>
+        public static async Task WaitAsync(int minTime, int maxTime, CancellationToken token = default)
         {
-            await Task.Delay(new Random((int)DateTime.Now.Ticks).Next(minTime, maxTime + 1));
+            await Task.Delay(new Random((int)DateTime.Now.Ticks).Next(minTime, maxTime + 1), token);
         }
     }
 }

@@ -33,7 +33,7 @@ namespace WeChatAuto.Components
         private IServiceProvider _serviceProvider;
         private readonly Dictionary<string, WeChatClient> _wxClientList = new Dictionary<string, WeChatClient>();
         private bool _disposed = false;
-        private readonly WeChatRecordVideo _recordVideo;
+        private WeChatRecordVideo _recordVideo;
         private SemaphoreSlim monitorEvent = new SemaphoreSlim(1, 1);    //所有自动监听都应该受这个约束
 
         public string WechatVersion = "";  //微信版本号.
@@ -60,7 +60,7 @@ namespace WeChatAuto.Components
             _recordVideo = _serviceProvider.GetRequiredService<WeChatRecordVideo>();
             if (WeAutomation.Config.EnableRecordVideo)
             {
-                var videoPath = _recordVideo.RecordVideo().GetAwaiter().GetResult();
+                var videoPath = _recordVideo.GlobalRecordVideo().GetAwaiter().GetResult();
                 _logger.Trace($"开始录制视频,保存路径: {videoPath}");
             }
             _logger.Trace("微信客户端工厂初始化完成");
