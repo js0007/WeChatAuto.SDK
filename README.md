@@ -121,7 +121,7 @@ await client.SendMessage("AI.Net_test","hello world!!");
 
 ... 更多功能请参考文档
 ```
-## 🏌️‍♂️ 项目结构
+## 🚣 项目结构
 
 ```
 src/                               # WeChatAuto.SDK 仓库根
@@ -221,7 +221,7 @@ src/                               # WeChatAuto.SDK 仓库根
 关于键鼠模拟器更深度的了解，请参见：[键鼠模拟器](https://github.com/scottfly189/SKSimulator)
 
 
-## 😊 关于VIP
+## 🏌️‍♂️ 关于VIP
 
 Wechatauto.SDK分为社区版和VIP版，社区版是完全开源的，VIP版为专用私库，则提供更多的功能和更深入的技术支持。
 
