@@ -23,8 +23,7 @@
 
 
 > [!IMPORTANT]
-> 支持微信版本为 >= 4.1.9.30 and <= 最新版微信，推荐使用最新版本的微信,WeChatAuto.SDK分两个版本： 社区版 与 VIP版，VIP版与社区版底层核心代码都一样，业务层多了一些高级功能,
-> 具体请参考 [WECHATAUTO.SDK能力表](./docs/ability.md).
+> 支持微信版本为 >= 4.1.9.30 and <= 最新版微信，推荐使用最新版本的微信;
 
 <div align="center">
 <br />
@@ -138,6 +137,9 @@ await client.SendMessage("AI.Net_test","hello world!!");
 ## 😊 关于VIP
 
 Wechatauto.SDK分为社区版和VIP版，社区版是完全开源的，VIP版为专用私库，则提供更多的功能和更深入的技术支持。
+
+> 具体请参考 [WECHATAUTO.SDK能力表](./docs/ability.md).
+
 
 社区版与VIP版本在代码层面，主要区别在于：VIP版本比社区版本多了20%的API接口，这些接口主要是一些高级功能和扩展能力，旨在为VIP客户提供更简单、更强大的微信自动化能力。
 
