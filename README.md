@@ -136,15 +136,6 @@ src/                               # WeChatAuto.SDK 仓库根
 │   ├── Utils/                     # AutomationElement/IME/注册表/随机等待等工具
 │   └── WeAutoCommon.csproj
 │
-├── WeChatAuto3_9_12_xx/           # 微信 3.9.12.xx 旧版本支持（已归档，不再维护）
-│   ├── WeChatAuto/                # 3.9.12 SDK 核心（Components/Services/Models/Utils）
-│   ├── WeChatAuto.MCP/            # MCP Server（Prompts/Services/Tools/Utils）
-│   ├── WeChatAutoWebSupport/      # Web/HTTP 支持（WinForms：Forms/Models/Utils + Tests）
-│   ├── WeChatAuto.Tests/          # 单元测试
-│   ├── Examples/                  # 示例（autodemo、Chat、demo01~03 等 6 个）
-│   ├── WeChatAuto.SDK.sln
-│   └── README.md
-│
 ├── WeChatAuto4_X/                 # 微信 4.x 当前版本 SDK（主仓库）
 │   ├── WeChatAuto/                # SDK 核心项目
 │   │   ├── Assets/                # UI 图标资源
@@ -203,6 +194,15 @@ src/                               # WeChatAuto.SDK 仓库根
 │   ├── FlaUInspect / AutomationSpy # UI 自动化检查器
 │   ├── EnableRdpMinimize.bat      # 远程桌面最小化自动化脚本
 │   └── models/                    # OCR 模型（PP-OCRv6）
+|
+├── WeChatAuto3_9_12_xx/           # 微信 3.9.12.xx 旧版本支持（已归档，不再维护）
+│   ├── WeChatAuto/                # 3.9.12 SDK 核心（Components/Services/Models/Utils）
+│   ├── WeChatAuto.MCP/            # MCP Server（Prompts/Services/Tools/Utils）
+│   ├── WeChatAutoWebSupport/      # Web/HTTP 支持（WinForms：Forms/Models/Utils + Tests）
+│   ├── WeChatAuto.Tests/          # 单元测试
+│   ├── Examples/                  # 示例（autodemo、Chat、demo01~03 等 6 个）
+│   ├── WeChatAuto.SDK.sln
+│   └── README.md
 ├── LICENSE
 └── README.md
 
