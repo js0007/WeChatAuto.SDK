@@ -121,6 +121,94 @@ await client.SendMessage("AI.Net_test","hello world!!");
 
 ... 更多功能请参考文档
 ```
+## 🏌️‍♂️ 项目结构
+
+```
+src/                               # WeChatAuto.SDK 仓库根
+├── WeAutoCommon/                  # 跨版本共用的基础库（无 UI 自动化入口，纯数据/工具）
+│   ├── Configs/                   # 微信相关配置
+│   ├── Enums/                     # 消息类型、会话类型、转发类型等枚举
+│   ├── Exceptions/                # 自定义异常（如 WindowNotExsitException）
+│   ├── Extentions/                # 扩展方法
+│   ├── Interface/                 # IWeChatWindow 等接口契约
+│   ├── Models/                    # 会话、好友、消息、朋友圈等通用模型
+│   ├── Simulator/                 # 键鼠模拟器 Skm（含 x64/x86 原生库）
+│   ├── Utils/                     # AutomationElement/IME/注册表/随机等待等工具
+│   └── WeAutoCommon.csproj
+│
+├── WeChatAuto3_9_12_xx/           # 微信 3.9.12.xx 旧版本支持（已归档，不再维护）
+│   ├── WeChatAuto/                # 3.9.12 SDK 核心（Components/Services/Models/Utils）
+│   ├── WeChatAuto.MCP/            # MCP Server（Prompts/Services/Tools/Utils）
+│   ├── WeChatAutoWebSupport/      # Web/HTTP 支持（WinForms：Forms/Models/Utils + Tests）
+│   ├── WeChatAuto.Tests/          # 单元测试
+│   ├── Examples/                  # 示例（autodemo、Chat、demo01~03 等 6 个）
+│   ├── WeChatAuto.SDK.sln
+│   └── README.md
+│
+├── WeChatAuto4_X/                 # 微信 4.x 当前版本 SDK（主仓库）
+│   ├── WeChatAuto/                # SDK 核心项目
+│   │   ├── Assets/                # UI 图标资源
+│   │   ├── Components/            # WeChatClient/Factory、Sender、Search、Group、Moments、消息监控等
+│   │   ├── Services/              # WeAutomation 初始化、OCR、Qwen、键鼠模拟器服务
+│   │   ├── Models/                # 消息、气泡、好友、语音等模型
+│   │   ├── Options/               # 各功能配置项
+│   │   ├── Extentions/            # 自动化元素/点击增强/录屏等扩展
+│   │   ├── Exceptions/            # 自定义异常
+│   │   ├── Utils/                 # DPI/剪贴板/窗口/录屏/多开调度/LCS/DIFF BLOCK/CheckPoint等核心工具
+│   │   ├── WeChatAuto.csproj
+│   │   └── WeChatAuto.sln
+│   │
+│   ├── WeChatAuto.Tests/          # 微信 4.x 单元测试（Assets/Components/Utils）
+│   │
+│   ├── HttpSupport/               # HTTP WebAPI 方式
+│   │   ├── Server/                # WinForms 服务端（可直接运行） 💎
+│   │   │   ├── Forms/             # 主界面、发消息、转发、监控配置、定时任务等窗体
+│   │   │   ├── Controls/          # 自定义卡片控件
+│   │   │   ├── Services/          # 定时发送、Cron、日志
+│   │   │   ├── Utils/             # SDK 版本探测等
+│   │   │   ├── Assets/            # 图标、虚拟声卡驱动
+│   │   │   ├── models/            # OCR 模型
+│   │   │   ├── Docs/              # API 接入指南、发布教程
+│   │   │   ├── App.json / Program.cs / Server.csproj / obfuscar.xml
+│   │   │   └── README.md
+│   │   └── Client/                # 各语言 HTTP 客户端 SDK
+│   │       ├── .net/              # C# 客户端
+│   │       ├── c++/               # C++ 客户端（CMake）
+│   │       ├── go/                # Go 客户端
+│   │       ├── java/              # Java 客户端（Maven）
+│   │       ├── node/              # Node.js 客户端（npm）
+│   │       ├── python/            # Python 客户端
+│   │       └── rust/              # Rust 客户端（Cargo）
+│   │
+│   ├── Examples/                  # 示例项目
+│   │   ├── FirstDemo/             # 30 秒快速上手示例
+│   │   ├── AutoReceiveNewFriends/ # 自动通过加好友申请并聊天  💎
+│   │   ├── QrcodeTransfer/        # 二维码转发（待完成中)  💎
+│   │   ├── SystemMessageMonitor/  # 系统消息监控     💎
+│   │   └── WinForm_Demo/          # WinForms 可视化 Demo
+│   │
+│   ├── WeChatAuto4_X.sln
+│   └── README.md
+│
+├── docs/                          # 文档站点（docsify + Swagger API）
+│   ├── api-site/                  # Swagger UI + swagger.json
+│   ├── images/                    # 文档截图
+│   ├── _media/                    # logo/icon 素材
+│   ├── ability.md / faq.md / why.md / webapi.md / mcpserver.md / httpserveruse.md / inlineuse.md
+│   └── README.md / index.html / _coverpage.md / _navbar.md / sw.js
+│
+├── Resources/                     # 资源（VBCABLE 虚拟声卡驱动）
+├── Tools/                         # 开发辅助工具
+│   ├── UISpy.exe / inspect.exe    # UI Tree 查看工具
+│   ├── FlaUInspect / AutomationSpy # UI 自动化检查器
+│   ├── EnableRdpMinimize.bat      # 远程桌面最小化自动化脚本
+│   └── models/                    # OCR 模型（PP-OCRv6）
+├── LICENSE
+└── README.md
+
+```
+
+> 注： 标 💎 的为 **VIP 专有目录**
 
 ## 🎈 关于键鼠模拟器
 
