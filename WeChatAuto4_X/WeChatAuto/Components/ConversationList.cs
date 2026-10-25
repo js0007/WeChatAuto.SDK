@@ -294,11 +294,19 @@ namespace WeChatAuto.Components
                 subWinRetry = Retry.WhileNull(() => desktop.FindFirstChild(cf => cf.ByClassName("mmui::ChatSingleWindow").And(cf.ByControlType(ControlType.Window).And(cf.ByName(who)))), TimeSpan.FromSeconds(2), TimeSpan.FromMilliseconds(200));
                 if (subWinRetry.Success)
                 {
+                    //移动到中间
                     var subWin = subWinRetry.Result.AsWindow();
                     this._Client.MoveWinToMainCenter(subWin);
                     RandomWait.Wait(300, 900);
+
                     if (!CheckAnchorExist())
-                        clickItem.Click();
+                    {
+                        this._Client.MainWindow.Focus();
+                        if (clickItem.IsElementInTree(croot))
+                        {
+                            clickItem.Click();
+                        }
+                    }
 
                     return subWin;
                 }
@@ -309,7 +317,7 @@ namespace WeChatAuto.Components
 
         internal bool CheckAnchorExist()
         {
-            var path = "/Group/Custom/Group/Group/Group/Custom/Custom/Custom/Group/Custom/Custom/Group/Group/Group/Group/Group/Group/Group/Group/Group/Group/Group/Group/Button[@Name='聊天记录'][@ClassName='mmui::XButton']";
+            var path = UITreeGlobal.MessageChatHistory;
             var buttonRetry = Retry.WhileNull(() => this._Client.MainWindow.FindFirstByXPath(path), TimeSpan.FromSeconds(1), TimeSpan.FromMilliseconds(200));
             return buttonRetry.Success;
         }
