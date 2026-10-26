@@ -177,6 +177,7 @@ src/                               # WeChatAuto.SDK 仓库根
 │   │   ├── QrcodeTransfer/        # 二维码转发（待完成中)  💎
 │   │   ├── SystemMessageMonitor/  # 系统消息监控     💎
 │   │   └── WinForm_Demo/          # WinForms 可视化 Demo
+│   │   └── WinFormWithHttpWebAPI/ # Winforms调用HttpWebAPI客户端示例
 │   │
 │   ├── WeChatAuto4_X.sln
 │   └── README.md
