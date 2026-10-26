@@ -112,7 +112,11 @@ public sealed partial class WeChatAutoClient
         using var response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
         response.EnsureSuccessStatusCode();
 
+#if NET
         var content = await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
+#else
+        var content = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+#endif
         return string.IsNullOrEmpty(content) ? null : content;
     }
 
